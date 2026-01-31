@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Professeur - Cours de Français Complets</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        body { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100vh; color: white; }
+        
+        /* Header */
+        .header { text-align: center; padding: 3rem 2rem; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); }
+        .logo { font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, #667eea, #764ba2, #f093fb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .tagline { font-size: 1.3rem; color: #a0a0a0; margin-top: 0.5rem; }
+        .stats { display: flex; justify-content: center; gap: 3rem; margin-top: 2rem; flex-wrap: wrap; }
+        .stat { text-align: center; }
+        .stat-number { font-size: 2.5rem; font-weight: 800; color: #667eea; }
+        .stat-label { color: #888; font-size: 0.9rem; }
+        
+        /* Container */
+        .container { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem; }
+        
+        /* Section Title */
+        .section-title { text-align: center; margin-bottom: 2rem; }
+        .section-title h2 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .section-title p { color: #888; }
+        
+        /* Cards Grid */
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 4rem; }
+        
+        /* Card */
+        .card { background: rgba(255,255,255,0.05); border-radius: 20px; padding: 2rem; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden; }
+        .card:hover { transform: translateY(-10px); border-color: rgba(255,255,255,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+        .card.green::before { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+        .card.blue::before { background: linear-gradient(90deg, #2196f3, #03a9f4); }
+        .card.purple::before { background: linear-gradient(90deg, #9c27b0, #e91e63); }
+        .card.red::before { background: linear-gradient(90deg, #f44336, #ff5722); }
+        .card.teal::before { background: linear-gradient(90deg, #009688, #4db6ac); }
+        .card.orange::before { background: linear-gradient(90deg, #ff9800, #ffc107); }
+        .card.crimson::before { background: linear-gradient(90deg, #c62828, #ef5350); }
+        
+        .card-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .card-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .card-level { color: #888; font-size: 0.9rem; margin-bottom: 1rem; }
+        .card-stats { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+        .card-stat { background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.85rem; }
+        .card-topics { color: #aaa; font-size: 0.85rem; line-height: 1.6; margin-bottom: 1.5rem; }
+        .card-btn { display: block; text-align: center; padding: 1rem; border-radius: 12px; text-decoration: none; color: white; font-weight: 600; transition: all 0.3s; }
+        .card.green .card-btn { background: linear-gradient(135deg, #4caf50, #8bc34a); }
+        .card.blue .card-btn { background: linear-gradient(135deg, #2196f3, #03a9f4); }
+        .card.purple .card-btn { background: linear-gradient(135deg, #9c27b0, #e91e63); }
+        .card.red .card-btn { background: linear-gradient(135deg, #f44336, #ff5722); }
+        .card.teal .card-btn { background: linear-gradient(135deg, #009688, #4db6ac); }
+        .card.orange .card-btn { background: linear-gradient(135deg, #ff9800, #ffc107); color: #333; }
+        .card.crimson .card-btn { background: linear-gradient(135deg, #c62828, #ef5350); }
+        .card-btn:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        
+        .badge { display: inline-block; background: linear-gradient(135deg, #ffd700, #ffb300); color: #333; padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.75rem; font-weight: 700; margin-left: 0.5rem; }
+        
+        /* Features */
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 4rem 0; }
+        .feature { text-align: center; padding: 2rem; }
+        .feature-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .feature h3 { margin-bottom: 0.5rem; }
+        .feature p { color: #888; font-size: 0.9rem; }
+        
+        /* Footer */
+        .footer { text-align: center; padding: 3rem 2rem; background: rgba(0,0,0,0.3); margin-top: 2rem; }
+        .footer-contact { margin-bottom: 1rem; }
+        .footer-contact a { color: #667eea; text-decoration: none; margin: 0 1rem; }
+        .footer-copy { color: #666; font-size: 0.85rem; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo { font-size: 2.5rem; }
+            .stats { gap: 1.5rem; }
+            .stat-number { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1 class="logo">📚 Le Professeur</h1>
+        <p class="tagline">Cours de Français Complets - Programme PHARES Sénégal</p>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">159</div>
+                <div class="stat-label">Leçons</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">7</div>
+                <div class="stat-label">Niveaux</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Gratuit</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- COLLÈGE -->
+        <div class="section-title">
+            <h2>🏫 Enseignement Moyen (Collège)</h2>
+            <p>De la 6ème à la 3ème - Préparation au BFEM</p>
+        </div>
+        
+        <div class="cards-grid">
+            <div class="card green">
+                <div class="card-icon">📗</div>
+                <div class="card-title">6ème</div>
+                <div class="card-level">Première année du collège</div>
+                <div class="card-stats">
+                    <span class="card-stat">28 leçons</span>
+                    <span class="card-stat">100 KB</span>
+                </div>
+                <div class="card-topics">Grammaire de base • Conjugaison • Orthographe • Vocabulaire • Conte • Fable • Poésie • Expression écrite</div>
+                <a href="cours-francais-6eme-complet.html" class="card-btn">Accéder au cours →</a>
+            </div>
+            
+            <div class="card blue">
+                <div class="card-icon">📘</div>
+                <div class="card-title">5ème</div>
+                <div class="card-level">Deuxième année du collège</div>
+                <div class="card-stats">
+                    <span class="card-stat">22 leçons</span>
+                    <span class="card-stat">41 KB</span>
+                </div>
+                <div class="card-topics">Expansions du GN • Voix passive • Théâtre (Le Cid, L'Avare) • Épopée (Soundjata) • Poésie (Senghor) • Lettre administrative</div>
+                <a href="cours-francais-5eme-complet.html" class="card-btn">Accéder au cours →</a>
+            </div>
+            
+            <div class="card purple">
+                <div class="card-icon">📙</div>
+                <div class="card-title">4ème</div>
+                <div class="card-level">Troisième année du collège</div>
+                <div class="card-stats">
+                    <span class="card-stat">20 leçons</span>
+                    <span class="card-stat">48 KB</span>
+                </div>
+                <div class="card-topics">Propositions • Subjonctif • Figures de style • Nouvelle (Maupassant) • Fait divers • Sous l'orage • Dissertation</div>
+                <a href="cours-francais-4eme-complet.html" class="card-btn">Accéder au cours →</a>
+            </div>
+            
+            <div class="card red">
+                <div class="card-icon">📕</div>
+                <div class="card-title">3ème <span class="badge">BFEM</span></div>
+                <div class="card-level">Année du BFEM</div>
+                <div class="card-stats">
+                    <span class="card-stat">17 leçons</span>
+                    <span class="card-stat">49 KB</span>
+                </div>
+                <div class="card-topics">Révisions complètes • Argumentation • Dissertation • Résumé • Méthodologie BFEM • Sujets corrigés</div>
+                <a href="cours-francais-3eme-complet.html" class="card-btn">Accéder au cours →</a>
+            </div>
+        </div>
+
+        <!-- LYCÉE -->
+        <div class="section-title">
+            <h2>🎓 Enseignement Secondaire (Lycée)</h2>
+            <p>De la Seconde à la Terminale - Préparation au BAC</p>
+        </div>
+        
+        <div class="cards-grid">
+            <div class="card teal">
+                <div class="card-icon">🎓</div>
+                <div class="card-title">Seconde</div>
+                <div class="card-level">Première année du lycée</div>
+                <div class="card-stats">
+                    <span class="card-stat">29 leçons</span>
+                    <span class="card-stat">92 KB</span>
+                </div>
+                <div class="card-topics">Humanisme • Classicisme • Lumières • Romantisme • Montaigne • Molière • Voltaire • Hugo • Littérature africaine • Méthodologie</div>
+                <a href="cours-francais-seconde-complet.html" class="card-btn">Accéder au cours →</a>
+            </div>
+            
+            <div class="card orange">
+                <div class="card-icon">🎓</div>
+                <div class="card-title">Première <span class="badge">Prépa BAC</span></div>
+                <div class="card-level">Deuxième année du lycée</div>
+                <div class="card-stats">
+                    <span class="card-stat">23 leçons</span>
+                    <span class="card-stat">45 KB</span>
+                </div>
+                <div class="card-topics">Réalisme • Naturalisme • Symbolisme • Baudelaire • Rimbaud • Balzac • Flaubert • Zola • Racine • Kourouma • Oyono</div>
+                <a href="cours-francais-premiere-complet.html" class="card-btn">Accéder au cours →</a>
+            </div>
+            
+            <div class="card crimson">
+                <div class="card-icon">🎓</div>
+                <div class="card-title">Terminale <span class="badge">BAC</span></div>
+                <div class="card-level">Année du Baccalauréat</div>
+                <div class="card-stats">
+                    <span class="card-stat">20 leçons</span>
+                    <span class="card-stat">48 KB</span>
+                </div>
+                <div class="card-topics">Surréalisme • Existentialisme • Négritude • Senghor • Césaire • Camus • Sartre • Sembène • Annales BAC corrigées</div>
+                <a href="cours-francais-terminale-complet.html" class="card-btn">Accéder au cours →</a>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">📱</div>
+                <h3>100% Responsive</h3>
+                <p>Fonctionne sur téléphone, tablette et ordinateur</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🌙</div>
+                <h3>Hors ligne</h3>
+                <p>Téléchargez et consultez sans internet</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎯</div>
+                <h3>Programme officiel</h3>
+                <p>Conforme au programme PHARES du Sénégal</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✍️</div>
+                <h3>Exercices</h3>
+                <p>Exercices pratiques dans chaque leçon</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-contact">
+            <a href="mailto:nenemoallah@gmail.com">📧 nenemoallah@gmail.com</a>
+            <a href="tel:+221782702457">📞 +221 78 270 24 57</a>
+        </div>
+        <p class="footer-copy">© 2025 Le Professeur - Tous droits réservés - Dakar, Sénégal</p>
+    </footer>
+</body>
+</html>

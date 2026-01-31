@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Professeur - Français Seconde Complet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        :root { --primary: #6a1b9a; --primary-dark: #4a148c; --success: #4caf50; --warning: #ff9800; --info: #00bcd4; --dark: #311b92; }
+        body { background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); min-height: 100vh; }
+        .navbar { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 1rem 2rem; position: sticky; top: 0; z-index: 1000; }
+        .nav-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { color: white; font-size: 1.5rem; font-weight: 800; text-decoration: none; }
+        .nav-level { background: rgba(255,255,255,0.2); padding: 0.5rem 1.5rem; border-radius: 50px; color: white; font-weight: 600; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .page-header { text-align: center; margin-bottom: 2rem; padding: 2rem; background: white; border-radius: 20px; }
+        .page-header h1 { font-size: 2.2rem; color: var(--dark); margin-bottom: 0.5rem; }
+        .badge-level { display: inline-block; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 0.5rem 2rem; border-radius: 50px; font-weight: 700; margin-top: 1rem; }
+        .content-wrapper { display: grid; grid-template-columns: 320px 1fr; gap: 2rem; }
+        .sidebar { background: white; border-radius: 20px; padding: 1.5rem; position: sticky; top: 100px; height: fit-content; max-height: calc(100vh - 120px); overflow-y: auto; }
+        .sidebar h3 { color: var(--dark); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 3px solid var(--primary); }
+        .sidebar-section { margin-bottom: 1.5rem; }
+        .sidebar-section h4 { color: white; font-size: 0.8rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 0.5rem 1rem; border-radius: 8px; }
+        .sidebar-link { display: block; padding: 0.4rem 1rem; color: #555; text-decoration: none; border-radius: 8px; margin-bottom: 0.2rem; font-size: 0.85rem; cursor: pointer; transition: all 0.3s; border-left: 3px solid transparent; }
+        .sidebar-link:hover { background: #f3e5f5; border-left-color: var(--primary); }
+        .sidebar-link.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
+        .main-content { background: white; border-radius: 20px; padding: 2rem; }
+        .lesson { display: none; }
+        .lesson.active { display: block; }
+        .lesson-header { border-bottom: 3px solid var(--primary); padding-bottom: 1rem; margin-bottom: 2rem; }
+        .lesson-header h2 { color: var(--dark); font-size: 1.5rem; }
+        .duration { background: var(--info); color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; display: inline-block; margin-top: 0.5rem; }
+        .objectives { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-left: 5px solid var(--success); padding: 1.5rem; border-radius: 0 15px 15px 0; margin-bottom: 2rem; }
+        .objectives h3 { color: #2e7d32; margin-bottom: 1rem; }
+        .objectives ul { list-style: none; }
+        .objectives li { padding: 0.3rem 0; padding-left: 1.5rem; position: relative; }
+        .objectives li::before { content: '✓'; position: absolute; left: 0; color: #2e7d32; font-weight: bold; }
+        .section { margin-bottom: 2rem; }
+        .section h3 { color: var(--dark); font-size: 1.2rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px dashed #e0e0e0; }
+        .section p { color: #444; line-height: 1.8; margin-bottom: 1rem; }
+        .definition { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border: 2px solid var(--warning); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; }
+        .definition h4 { color: #e65100; margin-bottom: 0.5rem; }
+        .definition h4::before { content: '📌 '; }
+        .example { background: linear-gradient(135deg, #f3e5f5, #e1bee7); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; border-left: 5px solid var(--primary); }
+        .example h4 { color: var(--primary-dark); margin-bottom: 1rem; }
+        .example-content { background: white; padding: 1rem; border-radius: 10px; line-height: 1.8; }
+        .highlight { background: #ffeb3b; padding: 2px 6px; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; border-radius: 12px; overflow: hidden; }
+        th { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 0.8rem; text-align: left; }
+        td { padding: 0.7rem 0.8rem; border-bottom: 1px solid #eee; }
+        tr:hover { background: #f5f5f5; }
+        .tips { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; border-left: 5px solid var(--info); }
+        .tips h4 { color: #00838f; margin-bottom: 1rem; }
+        .warning { background: linear-gradient(135deg, #fff8e1, #ffecb3); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; border-left: 5px solid #ffc107; }
+        .warning h4 { color: #f57c00; margin-bottom: 0.5rem; }
+        .exercise { background: linear-gradient(135deg, #fce4ec, #f8bbd0); border-radius: 15px; padding: 1.5rem; margin: 2rem 0; }
+        .exercise h3 { color: #c2185b; margin-bottom: 1rem; }
+        textarea { width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px; font-family: inherit; }
+        .lesson-nav { display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 2rem; border-top: 2px solid #eee; }
+        .nav-btn { padding: 0.8rem 1.5rem; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; }
+        .nav-btn.prev { background: #ecf0f1; color: var(--dark); }
+        .nav-btn.next { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .formula { background: linear-gradient(135deg, #ede7f6, #d1c4e9); padding: 1rem 1.5rem; border-radius: 10px; text-align: center; font-size: 1.1rem; font-weight: 600; margin: 1rem 0; border: 2px solid #7e57c2; }
+        .author-box { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); color: white; padding: 1.5rem; border-radius: 15px; margin: 1.5rem 0; }
+        .author-box h4 { margin-bottom: 0.5rem; font-size: 1.2rem; }
+        .quote { font-style: italic; background: #f5f5f5; padding: 1rem; border-left: 4px solid var(--primary); margin: 1rem 0; }
+        .timeline { border-left: 3px solid var(--primary); padding-left: 1.5rem; margin: 1.5rem 0; }
+        .timeline-item { margin-bottom: 1.5rem; position: relative; }
+        .timeline-item::before { content: ''; position: absolute; left: -1.75rem; top: 0.5rem; width: 12px; height: 12px; background: var(--primary); border-radius: 50%; }
+        .timeline-item h5 { color: var(--primary); margin-bottom: 0.3rem; }
+        @media (max-width: 1024px) { .content-wrapper { grid-template-columns: 1fr; } .sidebar { position: relative; top: 0; max-height: none; } }
+    </style>
+</head>
+<body>
+    <nav class="navbar"><div class="nav-content"><a href="#" class="logo">📚 Le Professeur</a><span class="nav-level">🎓 Classe de Seconde</span></div></nav>
+    <div class="container">
+        <header class="page-header">
+            <h1>🎓 Cours Complet de Français - Seconde</h1>
+            <p>Programme PHARES - Enseignement Secondaire - République du Sénégal</p>
+            <span class="badge-level">Lycée - 30 Leçons Complètes</span>
+        </header>
+        <div class="content-wrapper">
+            <aside class="sidebar">
+                <h3>📑 Sommaire</h3>
+                <div class="sidebar-section"><h4>📝 LANGUE & GRAMMAIRE</h4>
+                    <a class="sidebar-link active" onclick="showLesson('revision-gram')">Révision grammaticale</a>
+                    <a class="sidebar-link" onclick="showLesson('analyse-logique')">L'analyse logique</a>
+                    <a class="sidebar-link" onclick="showLesson('modes-temps')">Modes et temps (synthèse)</a>
+                    <a class="sidebar-link" onclick="showLesson('subjonctif')">Le subjonctif (emplois)</a>
+                    <a class="sidebar-link" onclick="showLesson('discours-rapporte')">Le discours rapporté</a>
+                    <a class="sidebar-link" onclick="showLesson('enonciation')">L'énonciation</a>
+                </div>
+                <div class="sidebar-section"><h4>📖 GENRES LITTÉRAIRES</h4>
+                    <a class="sidebar-link" onclick="showLesson('genres-intro')">Introduction aux genres</a>
+                    <a class="sidebar-link" onclick="showLesson('roman')">Le roman</a>
+                    <a class="sidebar-link" onclick="showLesson('poesie')">La poésie</a>
+                    <a class="sidebar-link" onclick="showLesson('theatre')">Le théâtre</a>
+                    <a class="sidebar-link" onclick="showLesson('essai')">L'essai et l'argumentation</a>
+                </div>
+                <div class="sidebar-section"><h4>🏛️ MOUVEMENTS LITTÉRAIRES</h4>
+                    <a class="sidebar-link" onclick="showLesson('humanisme')">L'Humanisme (XVIe)</a>
+                    <a class="sidebar-link" onclick="showLesson('classicisme')">Le Classicisme (XVIIe)</a>
+                    <a class="sidebar-link" onclick="showLesson('lumieres')">Les Lumières (XVIIIe)</a>
+                    <a class="sidebar-link" onclick="showLesson('romantisme')">Le Romantisme (XIXe)</a>
+                </div>
+                <div class="sidebar-section"><h4>📚 ŒUVRES & AUTEURS</h4>
+                    <a class="sidebar-link" onclick="showLesson('montaigne')">Montaigne - Les Essais</a>
+                    <a class="sidebar-link" onclick="showLesson('moliere')">Molière - Dom Juan</a>
+                    <a class="sidebar-link" onclick="showLesson('voltaire')">Voltaire - Candide</a>
+                    <a class="sidebar-link" onclick="showLesson('hugo')">Hugo - Les Contemplations</a>
+                    <a class="sidebar-link" onclick="showLesson('kane')">C.H. Kane - L'Aventure ambiguë</a>
+                    <a class="sidebar-link" onclick="showLesson('ba')">M. Bâ - Une si longue lettre</a>
+                </div>
+                <div class="sidebar-section"><h4>✍️ MÉTHODOLOGIE</h4>
+                    <a class="sidebar-link" onclick="showLesson('lecture-analytique')">La lecture analytique</a>
+                    <a class="sidebar-link" onclick="showLesson('commentaire')">Le commentaire composé</a>
+                    <a class="sidebar-link" onclick="showLesson('dissertation')">La dissertation littéraire</a>
+                    <a class="sidebar-link" onclick="showLesson('synthese')">La synthèse de documents</a>
+                    <a class="sidebar-link" onclick="showLesson('essai-ecrit')">L'essai argumenté</a>
+                </div>
+                <div class="sidebar-section"><h4>🎯 OUTILS D'ANALYSE</h4>
+                    <a class="sidebar-link" onclick="showLesson('figures-style')">Les figures de style</a>
+                    <a class="sidebar-link" onclick="showLesson('registres')">Les registres littéraires</a>
+                    <a class="sidebar-link" onclick="showLesson('focalisation')">Points de vue et focalisation</a>
+                    <a class="sidebar-link" onclick="showLesson('versification')">La versification (approfondissement)</a>
+                </div>
+            </aside>
+            <main class="main-content">
+                <!-- LANGUE & GRAMMAIRE -->
+                <div class="lesson active" id="lesson-revision-gram">
+                    <div class="lesson-header">
+                        <h2>📝 Révision grammaticale complète</h2>
+                        <span class="duration">⏱️ 4h</span>
+                    </div>
+                    <div class="objectives"><h3>🎯 Objectifs</h3>
+                        <ul><li>Maîtriser les classes et fonctions grammaticales</li>
+                        <li>Analyser la structure des phrases complexes</li>
+                        <li>Préparer l'analyse de texte littéraire</li></ul>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Les classes grammaticales (rappel)</h3>
+                        <table><tr><th>Classes variables</th><th>Classes invariables</th></tr>
+                        <tr><td>Nom, Déterminant, Adjectif, Pronom, Verbe</td><td>Adverbe, Préposition, Conjonction, Interjection</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Les fonctions essentielles</h3>
+                        <table><tr><th>Fonction</th><th>Définition</th><th>Exemple</th></tr>
+                        <tr><td><strong>Sujet</strong></td><td>Fait l'action ou est décrit</td><td><u>Le soleil</u> brille.</td></tr>
+                        <tr><td><strong>COD</strong></td><td>Subit l'action directement</td><td>Je lis <u>un livre</u>.</td></tr>
+                        <tr><td><strong>COI</strong></td><td>Subit l'action indirectement</td><td>Je pense <u>à toi</u>.</td></tr>
+                        <tr><td><strong>Attribut du sujet</strong></td><td>Caractérise le sujet via verbe d'état</td><td>Elle est <u>médecin</u>.</td></tr>
+                        <tr><td><strong>Attribut du COD</strong></td><td>Caractérise le COD</td><td>Je le trouve <u>intelligent</u>.</td></tr>
+                        <tr><td><strong>CC</strong></td><td>Circonstances de l'action</td><td>Il travaille <u>à Dakar</u>.</td></tr>
+                        <tr><td><strong>Complément d'agent</strong></td><td>Fait l'action (voix passive)</td><td>Le livre est lu <u>par l'élève</u>.</td></tr>
+                        <tr><td><strong>Complément du nom</strong></td><td>Précise un nom</td><td>La maison <u>de mon père</u></td></tr>
+                        <tr><td><strong>Épithète</strong></td><td>Adjectif près du nom</td><td>Une <u>belle</u> maison</td></tr>
+                        <tr><td><strong>Apposition</strong></td><td>Précise un nom (entre virgules)</td><td>Dakar, <u>capitale du Sénégal</u>, ...</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 La phrase complexe</h3>
+                        <table><tr><th>Type de proposition</th><th>Caractéristique</th><th>Exemple</th></tr>
+                        <tr><td><strong>Indépendante</strong></td><td>Autonome</td><td>Il pleut.</td></tr>
+                        <tr><td><strong>Principale</strong></td><td>Commande une subordonnée</td><td><u>Je sais</u> qu'il viendra.</td></tr>
+                        <tr><td><strong>Sub. relative</strong></td><td>Complète un nom (qui, que, dont, où)</td><td>L'homme <u>qui parle</u>...</td></tr>
+                        <tr><td><strong>Sub. complétive</strong></td><td>COD du verbe (que)</td><td>Je crois <u>qu'il a raison</u>.</td></tr>
+                        <tr><td><strong>Sub. circonstancielle</strong></td><td>CC (temps, cause, but...)</td><td><u>Quand il pleut</u>, je reste.</td></tr>
+                        <tr><td><strong>Sub. infinitive</strong></td><td>Verbe à l'infinitif avec sujet propre</td><td>J'entends <u>les oiseaux chanter</u>.</td></tr>
+                        <tr><td><strong>Sub. participiale</strong></td><td>Verbe au participe avec sujet propre</td><td><u>Le soleil se couchant</u>, nous partîmes.</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" disabled>← Précédent</button><button class="nav-btn next" onclick="showLesson('analyse-logique')">Analyse logique →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-analyse-logique">
+                    <div class="lesson-header"><h2>📝 L'analyse logique</h2><span class="duration">⏱️ 3h</span></div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>L'<strong>analyse logique</strong> consiste à découper une phrase en propositions et à identifier leur nature et leur fonction.</p>
+                    </div>
+                    
+                    <div class="section"><h3>📋 Méthodologie</h3>
+                        <table><tr><th>Étape</th><th>Action</th></tr>
+                        <tr><td><strong>1.</strong></td><td>Repérer les verbes conjugués (= nombre de propositions)</td></tr>
+                        <tr><td><strong>2.</strong></td><td>Délimiter chaque proposition</td></tr>
+                        <tr><td><strong>3.</strong></td><td>Identifier la nature (indép., principale, subordonnée)</td></tr>
+                        <tr><td><strong>4.</strong></td><td>Préciser la fonction des subordonnées</td></tr></table>
+                    </div>
+                    
+                    <div class="example"><h4>✅ Exemple d'analyse</h4>
+                        <div class="example-content">
+                            <p><strong>Phrase :</strong> "Lorsque le soleil se couche, les pêcheurs qui rentrent au port savent que la journée fut bonne."</p>
+                            <p><strong>Analyse :</strong></p>
+                            <p>1. <span class="highlight">Lorsque le soleil se couche</span> → Sub. circonstancielle de temps (CC de temps de "savent")</p>
+                            <p>2. <span class="highlight">les pêcheurs [...] savent</span> → Proposition principale</p>
+                            <p>3. <span class="highlight">qui rentrent au port</span> → Sub. relative (complète "pêcheurs")</p>
+                            <p>4. <span class="highlight">que la journée fut bonne</span> → Sub. complétive (COD de "savent")</p>
+                        </div>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Les circonstancielles (rappel complet)</h3>
+                        <table><tr><th>Type</th><th>Conjonctions</th><th>Mode</th></tr>
+                        <tr><td><strong>Temps</strong></td><td>quand, lorsque, pendant que, avant que, après que, dès que</td><td>Indicatif (sauf avant que → subj.)</td></tr>
+                        <tr><td><strong>Cause</strong></td><td>parce que, puisque, comme, étant donné que, vu que</td><td>Indicatif</td></tr>
+                        <tr><td><strong>Conséquence</strong></td><td>si bien que, de sorte que, au point que, si... que</td><td>Indicatif</td></tr>
+                        <tr><td><strong>But</strong></td><td>pour que, afin que, de peur que, de crainte que</td><td>Subjonctif</td></tr>
+                        <tr><td><strong>Concession</strong></td><td>bien que, quoique, même si, alors que</td><td>Subjonctif (sauf même si, alors que)</td></tr>
+                        <tr><td><strong>Condition</strong></td><td>si, à condition que, pourvu que, à moins que</td><td>Indicatif après si, subj. après autres</td></tr>
+                        <tr><td><strong>Comparaison</strong></td><td>comme, ainsi que, de même que, tel que</td><td>Indicatif</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('revision-gram')">← Révision</button><button class="nav-btn next" onclick="showLesson('modes-temps')">Modes et temps →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-modes-temps">
+                    <div class="lesson-header"><h2>📝 Modes et temps (synthèse)</h2><span class="duration">⏱️ 3h</span></div>
+                    
+                    <div class="section"><h3>📊 Les 7 modes du français</h3>
+                        <table><tr><th>Mode</th><th>Caractéristique</th><th>Temps</th></tr>
+                        <tr><td><strong>Indicatif</strong></td><td>Réalité, certitude</td><td>8 temps (présent, imparfait, passé simple/composé, plus-que-parfait, passé antérieur, futur simple/antérieur)</td></tr>
+                        <tr><td><strong>Subjonctif</strong></td><td>Doute, souhait, sentiment</td><td>4 temps (présent, passé, imparfait, plus-que-parfait)</td></tr>
+                        <tr><td><strong>Conditionnel</strong></td><td>Hypothèse, politesse</td><td>2 temps (présent, passé)</td></tr>
+                        <tr><td><strong>Impératif</strong></td><td>Ordre, conseil</td><td>2 temps (présent, passé)</td></tr>
+                        <tr><td><strong>Infinitif</strong></td><td>Forme nominale</td><td>2 temps (présent, passé)</td></tr>
+                        <tr><td><strong>Participe</strong></td><td>Forme adjectivale</td><td>2 temps (présent, passé)</td></tr>
+                        <tr><td><strong>Gérondif</strong></td><td>En + participe présent</td><td>1 temps (présent)</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Valeurs des temps de l'indicatif</h3>
+                        <table><tr><th>Temps</th><th>Valeurs principales</th></tr>
+                        <tr><td><strong>Présent</strong></td><td>Actuel, habitude, vérité générale, narration, futur proche</td></tr>
+                        <tr><td><strong>Imparfait</strong></td><td>Description, habitude passée, durée, arrière-plan du récit</td></tr>
+                        <tr><td><strong>Passé simple</strong></td><td>Action ponctuelle passée, premier plan du récit</td></tr>
+                        <tr><td><strong>Passé composé</strong></td><td>Action passée avec lien au présent, oral</td></tr>
+                        <tr><td><strong>Plus-que-parfait</strong></td><td>Antériorité dans le passé</td></tr>
+                        <tr><td><strong>Futur simple</strong></td><td>Action à venir, prédiction, ordre atténué</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('analyse-logique')">← Analyse logique</button><button class="nav-btn next" onclick="showLesson('subjonctif')">Subjonctif →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-subjonctif">
+                    <div class="lesson-header"><h2>📝 Le subjonctif (emplois approfondis)</h2><span class="duration">⏱️ 2h</span></div>
+                    
+                    <div class="definition"><h4>Rappel</h4>
+                        <p>Le <strong>subjonctif</strong> exprime le doute, le souhait, la volonté, le sentiment, la nécessité. Il s'emploie principalement dans les subordonnées.</p>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Emplois obligatoires du subjonctif</h3>
+                        <table><tr><th>Après...</th><th>Exemples de verbes/locutions</th></tr>
+                        <tr><td><strong>Volonté</strong></td><td>vouloir, souhaiter, désirer, exiger, ordonner que</td></tr>
+                        <tr><td><strong>Sentiment</strong></td><td>craindre, regretter, se réjouir, avoir peur que</td></tr>
+                        <tr><td><strong>Doute</strong></td><td>douter que, il est possible que, il se peut que</td></tr>
+                        <tr><td><strong>Nécessité</strong></td><td>il faut que, il est nécessaire que</td></tr>
+                        <tr><td><strong>Jugement</strong></td><td>il est bon/juste/normal que</td></tr>
+                        <tr><td><strong>Conjonctions</strong></td><td>pour que, afin que, bien que, quoique, avant que, à moins que</td></tr></table>
+                    </div>
+                    
+                    <div class="warning"><h4>⚠️ Indicatif ou Subjonctif ?</h4>
+                        <table><tr><th>INDICATIF</th><th>SUBJONCTIF</th></tr>
+                        <tr><td>Je sais <u>qu'il vient</u>. (certitude)</td><td>Je veux <u>qu'il vienne</u>. (volonté)</td></tr>
+                        <tr><td>Je crois <u>qu'il a raison</u>. (opinion +)</td><td>Je doute <u>qu'il ait raison</u>. (doute)</td></tr>
+                        <tr><td>Il est certain <u>qu'il réussira</u>.</td><td>Il est possible <u>qu'il réussisse</u>.</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('modes-temps')">← Modes et temps</button><button class="nav-btn next" onclick="showLesson('discours-rapporte')">Discours rapporté →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-discours-rapporte">
+                    <div class="lesson-header"><h2>📝 Le discours rapporté</h2><span class="duration">⏱️ 2h</span></div>
+                    
+                    <div class="section"><h3>📊 Les 3 formes de discours rapporté</h3>
+                        <table><tr><th>Type</th><th>Caractéristiques</th><th>Exemple</th></tr>
+                        <tr><td><strong>Direct</strong></td><td>Paroles citées entre guillemets</td><td>Il dit : « Je viendrai demain. »</td></tr>
+                        <tr><td><strong>Indirect</strong></td><td>Paroles intégrées avec "que"</td><td>Il dit qu'il viendrait le lendemain.</td></tr>
+                        <tr><td><strong>Indirect libre</strong></td><td>Paroles intégrées sans introducteur</td><td>Il réfléchit. Viendrait-il demain ?</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Transformations (verbe principal au passé)</h3>
+                        <table><tr><th>Direct</th><th>→</th><th>Indirect</th></tr>
+                        <tr><td>Présent</td><td>→</td><td>Imparfait</td></tr>
+                        <tr><td>Passé composé</td><td>→</td><td>Plus-que-parfait</td></tr>
+                        <tr><td>Futur</td><td>→</td><td>Conditionnel présent</td></tr>
+                        <tr><td>Futur antérieur</td><td>→</td><td>Conditionnel passé</td></tr>
+                        <tr><td>Impératif</td><td>→</td><td>de + infinitif</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Transformations des repères</h3>
+                        <table><tr><th>Direct</th><th>→</th><th>Indirect</th></tr>
+                        <tr><td>je, me, moi</td><td>→</td><td>il/elle, se, lui/elle</td></tr>
+                        <tr><td>ici</td><td>→</td><td>là, là-bas</td></tr>
+                        <tr><td>maintenant</td><td>→</td><td>alors, à ce moment-là</td></tr>
+                        <tr><td>aujourd'hui</td><td>→</td><td>ce jour-là</td></tr>
+                        <tr><td>hier</td><td>→</td><td>la veille</td></tr>
+                        <tr><td>demain</td><td>→</td><td>le lendemain</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('subjonctif')">← Subjonctif</button><button class="nav-btn next" onclick="showLesson('enonciation')">Énonciation →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-enonciation">
+                    <div class="lesson-header"><h2>📝 L'énonciation</h2><span class="duration">⏱️ 2h</span></div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>L'<strong>énonciation</strong> est l'acte de produire un énoncé. Elle implique un locuteur, un destinataire, un moment et un lieu.</p>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Les indices d'énonciation</h3>
+                        <table><tr><th>Type</th><th>Indices</th></tr>
+                        <tr><td><strong>Personnes</strong></td><td>je, tu, nous, vous, on</td></tr>
+                        <tr><td><strong>Temps</strong></td><td>maintenant, hier, demain, aujourd'hui</td></tr>
+                        <tr><td><strong>Lieu</strong></td><td>ici, là, là-bas</td></tr>
+                        <tr><td><strong>Démonstratifs</strong></td><td>ce, cette, celui-ci, celui-là</td></tr>
+                        <tr><td><strong>Temps verbaux</strong></td><td>présent, passé composé, futur (= ancrés)</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Énoncé ancré vs coupé</h3>
+                        <table><tr><th>Énoncé ancré (discours)</th><th>Énoncé coupé (récit)</th></tr>
+                        <tr><td>Lié à la situation d'énonciation</td><td>Détaché de la situation</td></tr>
+                        <tr><td>je, tu, ici, maintenant</td><td>il, elle, là-bas, ce jour-là</td></tr>
+                        <tr><td>Présent, passé composé, futur</td><td>Passé simple, imparfait</td></tr>
+                        <tr><td>Dialogue, lettre, article</td><td>Conte, roman, récit historique</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('discours-rapporte')">← Discours rapporté</button><button class="nav-btn next" onclick="showLesson('genres-intro')">Genres littéraires →</button></div>
+                </div>
+
+                <!-- GENRES LITTÉRAIRES -->
+                <div class="lesson" id="lesson-genres-intro">
+                    <div class="lesson-header"><h2>📖 Introduction aux genres littéraires</h2><span class="duration">⏱️ 2h</span></div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>Un <strong>genre littéraire</strong> est une catégorie d'œuvres partageant des caractéristiques communes de forme et de contenu.</p>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Les grands genres</h3>
+                        <table><tr><th>Genre</th><th>Caractéristiques</th><th>Sous-genres</th></tr>
+                        <tr><td><strong>Roman</strong></td><td>Récit long en prose, fiction</td><td>Réaliste, fantastique, policier, historique</td></tr>
+                        <tr><td><strong>Poésie</strong></td><td>Expression des sentiments, travail sur la forme</td><td>Lyrique, épique, satirique, engagée</td></tr>
+                        <tr><td><strong>Théâtre</strong></td><td>Texte destiné à être joué</td><td>Tragédie, comédie, drame</td></tr>
+                        <tr><td><strong>Essai</strong></td><td>Réflexion argumentée</td><td>Philosophique, critique, polémique</td></tr>
+                        <tr><td><strong>Nouvelle</strong></td><td>Récit bref, chute</td><td>Réaliste, fantastique</td></tr>
+                        <tr><td><strong>Conte</strong></td><td>Récit merveilleux</td><td>Merveilleux, philosophique</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('enonciation')">← Énonciation</button><button class="nav-btn next" onclick="showLesson('roman')">Le roman →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-roman">
+                    <div class="lesson-header"><h2>📖 Le roman</h2><span class="duration">⏱️ 3h</span></div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>Le <strong>roman</strong> est un récit de fiction en prose, de longueur variable, mettant en scène des personnages dans une intrigue.</p>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Évolution du roman</h3>
+                        <div class="timeline">
+                            <div class="timeline-item"><h5>Moyen Âge</h5><p>Romans de chevalerie (Chrétien de Troyes)</p></div>
+                            <div class="timeline-item"><h5>XVIIe siècle</h5><p>Roman précieux, roman comique (Mme de La Fayette)</p></div>
+                            <div class="timeline-item"><h5>XVIIIe siècle</h5><p>Roman épistolaire, conte philosophique (Voltaire, Rousseau)</p></div>
+                            <div class="timeline-item"><h5>XIXe siècle</h5><p>Roman réaliste et naturaliste (Balzac, Zola, Flaubert)</p></div>
+                            <div class="timeline-item"><h5>XXe siècle</h5><p>Nouveau roman, roman africain (Sartre, Camus, Kourouma)</p></div>
+                        </div>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Éléments d'analyse du roman</h3>
+                        <table><tr><th>Élément</th><th>Questions à se poser</th></tr>
+                        <tr><td><strong>Narrateur</strong></td><td>Qui raconte ? Interne/externe ? Omniscient ?</td></tr>
+                        <tr><td><strong>Focalisation</strong></td><td>Point de vue ? Interne, externe, zéro ?</td></tr>
+                        <tr><td><strong>Personnages</strong></td><td>Héros ? Adjuvants ? Opposants ? Évolution ?</td></tr>
+                        <tr><td><strong>Temps</strong></td><td>Ordre chronologique ? Analepses ? Prolepses ?</td></tr>
+                        <tr><td><strong>Espace</strong></td><td>Lieux réels/fictifs ? Symbolique ?</td></tr>
+                        <tr><td><strong>Style</strong></td><td>Registre ? Figures de style ? Rythme ?</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('genres-intro')">← Genres</button><button class="nav-btn next" onclick="showLesson('poesie')">La poésie →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-poesie">
+                    <div class="lesson-header"><h2>📖 La poésie</h2><span class="duration">⏱️ 3h</span></div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>La <strong>poésie</strong> est un art du langage qui joue sur les sonorités, les rythmes et les images pour créer une émotion esthétique.</p>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Formes poétiques</h3>
+                        <table><tr><th>Forme</th><th>Caractéristiques</th></tr>
+                        <tr><td><strong>Sonnet</strong></td><td>14 vers (2 quatrains + 2 tercets), rimes ABBA ABBA CCD EDE</td></tr>
+                        <tr><td><strong>Ballade</strong></td><td>3 strophes + envoi, refrain</td></tr>
+                        <tr><td><strong>Ode</strong></td><td>Poème lyrique célébrant un sujet</td></tr>
+                        <tr><td><strong>Élégie</strong></td><td>Poème mélancolique, plainte</td></tr>
+                        <tr><td><strong>Fable</strong></td><td>Récit en vers avec morale</td></tr>
+                        <tr><td><strong>Vers libre</strong></td><td>Sans contrainte de mètre ni de rime</td></tr>
+                        <tr><td><strong>Prose poétique</strong></td><td>Poésie sans vers (Baudelaire)</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Fonctions de la poésie</h3>
+                        <table><tr><th>Fonction</th><th>Description</th><th>Exemples</th></tr>
+                        <tr><td><strong>Lyrique</strong></td><td>Exprimer les sentiments</td><td>Lamartine, Musset</td></tr>
+                        <tr><td><strong>Engagée</strong></td><td>Défendre une cause</td><td>Hugo, Éluard, Senghor</td></tr>
+                        <tr><td><strong>Descriptive</strong></td><td>Peindre le monde</td><td>Parnassiens</td></tr>
+                        <tr><td><strong>Didactique</strong></td><td>Enseigner</td><td>La Fontaine</td></tr>
+                        <tr><td><strong>Ludique</strong></td><td>Jouer avec le langage</td><td>Oulipo, Queneau</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('roman')">← Le roman</button><button class="nav-btn next" onclick="showLesson('theatre')">Le théâtre →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-theatre">
+                    <div class="lesson-header"><h2>📖 Le théâtre</h2><span class="duration">⏱️ 3h</span></div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>Le <strong>théâtre</strong> est un genre littéraire et un art du spectacle où des acteurs interprètent des personnages devant un public.</p>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Les genres théâtraux</h3>
+                        <table><tr><th>Genre</th><th>Caractéristiques</th><th>Auteurs</th></tr>
+                        <tr><td><strong>Tragédie</strong></td><td>Personnages nobles, fatalité, mort, catharsis</td><td>Corneille, Racine</td></tr>
+                        <tr><td><strong>Comédie</strong></td><td>Personnages ordinaires, rire, dénouement heureux</td><td>Molière, Marivaux</td></tr>
+                        <tr><td><strong>Drame</strong></td><td>Mélange des registres, réalisme</td><td>Hugo, Dumas</td></tr>
+                        <tr><td><strong>Théâtre de l'absurde</strong></td><td>Non-sens, remise en question du langage</td><td>Ionesco, Beckett</td></tr>
+                        <tr><td><strong>Vaudeville</strong></td><td>Comédie légère, quiproquos</td><td>Feydeau, Labiche</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Vocabulaire du théâtre</h3>
+                        <table><tr><th>Terme</th><th>Définition</th></tr>
+                        <tr><td><strong>Acte</strong></td><td>Grande division de la pièce</td></tr>
+                        <tr><td><strong>Scène</strong></td><td>Division de l'acte (entrée/sortie)</td></tr>
+                        <tr><td><strong>Exposition</strong></td><td>Présentation initiale</td></tr>
+                        <tr><td><strong>Nœud</strong></td><td>Cœur de l'intrigue</td></tr>
+                        <tr><td><strong>Dénouement</strong></td><td>Résolution finale</td></tr>
+                        <tr><td><strong>Coup de théâtre</strong></td><td>Retournement soudain</td></tr>
+                        <tr><td><strong>Tirade</strong></td><td>Longue réplique</td></tr>
+                        <tr><td><strong>Monologue</strong></td><td>Personnage seul parlant</td></tr>
+                        <tr><td><strong>Aparté</strong></td><td>Réplique pour le public seul</td></tr>
+                        <tr><td><strong>Stichomythie</strong></td><td>Répliques courtes et rapides</td></tr>
+                        <tr><td><strong>Didascalie</strong></td><td>Indication scénique</td></tr>
+                        <tr><td><strong>Double énonciation</strong></td><td>Parole aux personnages ET au public</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Les 3 unités classiques</h3>
+                        <table><tr><th>Unité</th><th>Règle</th></tr>
+                        <tr><td><strong>Temps</strong></td><td>Action en 24 heures maximum</td></tr>
+                        <tr><td><strong>Lieu</strong></td><td>Un seul lieu</td></tr>
+                        <tr><td><strong>Action</strong></td><td>Une seule intrigue principale</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('poesie')">← La poésie</button><button class="nav-btn next" onclick="showLesson('essai')">L'essai →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-essai">
+                    <div class="lesson-header"><h2>📖 L'essai et l'argumentation</h2><span class="duration">⏱️ 2h</span></div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>L'<strong>essai</strong> est un texte en prose où l'auteur expose ses réflexions personnelles sur un sujet, sans prétendre à l'exhaustivité.</p>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Genres argumentatifs</h3>
+                        <table><tr><th>Genre</th><th>Caractéristiques</th><th>Exemples</th></tr>
+                        <tr><td><strong>Essai</strong></td><td>Réflexion libre et personnelle</td><td>Montaigne, "Les Essais"</td></tr>
+                        <tr><td><strong>Pamphlet</strong></td><td>Critique violente</td><td>Voltaire</td></tr>
+                        <tr><td><strong>Discours</strong></td><td>Parole publique persuasive</td><td>Hugo, discours politiques</td></tr>
+                        <tr><td><strong>Lettre ouverte</strong></td><td>Adressée à un destinataire, publiée</td><td>Zola, "J'accuse"</td></tr>
+                        <tr><td><strong>Conte philosophique</strong></td><td>Récit + argumentation</td><td>Voltaire, "Candide"</td></tr>
+                        <tr><td><strong>Fable</strong></td><td>Récit + morale</td><td>La Fontaine</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Stratégies argumentatives</h3>
+                        <table><tr><th>Stratégie</th><th>Description</th></tr>
+                        <tr><td><strong>Convaincre</strong></td><td>Faire appel à la raison (arguments logiques)</td></tr>
+                        <tr><td><strong>Persuader</strong></td><td>Faire appel aux émotions (pathos)</td></tr>
+                        <tr><td><strong>Délibérer</strong></td><td>Peser le pour et le contre</td></tr>
+                        <tr><td><strong>Réfuter</strong></td><td>Contredire la thèse adverse</td></tr>
+                        <tr><td><strong>Concéder</strong></td><td>Admettre une partie de la thèse adverse</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('theatre')">← Le théâtre</button><button class="nav-btn next" onclick="showLesson('humanisme')">L'Humanisme →</button></div>
+                </div>
+
+                <!-- MOUVEMENTS LITTÉRAIRES -->
+                <div class="lesson" id="lesson-humanisme">
+                    <div class="lesson-header"><h2>🏛️ L'Humanisme (XVIe siècle)</h2><span class="duration">⏱️ 3h</span></div>
+                    
+                    <div class="author-box">
+                        <h4>📅 Contexte historique</h4>
+                        <p>Renaissance, découverte de l'Amérique (1492), invention de l'imprimerie, Réforme protestante</p>
+                    </div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>L'<strong>Humanisme</strong> est un mouvement intellectuel qui place l'homme au centre de ses préoccupations et valorise le savoir, l'éducation et le retour aux textes antiques.</p>
+                    </div>
+                    
+                    <div class="section"><h3>🎯 Principes de l'Humanisme</h3>
+                        <table><tr><th>Principe</th><th>Description</th></tr>
+                        <tr><td><strong>Foi en l'homme</strong></td><td>L'homme est capable de progresser par la connaissance</td></tr>
+                        <tr><td><strong>Retour à l'Antiquité</strong></td><td>Étude du grec et du latin, redécouverte des classiques</td></tr>
+                        <tr><td><strong>Soif de savoir</strong></td><td>Curiosité universelle, encyclopédisme</td></tr>
+                        <tr><td><strong>Éducation</strong></td><td>Former l'homme complet (corps et esprit)</td></tr>
+                        <tr><td><strong>Tolérance</strong></td><td>Respect des différences, dialogue</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>👤 Auteurs majeurs</h3>
+                        <table><tr><th>Auteur</th><th>Œuvres</th><th>Thèmes</th></tr>
+                        <tr><td><strong>Rabelais</strong></td><td>Gargantua, Pantagruel</td><td>Éducation, satire, humour</td></tr>
+                        <tr><td><strong>Montaigne</strong></td><td>Les Essais</td><td>Connaissance de soi, tolérance</td></tr>
+                        <tr><td><strong>Ronsard</strong></td><td>Odes, Sonnets</td><td>Poésie lyrique, carpe diem</td></tr>
+                        <tr><td><strong>Du Bellay</strong></td><td>Les Regrets</td><td>Nostalgie, poésie engagée</td></tr>
+                        <tr><td><strong>Érasme</strong></td><td>Éloge de la folie</td><td>Satire, sagesse</td></tr></table>
+                    </div>
+                    
+                    <div class="quote">"Il faut que le maître enseigne à son élève non seulement les lettres, mais la vie." — Montaigne</div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('essai')">← L'essai</button><button class="nav-btn next" onclick="showLesson('classicisme')">Le Classicisme →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-classicisme">
+                    <div class="lesson-header"><h2>🏛️ Le Classicisme (XVIIe siècle)</h2><span class="duration">⏱️ 3h</span></div>
+                    
+                    <div class="author-box">
+                        <h4>📅 Contexte historique</h4>
+                        <p>Règne de Louis XIV (le Roi-Soleil), monarchie absolue, Versailles, apogée de la France</p>
+                    </div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>Le <strong>Classicisme</strong> est un mouvement artistique qui recherche l'ordre, l'équilibre, la clarté et le respect des règles, en s'inspirant de l'Antiquité.</p>
+                    </div>
+                    
+                    <div class="section"><h3>🎯 Principes du Classicisme</h3>
+                        <table><tr><th>Principe</th><th>Application</th></tr>
+                        <tr><td><strong>Imitation des Anciens</strong></td><td>S'inspirer des modèles grecs et romains</td></tr>
+                        <tr><td><strong>Raison</strong></td><td>Dominer les passions par la raison</td></tr>
+                        <tr><td><strong>Vraisemblance</strong></td><td>Ce qui est représenté doit être crédible</td></tr>
+                        <tr><td><strong>Bienséance</strong></td><td>Ne pas choquer le public</td></tr>
+                        <tr><td><strong>Les 3 unités</strong></td><td>Temps (24h), lieu (un seul), action (une seule)</td></tr>
+                        <tr><td><strong>"Plaire et instruire"</strong></td><td>Divertir tout en éduquant</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>👤 Auteurs majeurs</h3>
+                        <table><tr><th>Auteur</th><th>Genre</th><th>Œuvres</th></tr>
+                        <tr><td><strong>Corneille</strong></td><td>Tragédie</td><td>Le Cid, Horace, Cinna</td></tr>
+                        <tr><td><strong>Racine</strong></td><td>Tragédie</td><td>Phèdre, Andromaque, Britannicus</td></tr>
+                        <tr><td><strong>Molière</strong></td><td>Comédie</td><td>Tartuffe, Dom Juan, Le Misanthrope</td></tr>
+                        <tr><td><strong>La Fontaine</strong></td><td>Fable</td><td>Fables</td></tr>
+                        <tr><td><strong>Boileau</strong></td><td>Critique</td><td>Art poétique</td></tr>
+                        <tr><td><strong>Mme de La Fayette</strong></td><td>Roman</td><td>La Princesse de Clèves</td></tr>
+                        <tr><td><strong>La Bruyère</strong></td><td>Moraliste</td><td>Les Caractères</td></tr></table>
+                    </div>
+                    
+                    <div class="quote">"Ce que l'on conçoit bien s'énonce clairement, et les mots pour le dire arrivent aisément." — Boileau</div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('humanisme')">← L'Humanisme</button><button class="nav-btn next" onclick="showLesson('lumieres')">Les Lumières →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-lumieres">
+                    <div class="lesson-header"><h2>🏛️ Les Lumières (XVIIIe siècle)</h2><span class="duration">⏱️ 3h</span></div>
+                    
+                    <div class="author-box">
+                        <h4>📅 Contexte historique</h4>
+                        <p>Siècle des philosophes, critique de l'absolutisme, Encyclopédie, Révolution française (1789)</p>
+                    </div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>Les <strong>Lumières</strong> désignent un mouvement intellectuel européen qui prône l'usage de la raison pour combattre l'ignorance, l'intolérance et les injustices.</p>
+                    </div>
+                    
+                    <div class="section"><h3>🎯 Valeurs des Lumières</h3>
+                        <table><tr><th>Valeur</th><th>Combat</th></tr>
+                        <tr><td><strong>Raison</strong></td><td>Contre les superstitions et préjugés</td></tr>
+                        <tr><td><strong>Liberté</strong></td><td>Contre l'absolutisme, pour la liberté d'expression</td></tr>
+                        <tr><td><strong>Tolérance</strong></td><td>Contre le fanatisme religieux</td></tr>
+                        <tr><td><strong>Progrès</strong></td><td>Foi dans l'avenir de l'humanité</td></tr>
+                        <tr><td><strong>Égalité</strong></td><td>Contre les privilèges de naissance</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>👤 Auteurs majeurs</h3>
+                        <table><tr><th>Auteur</th><th>Œuvres</th><th>Combat</th></tr>
+                        <tr><td><strong>Voltaire</strong></td><td>Candide, Traité sur la tolérance</td><td>Fanatisme, intolérance</td></tr>
+                        <tr><td><strong>Montesquieu</strong></td><td>Lettres persanes, L'Esprit des lois</td><td>Absolutisme, séparation des pouvoirs</td></tr>
+                        <tr><td><strong>Rousseau</strong></td><td>Du contrat social, Émile</td><td>Inégalités, éducation</td></tr>
+                        <tr><td><strong>Diderot</strong></td><td>Encyclopédie, Jacques le Fataliste</td><td>Ignorance, diffusion du savoir</td></tr>
+                        <tr><td><strong>Beaumarchais</strong></td><td>Le Barbier de Séville, Le Mariage de Figaro</td><td>Privilèges de naissance</td></tr></table>
+                    </div>
+                    
+                    <div class="quote">"Écrasez l'infâme !" — Voltaire (contre le fanatisme)</div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('classicisme')">← Le Classicisme</button><button class="nav-btn next" onclick="showLesson('romantisme')">Le Romantisme →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-romantisme">
+                    <div class="lesson-header"><h2>🏛️ Le Romantisme (XIXe siècle)</h2><span class="duration">⏱️ 3h</span></div>
+                    
+                    <div class="author-box">
+                        <h4>📅 Contexte historique</h4>
+                        <p>Après la Révolution, Empire napoléonien, Restauration, désillusion politique, "mal du siècle"</p>
+                    </div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>Le <strong>Romantisme</strong> est un mouvement artistique qui privilégie l'expression des sentiments, la liberté créatrice et la communion avec la nature, en réaction au rationalisme des Lumières.</p>
+                    </div>
+                    
+                    <div class="section"><h3>🎯 Caractéristiques du Romantisme</h3>
+                        <table><tr><th>Thème</th><th>Description</th></tr>
+                        <tr><td><strong>Le "moi"</strong></td><td>Expression des sentiments personnels, lyrisme</td></tr>
+                        <tr><td><strong>La nature</strong></td><td>Refuge, miroir de l'âme, communion</td></tr>
+                        <tr><td><strong>Le mal du siècle</strong></td><td>Mélancolie, ennui, sentiment d'être né trop tard</td></tr>
+                        <tr><td><strong>L'évasion</strong></td><td>Exotisme, Moyen Âge, rêve, imaginaire</td></tr>
+                        <tr><td><strong>La révolte</strong></td><td>Contre les règles, contre la société</td></tr>
+                        <tr><td><strong>L'engagement</strong></td><td>Poète guide du peuple (Hugo)</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>👤 Auteurs majeurs</h3>
+                        <table><tr><th>Auteur</th><th>Genre</th><th>Œuvres</th></tr>
+                        <tr><td><strong>Victor Hugo</strong></td><td>Poésie, théâtre, roman</td><td>Les Contemplations, Hernani, Les Misérables</td></tr>
+                        <tr><td><strong>Lamartine</strong></td><td>Poésie</td><td>Méditations poétiques ("Le Lac")</td></tr>
+                        <tr><td><strong>Musset</strong></td><td>Poésie, théâtre</td><td>Les Nuits, Lorenzaccio</td></tr>
+                        <tr><td><strong>Chateaubriand</strong></td><td>Roman, essai</td><td>René, Mémoires d'outre-tombe</td></tr>
+                        <tr><td><strong>Nerval</strong></td><td>Poésie</td><td>Les Chimères</td></tr>
+                        <tr><td><strong>Vigny</strong></td><td>Poésie</td><td>Les Destinées</td></tr></table>
+                    </div>
+                    
+                    <div class="quote">"Un seul être vous manque et tout est dépeuplé." — Lamartine</div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('lumieres')">← Les Lumières</button><button class="nav-btn next" onclick="showLesson('montaigne')">Montaigne →</button></div>
+                </div>
+
+                <!-- ŒUVRES & AUTEURS -->
+                <div class="lesson" id="lesson-montaigne">
+                    <div class="lesson-header"><h2>📚 Montaigne - Les Essais</h2><span class="duration">⏱️ 3h</span></div>
+                    
+                    <div class="author-box">
+                        <h4>Michel de Montaigne (1533-1592)</h4>
+                        <p>Philosophe humaniste, maire de Bordeaux, père de l'essai moderne</p>
+                    </div>
+                    
+                    <div class="section"><h3>📖 L'œuvre : Les Essais (1580-1588)</h3>
+                        <p>Recueil de réflexions personnelles où Montaigne se prend lui-même comme sujet d'étude : "Je suis moi-même la matière de mon livre."</p>
+                    </div>
+                    
+                    <div class="section"><h3>🎯 Thèmes principaux</h3>
+                        <table><tr><th>Thème</th><th>Position de Montaigne</th></tr>
+                        <tr><td><strong>Connaissance de soi</strong></td><td>"Que sais-je ?" - doute méthodique</td></tr>
+                        <tr><td><strong>Éducation</strong></td><td>Former le jugement, pas la mémoire</td></tr>
+                        <tr><td><strong>Relativisme culturel</strong></td><td>Les "barbares" sont ceux qui rejettent la différence</td></tr>
+                        <tr><td><strong>Tolérance</strong></td><td>Acceptation de l'autre</td></tr>
+                        <tr><td><strong>Mort</strong></td><td>"Que philosopher, c'est apprendre à mourir"</td></tr></table>
+                    </div>
+                    
+                    <div class="quote">"Chaque homme porte la forme entière de l'humaine condition." — Montaigne</div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('romantisme')">← Le Romantisme</button><button class="nav-btn next" onclick="showLesson('moliere')">Molière →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-moliere">
+                    <div class="lesson-header"><h2>📚 Molière - Dom Juan</h2><span class="duration">⏱️ 4h</span></div>
+                    
+                    <div class="author-box">
+                        <h4>Molière (Jean-Baptiste Poquelin) (1622-1673)</h4>
+                        <p>Comédien, dramaturge, directeur de troupe, protégé de Louis XIV</p>
+                    </div>
+                    
+                    <div class="section"><h3>📖 L'œuvre : Dom Juan (1665)</h3>
+                        <p>Comédie en 5 actes en prose. Dom Juan, séducteur impénitent et libertin, défie Dieu et les hommes jusqu'à être englouti par l'enfer.</p>
+                    </div>
+                    
+                    <div class="section"><h3>👥 Personnages</h3>
+                        <table><tr><th>Personnage</th><th>Caractéristiques</th></tr>
+                        <tr><td><strong>Dom Juan</strong></td><td>Séducteur, athée, libertin, hypocrite</td></tr>
+                        <tr><td><strong>Sganarelle</strong></td><td>Valet, superstitieux, moraliste comique</td></tr>
+                        <tr><td><strong>Elvire</strong></td><td>Femme abandonnée, pure, dévouée</td></tr>
+                        <tr><td><strong>Le Commandeur</strong></td><td>Statue, représente la justice divine</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>🎯 Thèmes</h3>
+                        <table><tr><th>Thème</th><th>Analyse</th></tr>
+                        <tr><td><strong>Libertinage</strong></td><td>Liberté morale, refus des conventions</td></tr>
+                        <tr><td><strong>Hypocrisie</strong></td><td>Critique de la fausse dévotion</td></tr>
+                        <tr><td><strong>Athéisme</strong></td><td>Dom Juan ne croit qu'en "deux et deux font quatre"</td></tr>
+                        <tr><td><strong>Châtiment divin</strong></td><td>La statue du Commandeur</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('montaigne')">← Montaigne</button><button class="nav-btn next" onclick="showLesson('voltaire')">Voltaire →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-voltaire">
+                    <div class="lesson-header"><h2>📚 Voltaire - Candide</h2><span class="duration">⏱️ 4h</span></div>
+                    
+                    <div class="author-box">
+                        <h4>Voltaire (François-Marie Arouet) (1694-1778)</h4>
+                        <p>Philosophe des Lumières, écrivain, défenseur de la tolérance</p>
+                    </div>
+                    
+                    <div class="section"><h3>📖 L'œuvre : Candide ou l'Optimisme (1759)</h3>
+                        <p>Conte philosophique. Candide, jeune homme naïf élevé dans l'optimisme par Pangloss, découvre la réalité du monde à travers ses mésaventures.</p>
+                    </div>
+                    
+                    <div class="section"><h3>👥 Personnages</h3>
+                        <table><tr><th>Personnage</th><th>Symbolise</th></tr>
+                        <tr><td><strong>Candide</strong></td><td>L'innocence, la naïveté, l'évolution</td></tr>
+                        <tr><td><strong>Pangloss</strong></td><td>L'optimisme absurde (parodie de Leibniz)</td></tr>
+                        <tr><td><strong>Cunégonde</strong></td><td>L'amour, la désillusion</td></tr>
+                        <tr><td><strong>Martin</strong></td><td>Le pessimisme</td></tr>
+                        <tr><td><strong>Cacambo</strong></td><td>Le bon sens populaire</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>🎯 Critique de l'optimisme</h3>
+                        <p>Voltaire s'attaque à la philosophie de Leibniz ("le meilleur des mondes possibles") en montrant les horreurs du monde : guerre, esclavage, fanatisme, catastrophes naturelles (tremblement de terre de Lisbonne).</p>
+                    </div>
+                    
+                    <div class="quote">"Il faut cultiver notre jardin." — Candide (conclusion pragmatique)</div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('moliere')">← Molière</button><button class="nav-btn next" onclick="showLesson('hugo')">Hugo →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-hugo">
+                    <div class="lesson-header"><h2>📚 Victor Hugo - Les Contemplations</h2><span class="duration">⏱️ 4h</span></div>
+                    
+                    <div class="author-box">
+                        <h4>Victor Hugo (1802-1885)</h4>
+                        <p>Chef de file du Romantisme, poète, romancier, dramaturge, homme politique engagé</p>
+                    </div>
+                    
+                    <div class="section"><h3>📖 L'œuvre : Les Contemplations (1856)</h3>
+                        <p>Recueil de 158 poèmes divisé en deux parties : "Autrefois" (bonheur) et "Aujourd'hui" (deuil), séparées par la mort de sa fille Léopoldine en 1843.</p>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Structure</h3>
+                        <table><tr><th>Partie</th><th>Livres</th><th>Thèmes</th></tr>
+                        <tr><td><strong>AUTREFOIS (1830-1843)</strong></td><td>I. Aurore<br>II. L'âme en fleur<br>III. Les luttes et les rêves</td><td>Jeunesse, amour, nature, engagement</td></tr>
+                        <tr><td><strong>AUJOURD'HUI (1843-1855)</strong></td><td>IV. Pauca meae<br>V. En marche<br>VI. Au bord de l'infini</td><td>Deuil, souffrance, méditation, spiritualité</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📝 Poèmes célèbres</h3>
+                        <table><tr><th>Poème</th><th>Thème</th></tr>
+                        <tr><td>"Demain, dès l'aube"</td><td>Pèlerinage sur la tombe de Léopoldine</td></tr>
+                        <tr><td>"Elle avait pris ce pli"</td><td>Portrait de Léopoldine</td></tr>
+                        <tr><td>"Veni, vidi, vixi"</td><td>Lassitude, désir de mort</td></tr>
+                        <tr><td>"À Villequier"</td><td>Acceptation de la volonté divine</td></tr></table>
+                    </div>
+                    
+                    <div class="quote">"Demain, dès l'aube, à l'heure où blanchit la campagne, / Je partirai..." — Hugo</div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('voltaire')">← Voltaire</button><button class="nav-btn next" onclick="showLesson('kane')">C.H. Kane →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-kane">
+                    <div class="lesson-header"><h2>📚 Cheikh Hamidou Kane - L'Aventure ambiguë</h2><span class="duration">⏱️ 4h</span></div>
+                    
+                    <div class="author-box" style="background: linear-gradient(135deg, #1b5e20, #2e7d32);">
+                        <h4>Cheikh Hamidou Kane (1928-)</h4>
+                        <p>Écrivain sénégalais, haut fonctionnaire, roman autobiographique</p>
+                    </div>
+                    
+                    <div class="section"><h3>📖 L'œuvre : L'Aventure ambiguë (1961)</h3>
+                        <p>Roman philosophique. Samba Diallo, jeune Peul du Sénégal, est tiraillé entre l'éducation coranique traditionnelle et l'école française coloniale.</p>
+                    </div>
+                    
+                    <div class="section"><h3>👥 Personnages</h3>
+                        <table><tr><th>Personnage</th><th>Symbolise</th></tr>
+                        <tr><td><strong>Samba Diallo</strong></td><td>Le déchirement entre deux cultures</td></tr>
+                        <tr><td><strong>Thierno</strong></td><td>Le maître coranique, la spiritualité africaine</td></tr>
+                        <tr><td><strong>La Grande Royale</strong></td><td>Le pragmatisme, l'acceptation du changement</td></tr>
+                        <tr><td><strong>Le Chevalier</strong></td><td>Le père, l'aristocratie peule traditionnelle</td></tr>
+                        <tr><td><strong>Le Fou</strong></td><td>La folie mystique, le refus du compromis</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>🎯 Thèmes majeurs</h3>
+                        <table><tr><th>Thème</th><th>Analyse</th></tr>
+                        <tr><td><strong>Tradition vs Modernité</strong></td><td>Conflit entre valeurs africaines et occidentales</td></tr>
+                        <tr><td><strong>Aliénation culturelle</strong></td><td>Perte d'identité dans l'assimilation</td></tr>
+                        <tr><td><strong>Spiritualité</strong></td><td>Quête de sens, foi islamique</td></tr>
+                        <tr><td><strong>Colonisation</strong></td><td>Critique de l'école coloniale</td></tr>
+                        <tr><td><strong>L'ambiguïté</strong></td><td>Impossibilité de choisir, déchirement</td></tr></table>
+                    </div>
+                    
+                    <div class="quote">"L'école étrangère est la forme nouvelle de la guerre que nous font ceux qui sont venus." — La Grande Royale</div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('hugo')">← Hugo</button><button class="nav-btn next" onclick="showLesson('ba')">Mariama Bâ →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-ba">
+                    <div class="lesson-header"><h2>📚 Mariama Bâ - Une si longue lettre</h2><span class="duration">⏱️ 4h</span></div>
+                    
+                    <div class="author-box" style="background: linear-gradient(135deg, #c2185b, #e91e63);">
+                        <h4>Mariama Bâ (1929-1981)</h4>
+                        <p>Écrivaine sénégalaise, militante féministe, Prix Noma 1980</p>
+                    </div>
+                    
+                    <div class="section"><h3>📖 L'œuvre : Une si longue lettre (1979)</h3>
+                        <p>Roman épistolaire. Ramatoulaye, veuve sénégalaise, écrit une longue lettre à son amie Aïssatou pour raconter sa vie, son mariage, la polygamie subie.</p>
+                    </div>
+                    
+                    <div class="section"><h3>👥 Personnages</h3>
+                        <table><tr><th>Personnage</th><th>Symbolise</th></tr>
+                        <tr><td><strong>Ramatoulaye</strong></td><td>La femme qui accepte et subit</td></tr>
+                        <tr><td><strong>Aïssatou</strong></td><td>La femme qui refuse et se libère</td></tr>
+                        <tr><td><strong>Modou Fall</strong></td><td>Le mari qui abandonne</td></tr>
+                        <tr><td><strong>Binetou</strong></td><td>La jeune co-épouse, victime aussi</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>🎯 Thèmes majeurs</h3>
+                        <table><tr><th>Thème</th><th>Analyse</th></tr>
+                        <tr><td><strong>Condition féminine</strong></td><td>Dénonciation de l'oppression des femmes</td></tr>
+                        <tr><td><strong>Polygamie</strong></td><td>Souffrance de la première épouse</td></tr>
+                        <tr><td><strong>Tradition vs Modernité</strong></td><td>Éducation, émancipation</td></tr>
+                        <tr><td><strong>Solidarité féminine</strong></td><td>Amitié entre Ramatoulaye et Aïssatou</td></tr>
+                        <tr><td><strong>Deuil</strong></td><td>La "mirasse" (retraite de veuvage)</td></tr></table>
+                    </div>
+                    
+                    <div class="quote">"J'ai mûri. Mon cœur s'accorde à la raison." — Ramatoulaye</div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('kane')">← C.H. Kane</button><button class="nav-btn next" onclick="showLesson('lecture-analytique')">Lecture analytique →</button></div>
+                </div>
+
+                <!-- MÉTHODOLOGIE -->
+                <div class="lesson" id="lesson-lecture-analytique">
+                    <div class="lesson-header"><h2>✍️ La lecture analytique</h2><span class="duration">⏱️ 3h</span></div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>La <strong>lecture analytique</strong> est une étude approfondie d'un texte qui vise à en dégager le sens et les procédés d'écriture.</p>
+                    </div>
+                    
+                    <div class="section"><h3>📋 Méthodologie en 5 étapes</h3>
+                        <table><tr><th>Étape</th><th>Action</th></tr>
+                        <tr><td><strong>1. Situer</strong></td><td>Auteur, œuvre, contexte, mouvement littéraire</td></tr>
+                        <tr><td><strong>2. Caractériser</strong></td><td>Genre, type de texte, registre, ton</td></tr>
+                        <tr><td><strong>3. Dégager le sens</strong></td><td>Thème, idée principale, structure</td></tr>
+                        <tr><td><strong>4. Analyser les procédés</strong></td><td>Figures de style, champs lexicaux, rythme</td></tr>
+                        <tr><td><strong>5. Interpréter</strong></td><td>Effets produits, intentions de l'auteur</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Axes d'analyse selon le genre</h3>
+                        <table><tr><th>Genre</th><th>Points d'analyse</th></tr>
+                        <tr><td><strong>Poésie</strong></td><td>Versification, sonorités, images, rythme</td></tr>
+                        <tr><td><strong>Roman</strong></td><td>Narrateur, focalisation, personnages, temps</td></tr>
+                        <tr><td><strong>Théâtre</strong></td><td>Dialogue, didascalies, double énonciation</td></tr>
+                        <tr><td><strong>Argumentation</strong></td><td>Thèse, arguments, stratégies, registre</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('ba')">← Mariama Bâ</button><button class="nav-btn next" onclick="showLesson('commentaire')">Commentaire →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-commentaire">
+                    <div class="lesson-header"><h2>✍️ Le commentaire composé</h2><span class="duration">⏱️ 4h</span></div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>Le <strong>commentaire composé</strong> est un exercice qui consiste à expliquer un texte littéraire de manière organisée autour d'axes de lecture.</p>
+                    </div>
+                    
+                    <div class="section"><h3>📋 Structure du commentaire</h3>
+                        <table><tr><th>Partie</th><th>Contenu</th><th>Longueur</th></tr>
+                        <tr><td><strong>Introduction</strong></td><td>Accroche + présentation + problématique + plan</td><td>10-15 lignes</td></tr>
+                        <tr><td><strong>Développement</strong></td><td>2-3 axes avec sous-parties (procédés + interprétation)</td><td>3-4 pages</td></tr>
+                        <tr><td><strong>Conclusion</strong></td><td>Bilan + réponse + ouverture</td><td>8-10 lignes</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Construction d'un axe</h3>
+                        <table><tr><th>Élément</th><th>Description</th></tr>
+                        <tr><td><strong>Titre de l'axe</strong></td><td>Idée directrice (ex: "Un personnage tragique")</td></tr>
+                        <tr><td><strong>Sous-partie 1</strong></td><td>Procédés + citations + analyse</td></tr>
+                        <tr><td><strong>Sous-partie 2</strong></td><td>Procédés + citations + analyse</td></tr>
+                        <tr><td><strong>Transition</strong></td><td>Lien vers l'axe suivant</td></tr></table>
+                    </div>
+                    
+                    <div class="warning"><h4>⚠️ Erreurs à éviter</h4>
+                        <p>• La paraphrase (raconter le texte)</p>
+                        <p>• Le catalogue de procédés sans interprétation</p>
+                        <p>• L'absence de citations</p>
+                        <p>• Le plan qui suit l'ordre du texte (linéaire)</p>
+                    </div>
+                    
+                    <div class="formula">PROCÉDÉ + CITATION + INTERPRÉTATION = Bonne analyse</div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('lecture-analytique')">← Lecture analytique</button><button class="nav-btn next" onclick="showLesson('dissertation')">Dissertation →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-dissertation">
+                    <div class="lesson-header"><h2>✍️ La dissertation littéraire</h2><span class="duration">⏱️ 4h</span></div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>La <strong>dissertation littéraire</strong> est une réflexion argumentée sur une question littéraire, s'appuyant sur des exemples précis d'œuvres.</p>
+                    </div>
+                    
+                    <div class="section"><h3>📋 Types de sujets</h3>
+                        <table><tr><th>Type</th><th>Formulation</th><th>Plan adapté</th></tr>
+                        <tr><td><strong>Question</strong></td><td>"La poésie doit-elle...?"</td><td>Dialectique ou thématique</td></tr>
+                        <tr><td><strong>Citation à discuter</strong></td><td>"Selon X, '...' Qu'en pensez-vous ?"</td><td>Dialectique</td></tr>
+                        <tr><td><strong>Comparaison</strong></td><td>"En quoi X et Y...?"</td><td>Thématique ou comparatif</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Les types de plans</h3>
+                        <table><tr><th>Plan</th><th>Structure</th><th>Usage</th></tr>
+                        <tr><td><strong>Dialectique</strong></td><td>I. Thèse / II. Antithèse / III. Synthèse</td><td>Sujet qui invite à discuter</td></tr>
+                        <tr><td><strong>Thématique</strong></td><td>I. Aspect 1 / II. Aspect 2 / III. Aspect 3</td><td>Sujet qui invite à explorer</td></tr>
+                        <tr><td><strong>Analytique</strong></td><td>I. Constat / II. Causes / III. Conséquences</td><td>Sujet qui invite à analyser</td></tr></table>
+                    </div>
+                    
+                    <div class="tips"><h4>💡 Les exemples littéraires</h4>
+                        <p>• Au moins 2-3 exemples par partie</p>
+                        <p>• Varier les genres, les siècles, les auteurs</p>
+                        <p>• Citer précisément (titre, auteur, date)</p>
+                        <p>• Analyser l'exemple (ne pas juste le mentionner)</p>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('commentaire')">← Commentaire</button><button class="nav-btn next" onclick="showLesson('synthese')">Synthèse →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-synthese">
+                    <div class="lesson-header"><h2>✍️ La synthèse de documents</h2><span class="duration">⏱️ 3h</span></div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>La <strong>synthèse</strong> consiste à confronter plusieurs documents sur un même thème pour en dégager les idées principales et les organiser.</p>
+                    </div>
+                    
+                    <div class="section"><h3>📋 Méthodologie</h3>
+                        <table><tr><th>Étape</th><th>Action</th></tr>
+                        <tr><td><strong>1. Lecture</strong></td><td>Lire tous les documents, identifier le thème commun</td></tr>
+                        <tr><td><strong>2. Analyse</strong></td><td>Relever les idées de chaque document</td></tr>
+                        <tr><td><strong>3. Confrontation</strong></td><td>Comparer : points communs, divergences, compléments</td></tr>
+                        <tr><td><strong>4. Plan</strong></td><td>Organiser par thèmes (pas par documents !)</td></tr>
+                        <tr><td><strong>5. Rédaction</strong></td><td>Reformuler, citer brièvement, rester objectif</td></tr></table>
+                    </div>
+                    
+                    <div class="warning"><h4>⚠️ Règles de la synthèse</h4>
+                        <p>• Ne JAMAIS traiter les documents un par un</p>
+                        <p>• Rester OBJECTIF (pas d'avis personnel)</p>
+                        <p>• REFORMULER (pas de copier-coller)</p>
+                        <p>• CITER les sources (doc. 1, doc. 2...)</p>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('dissertation')">← Dissertation</button><button class="nav-btn next" onclick="showLesson('essai-ecrit')">Essai argumenté →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-essai-ecrit">
+                    <div class="lesson-header"><h2>✍️ L'essai argumenté</h2><span class="duration">⏱️ 2h</span></div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>L'<strong>essai</strong> est un texte où l'on développe son opinion personnelle sur un sujet, de manière argumentée et structurée.</p>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Différences avec la dissertation</h3>
+                        <table><tr><th>Dissertation</th><th>Essai</th></tr>
+                        <tr><td>Exemples littéraires obligatoires</td><td>Exemples variés (actualité, vécu...)</td></tr>
+                        <tr><td>Objectivité (on, nous)</td><td>Subjectivité autorisée (je)</td></tr>
+                        <tr><td>Plan rigide</td><td>Plan plus libre</td></tr>
+                        <tr><td>Ton académique</td><td>Ton plus personnel</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📋 Structure de l'essai</h3>
+                        <table><tr><th>Partie</th><th>Contenu</th></tr>
+                        <tr><td><strong>Introduction</strong></td><td>Accroche + présentation + thèse personnelle</td></tr>
+                        <tr><td><strong>Développement</strong></td><td>Arguments organisés + exemples + contre-arguments</td></tr>
+                        <tr><td><strong>Conclusion</strong></td><td>Réaffirmation de la thèse + ouverture</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('synthese')">← Synthèse</button><button class="nav-btn next" onclick="showLesson('figures-style')">Figures de style →</button></div>
+                </div>
+
+                <!-- OUTILS D'ANALYSE -->
+                <div class="lesson" id="lesson-figures-style">
+                    <div class="lesson-header"><h2>🎯 Les figures de style (approfondissement)</h2><span class="duration">⏱️ 4h</span></div>
+                    
+                    <div class="section"><h3>📊 Figures d'analogie</h3>
+                        <table><tr><th>Figure</th><th>Définition</th><th>Exemple</th></tr>
+                        <tr><td><strong>Comparaison</strong></td><td>Rapprochement avec outil (comme)</td><td>"Fort <u>comme</u> un lion"</td></tr>
+                        <tr><td><strong>Métaphore</strong></td><td>Comparaison sans outil</td><td>"Cet homme est un lion"</td></tr>
+                        <tr><td><strong>Métaphore filée</strong></td><td>Métaphore développée</td><td>"La vie est un voyage..."</td></tr>
+                        <tr><td><strong>Personnification</strong></td><td>Attributs humains à non-humain</td><td>"Le vent hurle"</td></tr>
+                        <tr><td><strong>Allégorie</strong></td><td>Idée abstraite personnifiée</td><td>"La Justice aveugle"</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Figures d'insistance</h3>
+                        <table><tr><th>Figure</th><th>Définition</th><th>Exemple</th></tr>
+                        <tr><td><strong>Anaphore</strong></td><td>Répétition en début</td><td>"Paris ! Paris outragé ! Paris..."</td></tr>
+                        <tr><td><strong>Épiphore</strong></td><td>Répétition en fin</td><td>"...de la liberté, pour la liberté"</td></tr>
+                        <tr><td><strong>Hyperbole</strong></td><td>Exagération</td><td>"Je meurs de faim"</td></tr>
+                        <tr><td><strong>Gradation</strong></td><td>Progression croissante/décroissante</td><td>"Va, cours, vole"</td></tr>
+                        <tr><td><strong>Pléonasme</strong></td><td>Redondance volontaire</td><td>"Je l'ai vu de mes yeux"</td></tr>
+                        <tr><td><strong>Accumulation</strong></td><td>Énumération abondante</td><td>"Livres, cahiers, stylos, gommes..."</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Figures d'opposition</h3>
+                        <table><tr><th>Figure</th><th>Définition</th><th>Exemple</th></tr>
+                        <tr><td><strong>Antithèse</strong></td><td>Opposition de deux idées</td><td>"Blanc bonnet, bonnet blanc"</td></tr>
+                        <tr><td><strong>Oxymore</strong></td><td>Alliance de contraires</td><td>"Cette obscure clarté"</td></tr>
+                        <tr><td><strong>Chiasme</strong></td><td>Structure croisée AB/BA</td><td>"Il faut manger pour vivre, non vivre pour manger"</td></tr>
+                        <tr><td><strong>Antiphrase</strong></td><td>Dire le contraire (ironie)</td><td>"Quel beau temps !" (sous la pluie)</td></tr>
+                        <tr><td><strong>Paradoxe</strong></td><td>Idée contraire au sens commun</td><td>"Je sais que je ne sais rien"</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Figures d'atténuation</h3>
+                        <table><tr><th>Figure</th><th>Définition</th><th>Exemple</th></tr>
+                        <tr><td><strong>Euphémisme</strong></td><td>Atténuation de la réalité</td><td>"Il nous a quittés" (mort)</td></tr>
+                        <tr><td><strong>Litote</strong></td><td>Dire moins pour suggérer plus</td><td>"Ce n'est pas mal" (c'est bien)</td></tr>
+                        <tr><td><strong>Périphrase</strong></td><td>Expression en plusieurs mots</td><td>"L'astre du jour" (le soleil)</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('essai-ecrit')">← Essai</button><button class="nav-btn next" onclick="showLesson('registres')">Registres →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-registres">
+                    <div class="lesson-header"><h2>🎯 Les registres littéraires</h2><span class="duration">⏱️ 2h</span></div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>Le <strong>registre</strong> (ou tonalité) est l'ensemble des caractéristiques d'un texte qui produisent un effet particulier sur le lecteur.</p>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Les principaux registres</h3>
+                        <table><tr><th>Registre</th><th>Effet recherché</th><th>Procédés</th></tr>
+                        <tr><td><strong>Tragique</strong></td><td>Terreur et pitié</td><td>Fatalité, mort, champ lexical de la souffrance</td></tr>
+                        <tr><td><strong>Pathétique</strong></td><td>Émotion, compassion</td><td>Exclamations, interjections, hyperboles</td></tr>
+                        <tr><td><strong>Lyrique</strong></td><td>Émotion personnelle</td><td>1ère personne, exclamations, musicalité</td></tr>
+                        <tr><td><strong>Comique</strong></td><td>Rire</td><td>Exagération, jeux de mots, décalage</td></tr>
+                        <tr><td><strong>Satirique</strong></td><td>Critique par le rire</td><td>Ironie, caricature, exagération</td></tr>
+                        <tr><td><strong>Ironique</strong></td><td>Critique par antiphrase</td><td>Dire le contraire de ce qu'on pense</td></tr>
+                        <tr><td><strong>Épique</strong></td><td>Admiration pour l'héroïsme</td><td>Hyperboles, accumulations, comparaisons</td></tr>
+                        <tr><td><strong>Fantastique</strong></td><td>Doute, inquiétude</td><td>Champ lexical de l'étrange, modalisateurs</td></tr>
+                        <tr><td><strong>Polémique</strong></td><td>Indignation, combat</td><td>Vocabulaire violent, interpellations</td></tr>
+                        <tr><td><strong>Didactique</strong></td><td>Enseigner</td><td>Explications, exemples, tournures impersonnelles</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('figures-style')">← Figures de style</button><button class="nav-btn next" onclick="showLesson('focalisation')">Focalisation →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-focalisation">
+                    <div class="lesson-header"><h2>🎯 Points de vue et focalisation</h2><span class="duration">⏱️ 2h</span></div>
+                    
+                    <div class="definition"><h4>Définition</h4>
+                        <p>La <strong>focalisation</strong> désigne le point de vue adopté pour raconter : qui voit ? qui sait ?</p>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Les 3 types de focalisation</h3>
+                        <table><tr><th>Type</th><th>Qui voit/sait ?</th><th>Indices</th><th>Effet</th></tr>
+                        <tr><td><strong>Zéro (omnisciente)</strong></td><td>Narrateur sait tout</td><td>Pensées de tous, passé/futur, commentaires</td><td>Vision totale</td></tr>
+                        <tr><td><strong>Interne</strong></td><td>Un personnage</td><td>Verbes de perception, "il vit", "il sentit"</td><td>Identification</td></tr>
+                        <tr><td><strong>Externe</strong></td><td>Témoin extérieur</td><td>Descriptions objectives, pas de pensées</td><td>Distance, mystère</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Narrateur interne vs externe</h3>
+                        <table><tr><th>Narrateur interne</th><th>Narrateur externe</th></tr>
+                        <tr><td>Personnage de l'histoire</td><td>N'est pas dans l'histoire</td></tr>
+                        <tr><td>"Je" = personnage</td><td>"Il/elle" ou "je" = auteur</td></tr>
+                        <tr><td>Vision limitée</td><td>Vision variable</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('registres')">← Registres</button><button class="nav-btn next" onclick="showLesson('versification')">Versification →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-versification">
+                    <div class="lesson-header"><h2>🎯 La versification (approfondissement)</h2><span class="duration">⏱️ 3h</span></div>
+                    
+                    <div class="section"><h3>📊 Les mètres</h3>
+                        <table><tr><th>Nom</th><th>Syllabes</th><th>Usage</th></tr>
+                        <tr><td><strong>Alexandrin</strong></td><td>12 (6//6)</td><td>Vers noble, tragédie, épopée</td></tr>
+                        <tr><td><strong>Décasyllabe</strong></td><td>10 (4//6 ou 5//5)</td><td>Épopée médiévale</td></tr>
+                        <tr><td><strong>Octosyllabe</strong></td><td>8</td><td>Légèreté, chanson</td></tr>
+                        <tr><td><strong>Heptasyllabe</strong></td><td>7</td><td>Impair = rythme particulier</td></tr>
+                        <tr><td><strong>Hexasyllabe</strong></td><td>6</td><td>Demi-alexandrin</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Les strophes</h3>
+                        <table><tr><th>Nom</th><th>Vers</th></tr>
+                        <tr><td>Distique</td><td>2</td></tr>
+                        <tr><td>Tercet</td><td>3</td></tr>
+                        <tr><td>Quatrain</td><td>4</td></tr>
+                        <tr><td>Quintil</td><td>5</td></tr>
+                        <tr><td>Sizain</td><td>6</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Effets sonores</h3>
+                        <table><tr><th>Effet</th><th>Définition</th><th>Exemple</th></tr>
+                        <tr><td><strong>Allitération</strong></td><td>Répétition de consonnes</td><td>"Pour qui sont ces <u>s</u>erpents qui <u>s</u>ifflent..."</td></tr>
+                        <tr><td><strong>Assonance</strong></td><td>Répétition de voyelles</td><td>"Les s<u>an</u>glots l<u>on</u>gs des vi<u>ol</u><u>on</u>s"</td></tr>
+                        <tr><td><strong>Diérèse</strong></td><td>Deux syllabes (vi-o-lon)</td><td>Effet d'allongement</td></tr>
+                        <tr><td><strong>Synérèse</strong></td><td>Une syllabe (vio-lon)</td><td>Effet de rapidité</td></tr></table>
+                    </div>
+                    
+                    <div class="section"><h3>📊 Le rythme</h3>
+                        <table><tr><th>Effet</th><th>Définition</th><th>Sens</th></tr>
+                        <tr><td><strong>Enjambement</strong></td><td>Phrase qui déborde sur le vers suivant</td><td>Continuité, fluidité</td></tr>
+                        <tr><td><strong>Rejet</strong></td><td>Élément court au début du vers suivant</td><td>Mise en valeur</td></tr>
+                        <tr><td><strong>Contre-rejet</strong></td><td>Élément court à la fin du vers précédent</td><td>Mise en valeur</td></tr>
+                        <tr><td><strong>Césure</strong></td><td>Pause à l'intérieur du vers</td><td>Structure, rythme</td></tr></table>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('focalisation')">← Focalisation</button><button class="nav-btn next" disabled>Fin du programme →</button></div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+    <script>
+        function showLesson(id) {
+            document.querySelectorAll('.lesson').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            document.getElementById('lesson-' + id).classList.add('active');
+            event.target.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

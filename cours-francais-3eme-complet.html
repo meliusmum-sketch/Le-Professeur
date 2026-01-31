@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Professeur - Français 3ème Complet - BFEM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        :root { --primary: #d32f2f; --primary-dark: #b71c1c; --success: #4caf50; --warning: #ff9800; --info: #00bcd4; --dark: #b71c1c; }
+        body { background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); min-height: 100vh; }
+        .navbar { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 1rem 2rem; position: sticky; top: 0; z-index: 1000; }
+        .nav-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { color: white; font-size: 1.5rem; font-weight: 800; text-decoration: none; }
+        .nav-level { background: rgba(255,255,255,0.2); padding: 0.5rem 1.5rem; border-radius: 50px; color: white; font-weight: 600; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .page-header { text-align: center; margin-bottom: 2rem; padding: 2rem; background: white; border-radius: 20px; }
+        .page-header h1 { font-size: 2.2rem; color: var(--dark); margin-bottom: 0.5rem; }
+        .badge-level { display: inline-block; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 0.5rem 2rem; border-radius: 50px; font-weight: 700; margin-top: 1rem; }
+        .bfem-badge { display: inline-block; background: linear-gradient(135deg, #ffc107, #ff9800); color: #333; padding: 0.3rem 1rem; border-radius: 50px; font-weight: 700; margin-left: 1rem; }
+        .content-wrapper { display: grid; grid-template-columns: 320px 1fr; gap: 2rem; }
+        .sidebar { background: white; border-radius: 20px; padding: 1.5rem; position: sticky; top: 100px; height: fit-content; max-height: calc(100vh - 120px); overflow-y: auto; }
+        .sidebar h3 { color: var(--dark); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 3px solid var(--primary); }
+        .sidebar-section { margin-bottom: 1.5rem; }
+        .sidebar-section h4 { color: white; font-size: 0.8rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 0.5rem 1rem; border-radius: 8px; }
+        .sidebar-link { display: block; padding: 0.4rem 1rem; color: #555; text-decoration: none; border-radius: 8px; margin-bottom: 0.2rem; font-size: 0.85rem; cursor: pointer; transition: all 0.3s; border-left: 3px solid transparent; }
+        .sidebar-link:hover { background: #ffebee; border-left-color: var(--primary); }
+        .sidebar-link.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
+        .main-content { background: white; border-radius: 20px; padding: 2rem; }
+        .lesson { display: none; }
+        .lesson.active { display: block; }
+        .lesson-header { border-bottom: 3px solid var(--primary); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .lesson-header h2 { color: var(--dark); font-size: 1.5rem; }
+        .duration { background: var(--info); color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; }
+        .objectives { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-left: 5px solid var(--success); padding: 1.5rem; border-radius: 0 15px 15px 0; margin-bottom: 2rem; }
+        .objectives h3 { color: #2e7d32; margin-bottom: 1rem; }
+        .objectives ul { list-style: none; }
+        .objectives li { padding: 0.3rem 0; padding-left: 1.5rem; position: relative; }
+        .objectives li::before { content: '✓'; position: absolute; left: 0; color: #2e7d32; font-weight: bold; }
+        .section { margin-bottom: 2rem; }
+        .section h3 { color: var(--dark); font-size: 1.2rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px dashed #e0e0e0; }
+        .section p { color: #444; line-height: 1.8; margin-bottom: 1rem; }
+        .definition { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border: 2px solid var(--warning); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; }
+        .definition h4 { color: #e65100; margin-bottom: 0.5rem; }
+        .definition h4::before { content: '📌 '; }
+        .example { background: linear-gradient(135deg, #ffebee, #ffcdd2); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; border-left: 5px solid var(--primary); }
+        .example h4 { color: var(--primary-dark); margin-bottom: 1rem; }
+        .example-content { background: white; padding: 1rem; border-radius: 10px; line-height: 1.8; }
+        .example-content .highlight { background: #ffeb3b; padding: 2px 6px; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; border-radius: 12px; overflow: hidden; }
+        th { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 0.8rem; text-align: left; }
+        td { padding: 0.7rem 0.8rem; border-bottom: 1px solid #eee; }
+        tr:hover { background: #f5f5f5; }
+        .tips { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; border-left: 5px solid var(--info); }
+        .tips h4 { color: #00838f; margin-bottom: 1rem; }
+        .warning { background: linear-gradient(135deg, #fff8e1, #ffecb3); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; border-left: 5px solid #ffc107; }
+        .warning h4 { color: #f57c00; margin-bottom: 0.5rem; }
+        .exercise { background: linear-gradient(135deg, #fce4ec, #f8bbd0); border-radius: 15px; padding: 1.5rem; margin: 2rem 0; }
+        .exercise h3 { color: #c2185b; margin-bottom: 1rem; }
+        .exercise-item { background: white; padding: 1rem; border-radius: 10px; margin-bottom: 1rem; }
+        textarea { width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px; font-family: inherit; }
+        .lesson-nav { display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 2rem; border-top: 2px solid #eee; }
+        .nav-btn { padding: 0.8rem 1.5rem; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; }
+        .nav-btn.prev { background: #ecf0f1; color: var(--dark); }
+        .nav-btn.next { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .formula { background: linear-gradient(135deg, #ffebee, #ffcdd2); padding: 1rem 1.5rem; border-radius: 10px; text-align: center; font-size: 1.1rem; font-weight: 600; margin: 1rem 0; border: 2px solid var(--primary); }
+        .bfem-alert { background: linear-gradient(135deg, #ffc107, #ff9800); padding: 1rem; border-radius: 10px; text-align: center; color: #333; font-weight: 600; margin: 1rem 0; }
+        @media (max-width: 1024px) { .content-wrapper { grid-template-columns: 1fr; } .sidebar { position: relative; top: 0; max-height: none; } }
+    </style>
+</head>
+<body>
+    <nav class="navbar"><div class="nav-content"><a href="#" class="logo">📚 Le Professeur</a><span class="nav-level">📕 Classe de 3ème <span class="bfem-badge">🎯 BFEM</span></span></div></nav>
+    <div class="container">
+        <header class="page-header"><h1>📕 Cours Complet de Français - 3ème</h1><p>Programme PHARES - République du Sénégal</p><span class="badge-level">Préparation BFEM - 20 Leçons</span></header>
+        <div class="content-wrapper">
+            <aside class="sidebar">
+                <h3>📑 Sommaire</h3>
+                <div class="sidebar-section"><h4>📝 RÉVISIONS GRAMMAIRE</h4>
+                    <a class="sidebar-link active" onclick="showLesson('revision-gram')">Révision grammaticale</a>
+                    <a class="sidebar-link" onclick="showLesson('propositions')">Les propositions (synthèse)</a>
+                    <a class="sidebar-link" onclick="showLesson('connecteurs')">Les connecteurs logiques</a>
+                </div>
+                <div class="sidebar-section"><h4>🔄 RÉVISIONS CONJUGAISON</h4>
+                    <a class="sidebar-link" onclick="showLesson('revision-conj')">Tous les temps (synthèse)</a>
+                    <a class="sidebar-link" onclick="showLesson('concordance')">La concordance des temps</a>
+                </div>
+                <div class="sidebar-section"><h4>📖 ARGUMENTATION</h4>
+                    <a class="sidebar-link" onclick="showLesson('texte-arg')">Le texte argumentatif</a>
+                    <a class="sidebar-link" onclick="showLesson('these')">Thèse et arguments</a>
+                    <a class="sidebar-link" onclick="showLesson('paragraphe')">Le paragraphe argumenté (AEI)</a>
+                </div>
+                <div class="sidebar-section"><h4>✍️ DISSERTATION</h4>
+                    <a class="sidebar-link" onclick="showLesson('dissertation')">Méthodologie dissertation</a>
+                    <a class="sidebar-link" onclick="showLesson('plans')">Les types de plans</a>
+                    <a class="sidebar-link" onclick="showLesson('intro-conclu')">Introduction et conclusion</a>
+                </div>
+                <div class="sidebar-section"><h4>📰 LECTURE D'IMAGE</h4>
+                    <a class="sidebar-link" onclick="showLesson('image')">Analyser une image</a>
+                    <a class="sidebar-link" onclick="showLesson('publicite')">La publicité</a>
+                </div>
+                <div class="sidebar-section"><h4>📝 LE RÉSUMÉ</h4>
+                    <a class="sidebar-link" onclick="showLesson('resume')">Méthodologie du résumé</a>
+                    <a class="sidebar-link" onclick="showLesson('contraction')">La contraction de texte</a>
+                </div>
+                <div class="sidebar-section"><h4>🎯 ÉPREUVES BFEM</h4>
+                    <a class="sidebar-link" onclick="showLesson('epreuves')">Les épreuves du BFEM</a>
+                    <a class="sidebar-link" onclick="showLesson('dictee')">Méthodologie dictée</a>
+                    <a class="sidebar-link" onclick="showLesson('sujets')">Sujets types corrigés</a>
+                </div>
+            </aside>
+            <main class="main-content">
+                <!-- RÉVISIONS GRAMMAIRE -->
+                <div class="lesson active" id="lesson-revision-gram">
+                    <div class="lesson-header"><h2>📝 Révision grammaticale complète</h2><span class="duration">⏱️ 4h</span></div>
+                    <div class="bfem-alert">🎯 ESSENTIEL POUR LE BFEM - Maîtriser ces notions est indispensable !</div>
+                    <div class="section"><h3>📊 Les classes grammaticales (nature)</h3>
+                        <table><tr><th>Classe</th><th>Définition</th><th>Exemples</th></tr>
+                        <tr><td><strong>Nom</strong></td><td>Désigne être/chose</td><td>maison, Dakar, courage</td></tr>
+                        <tr><td><strong>Déterminant</strong></td><td>Précède le nom</td><td>le, une, mon, ces</td></tr>
+                        <tr><td><strong>Adjectif</strong></td><td>Qualifie le nom</td><td>grand, beau, intelligent</td></tr>
+                        <tr><td><strong>Pronom</strong></td><td>Remplace le nom</td><td>il, celui, qui, chacun</td></tr>
+                        <tr><td><strong>Verbe</strong></td><td>Action ou état</td><td>manger, être, courir</td></tr>
+                        <tr><td><strong>Adverbe</strong></td><td>Modifie verbe/adj</td><td>vite, très, hier</td></tr>
+                        <tr><td><strong>Préposition</strong></td><td>Introduit complément</td><td>à, de, pour, avec</td></tr>
+                        <tr><td><strong>Conjonction</strong></td><td>Relie mots/propositions</td><td>et, mais, que, parce que</td></tr></table>
+                    </div>
+                    <div class="section"><h3>📊 Les fonctions</h3>
+                        <table><tr><th>Fonction</th><th>Question</th><th>Exemple</th></tr>
+                        <tr><td><strong>Sujet</strong></td><td>Qui/Qu'est-ce qui ?</td><td><u>Le chat</u> dort.</td></tr>
+                        <tr><td><strong>COD</strong></td><td>Qui/Quoi ?</td><td>Je vois <u>le chat</u>.</td></tr>
+                        <tr><td><strong>COI</strong></td><td>À qui/De quoi ?</td><td>Je pense <u>à toi</u>.</td></tr>
+                        <tr><td><strong>COS</strong></td><td>À qui ? (avec COD)</td><td>Je donne un livre <u>à mon ami</u>.</td></tr>
+                        <tr><td><strong>Attribut</strong></td><td>Après verbe d'état</td><td>Elle est <u>médecin</u>.</td></tr>
+                        <tr><td><strong>CC</strong></td><td>Où/Quand/Comment ?</td><td>Il travaille <u>à Dakar</u>.</td></tr>
+                        <tr><td><strong>CDN</strong></td><td>De quoi ?</td><td>La maison <u>de pierre</u></td></tr>
+                        <tr><td><strong>Épithète</strong></td><td>Adj. près du nom</td><td>Une <u>belle</u> maison</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" disabled>← Précédent</button><button class="nav-btn next" onclick="showLesson('propositions')">Propositions →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-propositions">
+                    <div class="lesson-header"><h2>📝 Les propositions (synthèse)</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="section"><h3>📊 Types de propositions</h3>
+                        <table><tr><th>Type</th><th>Caractéristique</th><th>Exemple</th></tr>
+                        <tr><td><strong>Indépendante</strong></td><td>Se suffit à elle-même</td><td>Il pleut.</td></tr>
+                        <tr><td><strong>Principale</strong></td><td>Commande une subordonnée</td><td><u>Je sais</u> qu'il viendra.</td></tr>
+                        <tr><td><strong>Sub. relative</strong></td><td>Complète un nom (qui, que...)</td><td>L'homme <u>qui parle</u></td></tr>
+                        <tr><td><strong>Sub. complétive</strong></td><td>COD du verbe (que)</td><td>Je pense <u>qu'il a raison</u>.</td></tr>
+                        <tr><td><strong>Sub. circonstancielle</strong></td><td>CC (quand, si, parce que...)</td><td><u>Quand il pleut</u>, je reste.</td></tr></table>
+                    </div>
+                    <div class="section"><h3>📊 Les circonstancielles</h3>
+                        <table><tr><th>Type</th><th>Conjonctions</th></tr>
+                        <tr><td><strong>Temps</strong></td><td>quand, lorsque, pendant que, avant que, après que</td></tr>
+                        <tr><td><strong>Cause</strong></td><td>parce que, puisque, comme, étant donné que</td></tr>
+                        <tr><td><strong>Conséquence</strong></td><td>si bien que, de sorte que, au point que</td></tr>
+                        <tr><td><strong>But</strong></td><td>pour que, afin que, de peur que</td></tr>
+                        <tr><td><strong>Condition</strong></td><td>si, à condition que, pourvu que</td></tr>
+                        <tr><td><strong>Concession</strong></td><td>bien que, quoique, même si</td></tr>
+                        <tr><td><strong>Comparaison</strong></td><td>comme, ainsi que, de même que</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('revision-gram')">← Révision gram.</button><button class="nav-btn next" onclick="showLesson('connecteurs')">Connecteurs →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-connecteurs">
+                    <div class="lesson-header"><h2>📝 Les connecteurs logiques</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="bfem-alert">🎯 INDISPENSABLE - À utiliser dans la dissertation et le résumé !</div>
+                    <div class="section"><h3>📊 Tableau des connecteurs</h3>
+                        <table><tr><th>Relation</th><th>Connecteurs</th></tr>
+                        <tr><td><strong>Addition</strong></td><td>et, de plus, en outre, par ailleurs, également, aussi</td></tr>
+                        <tr><td><strong>Classement</strong></td><td>d'abord, ensuite, puis, enfin, premièrement, d'une part</td></tr>
+                        <tr><td><strong>Cause</strong></td><td>car, parce que, puisque, en effet, étant donné que</td></tr>
+                        <tr><td><strong>Conséquence</strong></td><td>donc, ainsi, par conséquent, c'est pourquoi, de ce fait</td></tr>
+                        <tr><td><strong>But</strong></td><td>pour, afin de, dans le but de, en vue de</td></tr>
+                        <tr><td><strong>Opposition</strong></td><td>mais, cependant, toutefois, néanmoins, en revanche, pourtant</td></tr>
+                        <tr><td><strong>Concession</strong></td><td>certes...mais, bien que, même si, malgré</td></tr>
+                        <tr><td><strong>Comparaison</strong></td><td>comme, de même que, ainsi que, tel que</td></tr>
+                        <tr><td><strong>Illustration</strong></td><td>par exemple, notamment, ainsi, tel que, c'est le cas de</td></tr>
+                        <tr><td><strong>Conclusion</strong></td><td>en conclusion, pour conclure, en définitive, en somme, bref</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('propositions')">← Propositions</button><button class="nav-btn next" onclick="showLesson('revision-conj')">Conjugaison →</button></div>
+                </div>
+
+                <!-- RÉVISIONS CONJUGAISON -->
+                <div class="lesson" id="lesson-revision-conj">
+                    <div class="lesson-header"><h2>🔄 Tous les temps (synthèse)</h2><span class="duration">⏱️ 3h</span></div>
+                    <div class="section"><h3>📊 Les temps de l'indicatif</h3>
+                        <table><tr><th>Temps</th><th>Formation</th><th>Emploi</th></tr>
+                        <tr><td><strong>Présent</strong></td><td>Radical + terminaisons</td><td>Action actuelle, vérité générale</td></tr>
+                        <tr><td><strong>Imparfait</strong></td><td>Rad. 1ère plur. + ais...</td><td>Description, habitude passée</td></tr>
+                        <tr><td><strong>Passé simple</strong></td><td>Radical + ai/is/us</td><td>Action passée, récit</td></tr>
+                        <tr><td><strong>Passé composé</strong></td><td>Aux. présent + PP</td><td>Action passée, résultat présent</td></tr>
+                        <tr><td><strong>Plus-que-parfait</strong></td><td>Aux. imparfait + PP</td><td>Antériorité dans le passé</td></tr>
+                        <tr><td><strong>Futur simple</strong></td><td>Infinitif + ai, as, a...</td><td>Action à venir</td></tr>
+                        <tr><td><strong>Futur antérieur</strong></td><td>Aux. futur + PP</td><td>Antériorité dans le futur</td></tr></table>
+                    </div>
+                    <div class="section"><h3>📊 Les autres modes</h3>
+                        <table><tr><th>Mode</th><th>Temps</th><th>Emploi</th></tr>
+                        <tr><td><strong>Conditionnel</strong></td><td>Présent, passé</td><td>Hypothèse, politesse, info incertaine</td></tr>
+                        <tr><td><strong>Subjonctif</strong></td><td>Présent, passé</td><td>Souhait, doute, après certaines conjonctions</td></tr>
+                        <tr><td><strong>Impératif</strong></td><td>Présent</td><td>Ordre, conseil, prière</td></tr>
+                        <tr><td><strong>Infinitif</strong></td><td>Présent, passé</td><td>Forme nominale du verbe</td></tr>
+                        <tr><td><strong>Participe</strong></td><td>Présent, passé</td><td>Forme adjectivale du verbe</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('connecteurs')">← Connecteurs</button><button class="nav-btn next" onclick="showLesson('concordance')">Concordance →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-concordance">
+                    <div class="lesson-header"><h2>🔄 La concordance des temps</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="definition"><h4>Définition</h4><p>La <strong>concordance des temps</strong> est l'accord entre le temps de la proposition principale et celui de la subordonnée.</p></div>
+                    <div class="section"><h3>📊 Principale au présent</h3>
+                        <table><tr><th>Rapport</th><th>Subordonnée</th><th>Exemple</th></tr>
+                        <tr><td>Simultanéité</td><td>Présent</td><td>Je sais qu'il <u>travaille</u>.</td></tr>
+                        <tr><td>Antériorité</td><td>Passé composé / Imparfait</td><td>Je sais qu'il <u>a travaillé</u>.</td></tr>
+                        <tr><td>Postériorité</td><td>Futur</td><td>Je sais qu'il <u>travaillera</u>.</td></tr></table>
+                    </div>
+                    <div class="section"><h3>📊 Principale au passé</h3>
+                        <table><tr><th>Rapport</th><th>Subordonnée</th><th>Exemple</th></tr>
+                        <tr><td>Simultanéité</td><td>Imparfait</td><td>Je savais qu'il <u>travaillait</u>.</td></tr>
+                        <tr><td>Antériorité</td><td>Plus-que-parfait</td><td>Je savais qu'il <u>avait travaillé</u>.</td></tr>
+                        <tr><td>Postériorité</td><td>Conditionnel présent</td><td>Je savais qu'il <u>travaillerait</u>.</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('revision-conj')">← Révision conj.</button><button class="nav-btn next" onclick="showLesson('texte-arg')">Texte argumentatif →</button></div>
+                </div>
+
+                <!-- ARGUMENTATION -->
+                <div class="lesson" id="lesson-texte-arg">
+                    <div class="lesson-header"><h2>📖 Le texte argumentatif</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="definition"><h4>Définition</h4><p>Le <strong>texte argumentatif</strong> vise à convaincre le lecteur en défendant une opinion (thèse) à l'aide d'arguments et d'exemples.</p></div>
+                    <div class="section"><h3>📊 Composantes</h3>
+                        <table><tr><th>Élément</th><th>Définition</th><th>Exemple</th></tr>
+                        <tr><td><strong>Thèse</strong></td><td>Opinion défendue</td><td>"L'école est indispensable"</td></tr>
+                        <tr><td><strong>Arguments</strong></td><td>Raisons qui justifient</td><td>"Elle forme les citoyens"</td></tr>
+                        <tr><td><strong>Exemples</strong></td><td>Illustrations concrètes</td><td>"Par exemple, au Sénégal..."</td></tr>
+                        <tr><td><strong>Connecteurs</strong></td><td>Liens logiques</td><td>"D'abord, ensuite, donc..."</td></tr></table>
+                    </div>
+                    <div class="section"><h3>🎯 Types d'arguments</h3>
+                        <table><tr><th>Type</th><th>Description</th></tr>
+                        <tr><td><strong>D'autorité</strong></td><td>Citation d'un expert, d'une référence</td></tr>
+                        <tr><td><strong>D'expérience</strong></td><td>Fait vécu, témoignage personnel</td></tr>
+                        <tr><td><strong>Logique</strong></td><td>Raisonnement, déduction</td></tr>
+                        <tr><td><strong>Par l'exemple</strong></td><td>Cas concret illustrant l'idée</td></tr>
+                        <tr><td><strong>Par analogie</strong></td><td>Comparaison avec une situation similaire</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('concordance')">← Concordance</button><button class="nav-btn next" onclick="showLesson('these')">Thèse et arguments →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-these">
+                    <div class="lesson-header"><h2>📖 Thèse et arguments</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="section"><h3>📊 Identifier la thèse</h3>
+                        <p>La thèse est l'idée principale que l'auteur veut défendre. Elle répond à la question : <strong>"Que veut démontrer l'auteur ?"</strong></p>
+                        <table><tr><th>Indices</th><th>Exemples</th></tr>
+                        <tr><td>Verbes d'opinion</td><td>Je pense que, je crois que, il est certain que</td></tr>
+                        <tr><td>Formules</td><td>À mon avis, selon moi, il est évident que</td></tr>
+                        <tr><td>Position</td><td>Souvent en début ou fin de texte</td></tr></table>
+                    </div>
+                    <div class="section"><h3>📊 Distinguer argument et exemple</h3>
+                        <table><tr><th>Argument</th><th>Exemple</th></tr>
+                        <tr><td>Idée générale, abstraite</td><td>Fait concret, précis</td></tr>
+                        <tr><td>"L'école forme les citoyens"</td><td>"Par exemple, elle enseigne l'histoire"</td></tr>
+                        <tr><td>Justifie la thèse</td><td>Illustre l'argument</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('texte-arg')">← Texte argumentatif</button><button class="nav-btn next" onclick="showLesson('paragraphe')">Paragraphe AEI →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-paragraphe">
+                    <div class="lesson-header"><h2>📖 Le paragraphe argumenté (AEI)</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="bfem-alert">🎯 MÉTHODE ESSENTIELLE - À maîtriser absolument pour le BFEM !</div>
+                    <div class="formula">A = Affirmation + E = Explication + I = Illustration</div>
+                    <div class="section"><h3>📋 Structure AEI</h3>
+                        <table><tr><th>Étape</th><th>Contenu</th><th>Connecteurs</th></tr>
+                        <tr><td><strong>A - Affirmation</strong></td><td>Idée principale (argument)</td><td>D'abord, premièrement</td></tr>
+                        <tr><td><strong>E - Explication</strong></td><td>Développement de l'idée</td><td>En effet, car, parce que</td></tr>
+                        <tr><td><strong>I - Illustration</strong></td><td>Exemple concret</td><td>Par exemple, ainsi, c'est le cas de</td></tr></table>
+                    </div>
+                    <div class="example"><h4>✅ Exemple de paragraphe AEI</h4><div class="example-content">
+                        <p><strong>[A]</strong> L'éducation des filles est essentielle au développement d'un pays.</p>
+                        <p><strong>[E]</strong> En effet, une femme instruite participe mieux à la vie économique, prend soin de la santé de sa famille et transmet son savoir à ses enfants.</p>
+                        <p><strong>[I]</strong> Par exemple, au Sénégal, les programmes d'alphabétisation des femmes ont permis de réduire la mortalité infantile dans plusieurs régions.</p>
+                    </div></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('these')">← Thèse et arguments</button><button class="nav-btn next" onclick="showLesson('dissertation')">Dissertation →</button></div>
+                </div>
+
+                <!-- DISSERTATION -->
+                <div class="lesson" id="lesson-dissertation">
+                    <div class="lesson-header"><h2>✍️ Méthodologie de la dissertation</h2><span class="duration">⏱️ 4h</span></div>
+                    <div class="bfem-alert">🎯 ÉPREUVE MAJEURE DU BFEM - Suivre cette méthodologie garantit de bons résultats !</div>
+                    <div class="section"><h3>📋 Les 5 étapes</h3>
+                        <table><tr><th>Étape</th><th>Durée</th><th>Action</th></tr>
+                        <tr><td><strong>1. Analyser</strong></td><td>15 min</td><td>Lire le sujet, souligner mots-clés, définir</td></tr>
+                        <tr><td><strong>2. Problématiser</strong></td><td>10 min</td><td>Formuler la question centrale</td></tr>
+                        <tr><td><strong>3. Chercher idées</strong></td><td>20 min</td><td>Brainstorming arguments + exemples</td></tr>
+                        <tr><td><strong>4. Planifier</strong></td><td>15 min</td><td>Organiser en 2-3 parties</td></tr>
+                        <tr><td><strong>5. Rédiger</strong></td><td>1h30</td><td>Introduction, développement, conclusion</td></tr></table>
+                    </div>
+                    <div class="section"><h3>📊 Structure type</h3>
+                        <table><tr><th>Partie</th><th>Contenu</th><th>Longueur</th></tr>
+                        <tr><td><strong>Introduction</strong></td><td>Accroche + Sujet + Problématique + Plan</td><td>10-15 lignes</td></tr>
+                        <tr><td><strong>Partie 1</strong></td><td>1er axe avec 2-3 arguments AEI</td><td>15-20 lignes</td></tr>
+                        <tr><td><strong>Transition</strong></td><td>Bilan partie 1 + annonce partie 2</td><td>2-3 lignes</td></tr>
+                        <tr><td><strong>Partie 2</strong></td><td>2ème axe avec 2-3 arguments AEI</td><td>15-20 lignes</td></tr>
+                        <tr><td><strong>Conclusion</strong></td><td>Bilan + Réponse + Ouverture</td><td>8-10 lignes</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('paragraphe')">← Paragraphe AEI</button><button class="nav-btn next" onclick="showLesson('plans')">Les plans →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-plans">
+                    <div class="lesson-header"><h2>✍️ Les types de plans</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="section"><h3>📊 Les 3 plans principaux</h3>
+                        <table><tr><th>Plan</th><th>Structure</th><th>Quand l'utiliser</th></tr>
+                        <tr><td><strong>Thématique</strong></td><td>I. Aspect 1 / II. Aspect 2 / III. Aspect 3</td><td>Sujet : "Quels sont les avantages de..."</td></tr>
+                        <tr><td><strong>Dialectique</strong></td><td>I. Thèse / II. Antithèse / III. Synthèse</td><td>Sujet : "Pensez-vous que... Discutez"</td></tr>
+                        <tr><td><strong>Analytique</strong></td><td>I. Causes / II. Conséquences / III. Solutions</td><td>Sujet : problème à analyser</td></tr></table>
+                    </div>
+                    <div class="example"><h4>✅ Exemple de plan dialectique</h4><div class="example-content">
+                        <p><strong>Sujet :</strong> "L'argent fait-il le bonheur ? Discutez."</p>
+                        <p><strong>I. Thèse :</strong> L'argent contribue au bonheur (confort, sécurité, loisirs)</p>
+                        <p><strong>II. Antithèse :</strong> L'argent ne suffit pas (amour, santé, relations)</p>
+                        <p><strong>III. Synthèse :</strong> L'argent est un moyen, pas une fin</p>
+                    </div></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('dissertation')">← Dissertation</button><button class="nav-btn next" onclick="showLesson('intro-conclu')">Intro/Conclusion →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-intro-conclu">
+                    <div class="lesson-header"><h2>✍️ Introduction et conclusion</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="section"><h3>📋 L'introduction (4 étapes)</h3>
+                        <table><tr><th>Étape</th><th>Contenu</th><th>Exemple</th></tr>
+                        <tr><td><strong>1. Accroche</strong></td><td>Phrase d'ouverture</td><td>"De nos jours, l'éducation est un enjeu majeur..."</td></tr>
+                        <tr><td><strong>2. Présentation</strong></td><td>Reformulation du sujet</td><td>"Cette question de... nous amène à réfléchir..."</td></tr>
+                        <tr><td><strong>3. Problématique</strong></td><td>Question centrale</td><td>"On peut donc se demander si..."</td></tr>
+                        <tr><td><strong>4. Annonce plan</strong></td><td>Les grandes parties</td><td>"Nous verrons d'abord... puis... enfin..."</td></tr></table>
+                    </div>
+                    <div class="section"><h3>📋 La conclusion (3 étapes)</h3>
+                        <table><tr><th>Étape</th><th>Contenu</th><th>Exemple</th></tr>
+                        <tr><td><strong>1. Bilan</strong></td><td>Résumé des arguments</td><td>"En définitive, nous avons vu que..."</td></tr>
+                        <tr><td><strong>2. Réponse</strong></td><td>Réponse à la problématique</td><td>"Ainsi, il apparaît que..."</td></tr>
+                        <tr><td><strong>3. Ouverture</strong></td><td>Élargissement</td><td>"Cette réflexion nous invite à..."</td></tr></table>
+                    </div>
+                    <div class="warning"><h4>⚠️ À éviter</h4>
+                        <p>• Ne jamais dire "Je vais parler de..."</p>
+                        <p>• Ne jamais donner d'arguments dans l'introduction</p>
+                        <p>• Ne jamais ajouter de nouvelles idées dans la conclusion</p>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('plans')">← Les plans</button><button class="nav-btn next" onclick="showLesson('image')">Analyse image →</button></div>
+                </div>
+
+                <!-- LECTURE D'IMAGE -->
+                <div class="lesson" id="lesson-image">
+                    <div class="lesson-header"><h2>📰 Analyser une image</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="section"><h3>📋 Méthodologie en 4 étapes</h3>
+                        <table><tr><th>Étape</th><th>Questions</th></tr>
+                        <tr><td><strong>1. Identifier</strong></td><td>Nature ? Auteur ? Date ? Source ?</td></tr>
+                        <tr><td><strong>2. Décrire</strong></td><td>Que voit-on ? Personnages ? Décor ? Couleurs ?</td></tr>
+                        <tr><td><strong>3. Analyser</strong></td><td>Composition ? Symboles ? Message ?</td></tr>
+                        <tr><td><strong>4. Interpréter</strong></td><td>Quel sens ? Quelle intention ? Quel effet ?</td></tr></table>
+                    </div>
+                    <div class="section"><h3>📊 Vocabulaire de l'image</h3>
+                        <table><tr><th>Aspect</th><th>Termes</th></tr>
+                        <tr><td><strong>Plans</strong></td><td>Premier plan, second plan, arrière-plan</td></tr>
+                        <tr><td><strong>Angles</strong></td><td>Plongée (de haut), contre-plongée (de bas), frontal</td></tr>
+                        <tr><td><strong>Cadrage</strong></td><td>Plan large, plan moyen, gros plan</td></tr>
+                        <tr><td><strong>Lumière</strong></td><td>Clair, sombre, contrasté, naturel</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('intro-conclu')">← Intro/Conclusion</button><button class="nav-btn next" onclick="showLesson('publicite')">Publicité →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-publicite">
+                    <div class="lesson-header"><h2>📰 La publicité</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="definition"><h4>Définition</h4><p>La <strong>publicité</strong> est un message qui vise à <strong>persuader</strong> le public d'acheter un produit ou d'adopter une idée.</p></div>
+                    <div class="section"><h3>📊 Composantes d'une publicité</h3>
+                        <table><tr><th>Élément</th><th>Fonction</th></tr>
+                        <tr><td><strong>Accroche</strong></td><td>Phrase qui attire l'attention</td></tr>
+                        <tr><td><strong>Visuel</strong></td><td>Image principale</td></tr>
+                        <tr><td><strong>Slogan</strong></td><td>Phrase mémorable associée à la marque</td></tr>
+                        <tr><td><strong>Logo</strong></td><td>Symbole de la marque</td></tr>
+                        <tr><td><strong>Argumentaire</strong></td><td>Texte explicatif (rare)</td></tr></table>
+                    </div>
+                    <div class="section"><h3>🎯 Procédés de persuasion</h3>
+                        <table><tr><th>Procédé</th><th>Description</th></tr>
+                        <tr><td><strong>Émotion</strong></td><td>Jouer sur les sentiments (famille, amour, peur)</td></tr>
+                        <tr><td><strong>Autorité</strong></td><td>Utiliser des célébrités, experts</td></tr>
+                        <tr><td><strong>Humour</strong></td><td>Faire rire pour créer la sympathie</td></tr>
+                        <tr><td><strong>Répétition</strong></td><td>Marquer les esprits</td></tr>
+                        <tr><td><strong>Promesse</strong></td><td>Garantir un bénéfice</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('image')">← Analyse image</button><button class="nav-btn next" onclick="showLesson('resume')">Résumé →</button></div>
+                </div>
+
+                <!-- LE RÉSUMÉ -->
+                <div class="lesson" id="lesson-resume">
+                    <div class="lesson-header"><h2>📝 Méthodologie du résumé</h2><span class="duration">⏱️ 3h</span></div>
+                    <div class="bfem-alert">🎯 ÉPREUVE DU BFEM - Le résumé doit faire environ 1/4 du texte original !</div>
+                    <div class="section"><h3>📋 Les 5 étapes</h3>
+                        <table><tr><th>Étape</th><th>Action</th></tr>
+                        <tr><td><strong>1. Lire</strong></td><td>Lire 2-3 fois, comprendre le sens global</td></tr>
+                        <tr><td><strong>2. Analyser</strong></td><td>Repérer le thème, la thèse, les idées principales</td></tr>
+                        <tr><td><strong>3. Sélectionner</strong></td><td>Garder l'essentiel, supprimer exemples et détails</td></tr>
+                        <tr><td><strong>4. Reformuler</strong></td><td>Écrire avec SES PROPRES MOTS</td></tr>
+                        <tr><td><strong>5. Vérifier</strong></td><td>Compter les mots, relire</td></tr></table>
+                    </div>
+                    <div class="section"><h3>📊 Règles du résumé</h3>
+                        <table><tr><th>✓ À faire</th><th>✗ À éviter</th></tr>
+                        <tr><td>Reformuler avec ses mots</td><td>Recopier des phrases du texte</td></tr>
+                        <tr><td>Respecter l'ordre du texte</td><td>Réorganiser les idées</td></tr>
+                        <tr><td>Rester objectif</td><td>Donner son avis ("Je pense que")</td></tr>
+                        <tr><td>Utiliser la 3ème personne</td><td>Employer "je" ou "nous"</td></tr>
+                        <tr><td>Respecter la proportion (1/4)</td><td>Dépasser le nombre de mots</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('publicite')">← Publicité</button><button class="nav-btn next" onclick="showLesson('contraction')">Contraction →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-contraction">
+                    <div class="lesson-header"><h2>📝 La contraction de texte</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="definition"><h4>Différence avec le résumé</h4>
+                        <p><strong>Résumé :</strong> proportion libre (environ 1/4)</p>
+                        <p><strong>Contraction :</strong> nombre de mots imposé (ex: 100 mots ±10%)</p>
+                    </div>
+                    <div class="section"><h3>📊 Techniques de réduction</h3>
+                        <table><tr><th>Technique</th><th>Exemple</th></tr>
+                        <tr><td><strong>Supprimer exemples</strong></td><td>"comme le montre l'exemple de..." → supprimer</td></tr>
+                        <tr><td><strong>Supprimer répétitions</strong></td><td>Garder une seule formulation</td></tr>
+                        <tr><td><strong>Nominaliser</strong></td><td>"Il a réussi" → "sa réussite"</td></tr>
+                        <tr><td><strong>Utiliser synonymes courts</strong></td><td>"à cause du fait que" → "car"</td></tr>
+                        <tr><td><strong>Supprimer les digressions</strong></td><td>Garder uniquement l'essentiel</td></tr></table>
+                    </div>
+                    <div class="tips"><h4>💡 Compter les mots</h4>
+                        <p>Un mot = tout ce qui est entre deux espaces</p>
+                        <p>"c'est-à-dire" = 1 mot | "il y a" = 3 mots | "aujourd'hui" = 1 mot</p>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('resume')">← Résumé</button><button class="nav-btn next" onclick="showLesson('epreuves')">Épreuves BFEM →</button></div>
+                </div>
+
+                <!-- ÉPREUVES BFEM -->
+                <div class="lesson" id="lesson-epreuves">
+                    <div class="lesson-header"><h2>🎯 Les épreuves du BFEM</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="bfem-alert">🎯 INFORMATIONS ESSENTIELLES SUR L'EXAMEN</div>
+                    <div class="section"><h3>📋 Structure de l'épreuve de français</h3>
+                        <table><tr><th>Épreuve</th><th>Durée</th><th>Points</th></tr>
+                        <tr><td><strong>Dictée</strong></td><td>30 min</td><td>20 pts</td></tr>
+                        <tr><td><strong>Questions de compréhension</strong></td><td>-</td><td>20 pts</td></tr>
+                        <tr><td><strong>Questions de langue</strong></td><td>-</td><td>20 pts</td></tr>
+                        <tr><td><strong>Rédaction (dissertation/résumé)</strong></td><td>-</td><td>40 pts</td></tr>
+                        <tr><td><strong>TOTAL</strong></td><td><strong>3h</strong></td><td><strong>100 pts</strong></td></tr></table>
+                    </div>
+                    <div class="section"><h3>📊 Répartition du temps</h3>
+                        <table><tr><th>Tâche</th><th>Temps conseillé</th></tr>
+                        <tr><td>Dictée</td><td>30 minutes</td></tr>
+                        <tr><td>Lecture du texte + questions</td><td>45 minutes</td></tr>
+                        <tr><td>Rédaction</td><td>1h30</td></tr>
+                        <tr><td>Relecture</td><td>15 minutes</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('contraction')">← Contraction</button><button class="nav-btn next" onclick="showLesson('dictee')">Dictée →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-dictee">
+                    <div class="lesson-header"><h2>🎯 Méthodologie de la dictée</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="section"><h3>📋 Les 4 phases</h3>
+                        <table><tr><th>Phase</th><th>Action</th></tr>
+                        <tr><td><strong>1. Lecture</strong></td><td>Écouter attentivement sans écrire</td></tr>
+                        <tr><td><strong>2. Dictée</strong></td><td>Écrire au fur et à mesure</td></tr>
+                        <tr><td><strong>3. Relecture</strong></td><td>Écouter une dernière fois</td></tr>
+                        <tr><td><strong>4. Correction</strong></td><td>Vérifier accords, homophones</td></tr></table>
+                    </div>
+                    <div class="section"><h3>📊 Points de vigilance</h3>
+                        <table><tr><th>Type d'erreur</th><th>Vérification</th></tr>
+                        <tr><td><strong>Accord sujet-verbe</strong></td><td>Trouver le sujet, accorder</td></tr>
+                        <tr><td><strong>Accord adjectif</strong></td><td>Genre et nombre du nom</td></tr>
+                        <tr><td><strong>Participe passé</strong></td><td>Auxiliaire ÊTRE ou AVOIR ?</td></tr>
+                        <tr><td><strong>Homophones</strong></td><td>a/à, et/est, son/sont, ce/se...</td></tr>
+                        <tr><td><strong>Pluriel</strong></td><td>Noms et adjectifs</td></tr></table>
+                    </div>
+                    <div class="tips"><h4>💡 Astuce de relecture</h4>
+                        <p>Relire phrase par phrase en vérifiant : <strong>1.</strong> Sujet-verbe <strong>2.</strong> Accords <strong>3.</strong> Homophones <strong>4.</strong> Ponctuation</p>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('epreuves')">← Épreuves</button><button class="nav-btn next" onclick="showLesson('sujets')">Sujets types →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-sujets">
+                    <div class="lesson-header"><h2>🎯 Sujets types corrigés</h2><span class="duration">⏱️ 4h</span></div>
+                    <div class="bfem-alert">🎯 ENTRAÎNEMENT ESSENTIEL - Pratiquer avec des sujets réels !</div>
+                    
+                    <div class="section"><h3>📝 Sujet de dissertation type 1</h3>
+                        <div style="background: #f5f5f5; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <p><strong>Sujet :</strong> "L'éducation des filles est la clé du développement en Afrique." Qu'en pensez-vous ?</p>
+                        </div>
+                        <table><tr><th>Plan proposé (thématique)</th></tr>
+                        <tr><td><strong>I. L'éducation améliore la condition féminine</strong><br>- Autonomie financière<br>- Participation à la vie publique<br>- Exemple : femmes leaders au Sénégal</td></tr>
+                        <tr><td><strong>II. L'éducation bénéficie à toute la société</strong><br>- Santé familiale améliorée<br>- Transmission du savoir aux enfants<br>- Exemple : baisse mortalité infantile</td></tr>
+                        <tr><td><strong>III. L'éducation stimule l'économie</strong><br>- Main d'œuvre qualifiée<br>- Entrepreneuriat féminin<br>- Exemple : micro-entreprises féminines</td></tr></table>
+                    </div>
+
+                    <div class="section"><h3>📝 Sujet de dissertation type 2</h3>
+                        <div style="background: #f5f5f5; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <p><strong>Sujet :</strong> "Les réseaux sociaux sont-ils bénéfiques pour les jeunes ? Discutez."</p>
+                        </div>
+                        <table><tr><th>Plan proposé (dialectique)</th></tr>
+                        <tr><td><strong>I. Thèse : Les avantages des réseaux sociaux</strong><br>- Communication facilitée<br>- Accès à l'information<br>- Ouverture sur le monde</td></tr>
+                        <tr><td><strong>II. Antithèse : Les dangers des réseaux sociaux</strong><br>- Addiction<br>- Cyberharcèlement<br>- Désinformation</td></tr>
+                        <tr><td><strong>III. Synthèse : Un usage responsable</strong><br>- Éducation au numérique<br>- Contrôle parental<br>- Esprit critique</td></tr></table>
+                    </div>
+
+                    <div class="exercise"><h3>✍️ Entraînement</h3>
+                        <div class="exercise-item">
+                            <p><strong>Sujet :</strong> "La lecture est inutile à l'heure d'Internet." Discutez cette affirmation.</p>
+                            <textarea rows="10" placeholder="Rédige ton plan détaillé ici..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('dictee')">← Dictée</button><button class="nav-btn next" disabled>Fin du programme →</button></div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script>
+        function showLesson(id) {
+            document.querySelectorAll('.lesson').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            document.getElementById('lesson-' + id).classList.add('active');
+            event.target.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

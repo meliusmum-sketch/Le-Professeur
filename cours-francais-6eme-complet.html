@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Professeur - Cours Complet Français 6ème</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        :root { --primary: #4caf50; --primary-dark: #1b5e20; --secondary: #81c784; --success: #2e7d32; --warning: #ff9800; --info: #2196f3; --dark: #1a1a2e; }
+        body { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); min-height: 100vh; }
+        .navbar { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 1rem 2rem; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        .nav-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { color: white; font-size: 1.5rem; font-weight: 800; text-decoration: none; }
+        .nav-level { background: rgba(255,255,255,0.2); padding: 0.5rem 1.5rem; border-radius: 50px; color: white; font-weight: 600; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .page-header { text-align: center; margin-bottom: 2rem; padding: 2rem; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .page-header h1 { font-size: 2.2rem; color: var(--dark); margin-bottom: 0.5rem; }
+        .badge-level { display: inline-block; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 0.5rem 2rem; border-radius: 50px; font-weight: 700; margin-top: 1rem; }
+        .content-wrapper { display: grid; grid-template-columns: 320px 1fr; gap: 2rem; }
+        .sidebar { background: white; border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(0,0,0,0.1); position: sticky; top: 100px; height: fit-content; max-height: calc(100vh - 120px); overflow-y: auto; }
+        .sidebar::-webkit-scrollbar { width: 6px; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+        .sidebar h3 { color: var(--dark); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 3px solid var(--primary); }
+        .sidebar-section { margin-bottom: 1.5rem; }
+        .sidebar-section h4 { color: white; font-size: 0.8rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 0.5rem 1rem; border-radius: 8px; }
+        .sidebar-link { display: block; padding: 0.4rem 1rem; color: #555; text-decoration: none; border-radius: 8px; margin-bottom: 0.2rem; font-size: 0.85rem; cursor: pointer; transition: all 0.3s; border-left: 3px solid transparent; }
+        .sidebar-link:hover { background: #e8f5e9; border-left-color: var(--primary); }
+        .sidebar-link.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border-left-color: var(--primary-dark); }
+        .main-content { background: white; border-radius: 20px; padding: 2rem; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .lesson { display: none; }
+        .lesson.active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .lesson-header { border-bottom: 3px solid var(--primary); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .lesson-header h2 { color: var(--dark); font-size: 1.5rem; }
+        .duration { background: var(--info); color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; }
+        .objectives { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-left: 5px solid var(--success); padding: 1.5rem; border-radius: 0 15px 15px 0; margin-bottom: 2rem; }
+        .objectives h3 { color: var(--success); margin-bottom: 1rem; font-size: 1.1rem; }
+        .objectives ul { list-style: none; }
+        .objectives li { padding: 0.3rem 0; padding-left: 1.5rem; position: relative; }
+        .objectives li::before { content: '✓'; position: absolute; left: 0; color: var(--success); font-weight: bold; }
+        .section { margin-bottom: 2rem; }
+        .section h3 { color: var(--dark); font-size: 1.2rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px dashed #e0e0e0; }
+        .section p { color: #444; line-height: 1.8; margin-bottom: 1rem; }
+        .definition { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border: 2px solid var(--warning); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; }
+        .definition h4 { color: #e65100; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .definition h4::before { content: '📌'; }
+        .example { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; border-left: 5px solid var(--primary); }
+        .example h4 { color: var(--primary-dark); margin-bottom: 1rem; }
+        .example-content { background: white; padding: 1rem; border-radius: 10px; line-height: 1.8; font-family: 'Georgia', serif; }
+        .example-content .highlight { background: #ffeb3b; padding: 2px 6px; border-radius: 4px; }
+        .example-content .underline { text-decoration: underline; text-decoration-color: var(--primary); text-underline-offset: 3px; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        th { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 0.8rem; text-align: left; font-size: 0.9rem; }
+        td { padding: 0.7rem 0.8rem; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        tr:hover { background: #f5f5f5; }
+        tr:nth-child(even) { background: #fafafa; }
+        .tips { background: linear-gradient(135deg, #e3f2fd, #bbdefb); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; border-left: 5px solid var(--info); }
+        .tips h4 { color: #1565c0; margin-bottom: 1rem; }
+        .tips ul { list-style: none; }
+        .tips li { padding: 0.3rem 0; padding-left: 1.5rem; position: relative; }
+        .tips li::before { content: '💡'; position: absolute; left: 0; }
+        .warning { background: linear-gradient(135deg, #fff8e1, #ffecb3); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; border-left: 5px solid #ffc107; }
+        .warning h4 { color: #f57c00; margin-bottom: 0.5rem; }
+        .exercise { background: linear-gradient(135deg, #fce4ec, #f8bbd0); border-radius: 15px; padding: 1.5rem; margin: 2rem 0; }
+        .exercise h3 { color: #c2185b; margin-bottom: 1rem; }
+        .exercise-item { background: white; padding: 1rem; border-radius: 10px; margin-bottom: 1rem; }
+        .exercise-item p { margin-bottom: 0.5rem; }
+        textarea, input[type="text"] { width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px; font-family: inherit; font-size: 0.95rem; transition: border-color 0.3s; }
+        textarea:focus, input[type="text"]:focus { outline: none; border-color: var(--primary); }
+        input[type="text"].inline { width: auto; min-width: 150px; display: inline-block; padding: 0.3rem 0.5rem; }
+        .lesson-nav { display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 2rem; border-top: 2px solid #eee; }
+        .nav-btn { padding: 0.8rem 1.5rem; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; transition: transform 0.2s; }
+        .nav-btn:hover { transform: translateY(-2px); }
+        .nav-btn.prev { background: #ecf0f1; color: var(--dark); }
+        .nav-btn.next { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .conjugation-table td:first-child { font-weight: 600; background: #f5f5f5; }
+        .formula { background: linear-gradient(135deg, #ede7f6, #d1c4e9); padding: 1rem 1.5rem; border-radius: 10px; text-align: center; font-size: 1.1rem; font-weight: 600; margin: 1rem 0; border: 2px solid #9575cd; }
+        @media (max-width: 1024px) { 
+            .content-wrapper { grid-template-columns: 1fr; } 
+            .sidebar { position: relative; top: 0; max-height: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="logo">📚 Le Professeur</a>
+            <span class="nav-level">📗 Classe de 6ème</span>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <header class="page-header">
+            <h1>📗 Cours Complet de Français - 6ème</h1>
+            <p>Programme PHARES - République du Sénégal</p>
+            <span class="badge-level">Enseignement Moyen - 28 Leçons</span>
+        </header>
+        
+        <div class="content-wrapper">
+            <aside class="sidebar">
+                <h3>📑 Sommaire</h3>
+                
+                <div class="sidebar-section">
+                    <h4>📝 GRAMMAIRE</h4>
+                    <a class="sidebar-link active" onclick="showLesson('phrase-simple')">La phrase simple</a>
+                    <a class="sidebar-link" onclick="showLesson('formes-phrases')">Formes de phrases</a>
+                    <a class="sidebar-link" onclick="showLesson('gns-gv')">Le GNS et le GV</a>
+                    <a class="sidebar-link" onclick="showLesson('nom')">Le nom</a>
+                    <a class="sidebar-link" onclick="showLesson('determinants')">Les déterminants</a>
+                    <a class="sidebar-link" onclick="showLesson('pronoms')">Les pronoms personnels</a>
+                    <a class="sidebar-link" onclick="showLesson('adjectif')">L'adjectif qualificatif</a>
+                    <a class="sidebar-link" onclick="showLesson('cod-coi')">COD et COI</a>
+                    <a class="sidebar-link" onclick="showLesson('cc')">Les compléments circonstanciels</a>
+                    <a class="sidebar-link" onclick="showLesson('phrase-complexe')">La phrase complexe</a>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h4>🔄 CONJUGAISON</h4>
+                    <a class="sidebar-link" onclick="showLesson('present')">Le présent de l'indicatif</a>
+                    <a class="sidebar-link" onclick="showLesson('imparfait')">L'imparfait</a>
+                    <a class="sidebar-link" onclick="showLesson('passe-simple')">Le passé simple</a>
+                    <a class="sidebar-link" onclick="showLesson('futur')">Le futur simple</a>
+                    <a class="sidebar-link" onclick="showLesson('imperatif')">L'impératif</a>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h4>✏️ ORTHOGRAPHE</h4>
+                    <a class="sidebar-link" onclick="showLesson('homophones')">Les homophones grammaticaux</a>
+                    <a class="sidebar-link" onclick="showLesson('pluriel')">Le pluriel des noms</a>
+                    <a class="sidebar-link" onclick="showLesson('accord-adj')">L'accord de l'adjectif</a>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h4>📖 VOCABULAIRE</h4>
+                    <a class="sidebar-link" onclick="showLesson('synonymes')">Synonymes et antonymes</a>
+                    <a class="sidebar-link" onclick="showLesson('familles')">Les familles de mots</a>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h4>📚 LECTURE</h4>
+                    <a class="sidebar-link" onclick="showLesson('schema-narratif')">Le schéma narratif</a>
+                    <a class="sidebar-link" onclick="showLesson('conte')">Le conte merveilleux</a>
+                    <a class="sidebar-link" onclick="showLesson('schema-actantiel')">Le schéma actantiel</a>
+                    <a class="sidebar-link" onclick="showLesson('fable')">La fable</a>
+                    <a class="sidebar-link" onclick="showLesson('versification')">La versification</a>
+                    <a class="sidebar-link" onclick="showLesson('poesie')">Le texte poétique</a>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h4>✍️ EXPRESSION</h4>
+                    <a class="sidebar-link" onclick="showLesson('registres')">Les registres de langue</a>
+                    <a class="sidebar-link" onclick="showLesson('lettre')">La lettre familière</a>
+                    <a class="sidebar-link" onclick="showLesson('recit')">Produire un récit</a>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                
+                <!-- ==================== GRAMMAIRE ==================== -->
+                
+                <!-- La phrase simple -->
+                <div class="lesson active" id="lesson-phrase-simple">
+                    <div class="lesson-header">
+                        <h2>📝 La phrase simple</h2>
+                        <span class="duration">⏱️ 1h</span>
+                    </div>
+                    <div class="objectives">
+                        <h3>🎯 Objectifs</h3>
+                        <ul>
+                            <li>Identifier une phrase simple</li>
+                            <li>Distinguer phrase verbale et phrase non verbale</li>
+                            <li>Repérer le verbe conjugué</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Une <strong>phrase simple</strong> est une phrase qui contient <strong>un seul verbe conjugué</strong>. Elle exprime une idée complète et se termine par un point.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Types de phrases simples</h3>
+                        <table>
+                            <tr><th>Type</th><th>Caractéristique</th><th>Exemple</th></tr>
+                            <tr><td><strong>Phrase verbale</strong></td><td>Contient un verbe conjugué</td><td>Les élèves <u>travaillent</u> bien.</td></tr>
+                            <tr><td><strong>Phrase non verbale</strong></td><td>Sans verbe conjugué</td><td>Quelle belle journée !</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>✅ Exemples</h4>
+                        <div class="example-content">
+                            <p>✓ "Le pêcheur de Kayar <span class="highlight">lance</span> son filet." → 1 verbe = phrase simple</p>
+                            <p>✓ "Le soleil <span class="highlight">brille</span> sur Dakar." → 1 verbe = phrase simple</p>
+                            <p>✗ "Quand il <span class="highlight">pleut</span>, les enfants <span class="highlight">restent</span> à la maison." → 2 verbes = phrase complexe</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tips">
+                        <h4>💡 Comment identifier le verbe conjugué ?</h4>
+                        <ul>
+                            <li>Il change selon le temps (présent, passé, futur)</li>
+                            <li>Il change selon la personne (je, tu, il...)</li>
+                            <li>On peut l'encadrer par "ne... pas"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="exercise">
+                        <h3>✍️ Exercices</h3>
+                        <div class="exercise-item">
+                            <p><strong>Indique si ces phrases sont simples ou complexes :</strong></p>
+                            <p>1. "Amadou joue au football." → <input type="text" class="inline" placeholder="simple/complexe"></p>
+                            <p>2. "Quand le muezzin appelle, les fidèles se lèvent." → <input type="text" class="inline" placeholder="simple/complexe"></p>
+                            <p>3. "Ma grand-mère prépare le thiéboudienne." → <input type="text" class="inline" placeholder="simple/complexe"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" disabled>← Précédent</button>
+                        <button class="nav-btn next" onclick="showLesson('formes-phrases')">Formes de phrases →</button>
+                    </div>
+                </div>
+
+                <!-- Formes de phrases -->
+                <div class="lesson" id="lesson-formes-phrases">
+                    <div class="lesson-header">
+                        <h2>📝 Les formes de phrases</h2>
+                        <span class="duration">⏱️ 1h</span>
+                    </div>
+                    <div class="objectives">
+                        <h3>🎯 Objectifs</h3>
+                        <ul>
+                            <li>Distinguer phrase affirmative et négative</li>
+                            <li>Maîtriser les mots de négation</li>
+                            <li>Transformer les phrases</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Toute phrase a une <strong>forme</strong> : elle est soit <strong>affirmative</strong> (elle affirme quelque chose), soit <strong>négative</strong> (elle nie quelque chose).</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Les deux formes</h3>
+                        <table>
+                            <tr><th>Forme</th><th>Caractéristique</th><th>Exemple</th></tr>
+                            <tr><td><strong>Affirmative</strong></td><td>Affirme un fait</td><td>Fatou <u>aime</u> lire.</td></tr>
+                            <tr><td><strong>Négative</strong></td><td>Nie un fait (ne...pas, ne...plus, etc.)</td><td>Fatou <u>n'aime pas</u> lire.</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>🔧 Les mots de négation</h3>
+                        <table>
+                            <tr><th>Négation</th><th>Sens</th><th>Exemple</th></tr>
+                            <tr><td><strong>ne... pas</strong></td><td>Négation simple</td><td>Il <u>ne</u> vient <u>pas</u>.</td></tr>
+                            <tr><td><strong>ne... plus</strong></td><td>Arrêt d'une action</td><td>Il <u>ne</u> fume <u>plus</u>.</td></tr>
+                            <tr><td><strong>ne... jamais</strong></td><td>À aucun moment</td><td>Il <u>ne</u> ment <u>jamais</u>.</td></tr>
+                            <tr><td><strong>ne... rien</strong></td><td>Aucune chose</td><td>Il <u>ne</u> dit <u>rien</u>.</td></tr>
+                            <tr><td><strong>ne... personne</strong></td><td>Aucune personne</td><td>Il <u>ne</u> voit <u>personne</u>.</td></tr>
+                            <tr><td><strong>ne... que</strong></td><td>Restriction (seulement)</td><td>Il <u>n'</u>a <u>que</u> 10 ans.</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="warning">
+                        <h4>⚠️ Attention à l'oral !</h4>
+                        <p>À l'oral, on oublie souvent le "ne" : "Je sais pas" au lieu de "Je <u>ne</u> sais pas".</p>
+                        <p>À l'écrit, il faut <strong>toujours</strong> écrire les deux parties de la négation !</p>
+                    </div>
+                    
+                    <div class="exercise">
+                        <h3>✍️ Exercices</h3>
+                        <div class="exercise-item">
+                            <p><strong>Transforme ces phrases à la forme négative :</strong></p>
+                            <p>1. Moussa mange du riz. → <input type="text" class="inline" style="width: 250px;"></p>
+                            <p>2. Elle va encore au marché. → <input type="text" class="inline" style="width: 250px;"></p>
+                            <p>3. Quelqu'un a frappé. → <input type="text" class="inline" style="width: 250px;"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('phrase-simple')">← Phrase simple</button>
+                        <button class="nav-btn next" onclick="showLesson('gns-gv')">GNS et GV →</button>
+                    </div>
+                </div>
+
+                <!-- Le GNS et le GV -->
+                <div class="lesson" id="lesson-gns-gv">
+                    <div class="lesson-header">
+                        <h2>📝 Le GNS et le GV</h2>
+                        <span class="duration">⏱️ 1h30</span>
+                    </div>
+                    <div class="objectives">
+                        <h3>🎯 Objectifs</h3>
+                        <ul>
+                            <li>Identifier le groupe nominal sujet (GNS)</li>
+                            <li>Identifier le groupe verbal (GV)</li>
+                            <li>Maîtriser l'accord sujet-verbe</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Le <strong>GNS</strong> (Groupe Nominal Sujet) désigne de qui ou de quoi on parle. Le <strong>GV</strong> (Groupe Verbal) dit ce que fait le sujet ou ce qu'il est.</p>
+                    </div>
+                    
+                    <div class="formula">
+                        PHRASE = GNS + GV
+                    </div>
+                    
+                    <div class="section">
+                        <h3>🔍 Comment trouver le GNS ?</h3>
+                        <p>On pose la question <strong>"Qui est-ce qui... ?"</strong> ou <strong>"Qu'est-ce qui... ?"</strong> avant le verbe.</p>
+                        <div class="example">
+                            <div class="example-content">
+                                <p>"<span class="highlight">Les pêcheurs de Kayar</span> partent en mer."</p>
+                                <p>→ Qui est-ce qui part en mer ? → <strong>Les pêcheurs de Kayar</strong> = GNS</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Nature du GNS</h3>
+                        <table>
+                            <tr><th>Nature</th><th>Exemple</th></tr>
+                            <tr><td>Nom propre</td><td><u>Dakar</u> est la capitale.</td></tr>
+                            <tr><td>Groupe nominal</td><td><u>Le grand baobab</u> donne de l'ombre.</td></tr>
+                            <tr><td>Pronom</td><td><u>Il</u> travaille dur.</td></tr>
+                            <tr><td>Infinitif</td><td><u>Lire</u> enrichit l'esprit.</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="warning">
+                        <h4>⚠️ L'accord sujet-verbe</h4>
+                        <p>Le verbe s'accorde <strong>toujours</strong> avec son sujet en personne et en nombre :</p>
+                        <p>• Les élèves <u>travaillent</u>. (3ème personne du pluriel)</p>
+                        <p>• L'élève <u>travaille</u>. (3ème personne du singulier)</p>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('formes-phrases')">← Formes de phrases</button>
+                        <button class="nav-btn next" onclick="showLesson('nom')">Le nom →</button>
+                    </div>
+                </div>
+
+                <!-- Le nom -->
+                <div class="lesson" id="lesson-nom">
+                    <div class="lesson-header">
+                        <h2>📝 Le nom</h2>
+                        <span class="duration">⏱️ 1h30</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Le <strong>nom</strong> (ou substantif) désigne une personne, un animal, une chose, une idée. Il a un <strong>genre</strong> (masculin/féminin) et un <strong>nombre</strong> (singulier/pluriel).</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Nom commun vs Nom propre</h3>
+                        <table>
+                            <tr><th>Type</th><th>Caractéristique</th><th>Exemples</th></tr>
+                            <tr><td><strong>Nom commun</strong></td><td>Minuscule, désigne une catégorie</td><td>un pays, une ville, un élève</td></tr>
+                            <tr><td><strong>Nom propre</strong></td><td>Majuscule, désigne un être unique</td><td>le Sénégal, Dakar, Amadou</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>🔄 Le genre des noms</h3>
+                        <table>
+                            <tr><th>Règle</th><th>Masculin</th><th>Féminin</th></tr>
+                            <tr><td>Ajout de -e</td><td>un ami</td><td>une amie</td></tr>
+                            <tr><td>-eur → -euse</td><td>un vendeur</td><td>une vendeuse</td></tr>
+                            <tr><td>-teur → -trice</td><td>un directeur</td><td>une directrice</td></tr>
+                            <tr><td>-er → -ère</td><td>un boulanger</td><td>une boulangère</td></tr>
+                            <tr><td>Mot différent</td><td>un homme</td><td>une femme</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('gns-gv')">← GNS et GV</button>
+                        <button class="nav-btn next" onclick="showLesson('determinants')">Les déterminants →</button>
+                    </div>
+                </div>
+
+                <!-- Les déterminants -->
+                <div class="lesson" id="lesson-determinants">
+                    <div class="lesson-header">
+                        <h2>📝 Les déterminants</h2>
+                        <span class="duration">⏱️ 1h30</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Le <strong>déterminant</strong> est un mot placé devant le nom. Il indique le genre et le nombre du nom et permet de savoir si on parle de quelque chose de précis ou non.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Les articles</h3>
+                        <table>
+                            <tr><th>Type</th><th>Singulier</th><th>Pluriel</th><th>Usage</th></tr>
+                            <tr><td><strong>Définis</strong></td><td>le, la, l'</td><td>les</td><td>Chose connue, précise</td></tr>
+                            <tr><td><strong>Indéfinis</strong></td><td>un, une</td><td>des</td><td>Chose non précisée</td></tr>
+                            <tr><td><strong>Partitifs</strong></td><td>du, de la, de l'</td><td>des</td><td>Quantité indéterminée</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Les déterminants possessifs</h3>
+                        <table>
+                            <tr><th>Possesseur</th><th>Masculin sing.</th><th>Féminin sing.</th><th>Pluriel</th></tr>
+                            <tr><td>je</td><td>mon</td><td>ma</td><td>mes</td></tr>
+                            <tr><td>tu</td><td>ton</td><td>ta</td><td>tes</td></tr>
+                            <tr><td>il/elle</td><td>son</td><td>sa</td><td>ses</td></tr>
+                            <tr><td>nous</td><td colspan="2">notre</td><td>nos</td></tr>
+                            <tr><td>vous</td><td colspan="2">votre</td><td>vos</td></tr>
+                            <tr><td>ils/elles</td><td colspan="2">leur</td><td>leurs</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Les déterminants démonstratifs</h3>
+                        <table>
+                            <tr><th>Masculin sing.</th><th>Féminin sing.</th><th>Pluriel</th></tr>
+                            <tr><td>ce, cet (devant voyelle)</td><td>cette</td><td>ces</td></tr>
+                        </table>
+                        <p style="margin-top: 1rem;"><em>Exemples : <strong>ce</strong> livre, <strong>cet</strong> arbre, <strong>cette</strong> maison, <strong>ces</strong> enfants</em></p>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('nom')">← Le nom</button>
+                        <button class="nav-btn next" onclick="showLesson('pronoms')">Les pronoms →</button>
+                    </div>
+                </div>
+
+                <!-- Les pronoms personnels -->
+                <div class="lesson" id="lesson-pronoms">
+                    <div class="lesson-header">
+                        <h2>📝 Les pronoms personnels</h2>
+                        <span class="duration">⏱️ 1h30</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Le <strong>pronom personnel</strong> remplace un nom ou un groupe nominal pour éviter les répétitions. Il varie selon la personne, le genre, le nombre et la fonction.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Tableau des pronoms personnels</h3>
+                        <table>
+                            <tr><th>Personne</th><th>Sujet</th><th>COD</th><th>COI</th><th>Tonique</th></tr>
+                            <tr><td>1ère sing.</td><td>je</td><td>me</td><td>me</td><td>moi</td></tr>
+                            <tr><td>2ème sing.</td><td>tu</td><td>te</td><td>te</td><td>toi</td></tr>
+                            <tr><td>3ème sing. masc.</td><td>il</td><td>le</td><td>lui</td><td>lui</td></tr>
+                            <tr><td>3ème sing. fém.</td><td>elle</td><td>la</td><td>lui</td><td>elle</td></tr>
+                            <tr><td>1ère plur.</td><td>nous</td><td>nous</td><td>nous</td><td>nous</td></tr>
+                            <tr><td>2ème plur.</td><td>vous</td><td>vous</td><td>vous</td><td>vous</td></tr>
+                            <tr><td>3ème plur. masc.</td><td>ils</td><td>les</td><td>leur</td><td>eux</td></tr>
+                            <tr><td>3ème plur. fém.</td><td>elles</td><td>les</td><td>leur</td><td>elles</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>✅ Exemples d'emploi</h4>
+                        <div class="example-content">
+                            <p><strong>Sujet :</strong> <u>Il</u> mange. <u>Elles</u> travaillent.</p>
+                            <p><strong>COD :</strong> Je <u>le</u> vois. (Je vois Amadou.)</p>
+                            <p><strong>COI :</strong> Je <u>lui</u> parle. (Je parle à Fatou.)</p>
+                            <p><strong>Tonique :</strong> C'est <u>moi</u> ! Viens avec <u>nous</u>.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tips">
+                        <h4>💡 Astuce</h4>
+                        <ul>
+                            <li>Le pronom COD répond à "qui ?" ou "quoi ?" après le verbe</li>
+                            <li>Le pronom COI répond à "à qui ?" ou "à quoi ?"</li>
+                            <li>Le pronom tonique s'emploie après une préposition ou pour insister</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('determinants')">← Les déterminants</button>
+                        <button class="nav-btn next" onclick="showLesson('adjectif')">L'adjectif →</button>
+                    </div>
+                </div>
+
+                <!-- L'adjectif qualificatif -->
+                <div class="lesson" id="lesson-adjectif">
+                    <div class="lesson-header">
+                        <h2>📝 L'adjectif qualificatif</h2>
+                        <span class="duration">⏱️ 1h30</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>L'<strong>adjectif qualificatif</strong> donne une information sur le nom qu'il accompagne (qualité, défaut, couleur, taille...). Il s'accorde en genre et en nombre avec ce nom.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Fonctions de l'adjectif</h3>
+                        <table>
+                            <tr><th>Fonction</th><th>Position</th><th>Exemple</th></tr>
+                            <tr><td><strong>Épithète</strong></td><td>À côté du nom</td><td>Une <u>belle</u> maison</td></tr>
+                            <tr><td><strong>Attribut du sujet</strong></td><td>Après un verbe d'état</td><td>Cette maison est <u>belle</u>.</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>🔄 L'accord de l'adjectif</h3>
+                        <table>
+                            <tr><th>Règle</th><th>Masculin</th><th>Féminin</th></tr>
+                            <tr><td>Ajout de -e</td><td>grand</td><td>grande</td></tr>
+                            <tr><td>-eux → -euse</td><td>heureux</td><td>heureuse</td></tr>
+                            <tr><td>-f → -ve</td><td>neuf</td><td>neuve</td></tr>
+                            <tr><td>-er → -ère</td><td>léger</td><td>légère</td></tr>
+                            <tr><td>Doublement consonne</td><td>bon</td><td>bonne</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('pronoms')">← Les pronoms</button>
+                        <button class="nav-btn next" onclick="showLesson('cod-coi')">COD et COI →</button>
+                    </div>
+                </div>
+
+                <!-- COD et COI -->
+                <div class="lesson" id="lesson-cod-coi">
+                    <div class="lesson-header">
+                        <h2>📝 Le COD et le COI</h2>
+                        <span class="duration">⏱️ 2h</span>
+                    </div>
+                    <div class="objectives">
+                        <h3>🎯 Objectifs</h3>
+                        <ul>
+                            <li>Identifier le complément d'objet direct (COD)</li>
+                            <li>Identifier le complément d'objet indirect (COI)</li>
+                            <li>Les distinguer des compléments circonstanciels</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Le <strong>COD</strong> et le <strong>COI</strong> sont des compléments essentiels du verbe : on ne peut pas les supprimer sans changer le sens de la phrase.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Différence COD / COI</h3>
+                        <table>
+                            <tr><th>Complément</th><th>Question</th><th>Construction</th><th>Exemple</th></tr>
+                            <tr><td><strong>COD</strong></td><td>Qui ? Quoi ?</td><td>Directement après le verbe</td><td>Je mange <u>du riz</u>.</td></tr>
+                            <tr><td><strong>COI</strong></td><td>À qui ? À quoi ? De qui ? De quoi ?</td><td>Avec préposition (à, de)</td><td>Je parle <u>à mon ami</u>.</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>✅ Exemples détaillés</h4>
+                        <div class="example-content">
+                            <p><strong>COD :</strong></p>
+                            <p>• Fatou prépare <span class="highlight">le repas</span>. → Elle prépare QUOI ? → le repas = COD</p>
+                            <p>• J'aime <span class="highlight">ma mère</span>. → J'aime QUI ? → ma mère = COD</p>
+                            <p><strong>COI :</strong></p>
+                            <p>• Il téléphone <span class="highlight">à son père</span>. → Il téléphone À QUI ? → à son père = COI</p>
+                            <p>• Elle se souvient <span class="highlight">de ce jour</span>. → Elle se souvient DE QUOI ? → de ce jour = COI</p>
+                        </div>
+                    </div>
+                    
+                    <div class="warning">
+                        <h4>⚠️ Ne pas confondre COI et CC !</h4>
+                        <p>Le <strong>COI</strong> est essentiel (on ne peut pas le supprimer) :</p>
+                        <p>• "Il parle à son ami." → ✗ "Il parle." (incomplet)</p>
+                        <p>Le <strong>CC</strong> est facultatif (on peut le supprimer) :</p>
+                        <p>• "Il mange à la cantine." → ✓ "Il mange." (correct)</p>
+                    </div>
+                    
+                    <div class="exercise">
+                        <h3>✍️ Exercices</h3>
+                        <div class="exercise-item">
+                            <p><strong>Indique si le complément souligné est COD ou COI :</strong></p>
+                            <p>1. Mamadou lit <u>un livre</u>. → <input type="text" class="inline" placeholder="COD/COI"></p>
+                            <p>2. Elle pense <u>à ses parents</u>. → <input type="text" class="inline" placeholder="COD/COI"></p>
+                            <p>3. Le maître félicite <u>les élèves</u>. → <input type="text" class="inline" placeholder="COD/COI"></p>
+                            <p>4. Nous obéissons <u>au professeur</u>. → <input type="text" class="inline" placeholder="COD/COI"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('adjectif')">← L'adjectif</button>
+                        <button class="nav-btn next" onclick="showLesson('cc')">Les CC →</button>
+                    </div>
+                </div>
+
+                <!-- Les compléments circonstanciels -->
+                <div class="lesson" id="lesson-cc">
+                    <div class="lesson-header">
+                        <h2>📝 Les compléments circonstanciels</h2>
+                        <span class="duration">⏱️ 1h30</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Les <strong>compléments circonstanciels (CC)</strong> indiquent les circonstances de l'action : lieu, temps, manière, cause, but. Ils sont <strong>déplaçables</strong> et <strong>supprimables</strong>.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Les différents CC</h3>
+                        <table>
+                            <tr><th>Type</th><th>Question</th><th>Exemple</th></tr>
+                            <tr><td><strong>CCL</strong> (lieu)</td><td>Où ?</td><td>Il travaille <u>à Dakar</u>.</td></tr>
+                            <tr><td><strong>CCT</strong> (temps)</td><td>Quand ?</td><td>Il part <u>demain</u>.</td></tr>
+                            <tr><td><strong>CCM</strong> (manière)</td><td>Comment ?</td><td>Il marche <u>lentement</u>.</td></tr>
+                            <tr><td><strong>CCC</strong> (cause)</td><td>Pourquoi ?</td><td>Il pleure <u>de joie</u>.</td></tr>
+                            <tr><td><strong>CCBut</strong> (but)</td><td>Pour quoi faire ?</td><td>Il travaille <u>pour réussir</u>.</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="tips">
+                        <h4>💡 Test pour reconnaître un CC</h4>
+                        <ul>
+                            <li>On peut le déplacer : "<u>À Dakar</u>, il travaille."</li>
+                            <li>On peut le supprimer : "Il travaille." (phrase correcte)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('cod-coi')">← COD et COI</button>
+                        <button class="nav-btn next" onclick="showLesson('phrase-complexe')">Phrase complexe →</button>
+                    </div>
+                </div>
+
+                <!-- La phrase complexe -->
+                <div class="lesson" id="lesson-phrase-complexe">
+                    <div class="lesson-header">
+                        <h2>📝 La phrase complexe</h2>
+                        <span class="duration">⏱️ 1h30</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Une <strong>phrase complexe</strong> contient <strong>plusieurs verbes conjugués</strong>, donc plusieurs propositions.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Les trois types de liens</h3>
+                        <table>
+                            <tr><th>Lien</th><th>Outil</th><th>Exemple</th></tr>
+                            <tr><td><strong>Juxtaposition</strong></td><td>Ponctuation (, ; :)</td><td>Le soleil brille, les enfants jouent.</td></tr>
+                            <tr><td><strong>Coordination</strong></td><td>Conjonction (mais, ou, et, donc, or, ni, car)</td><td>Il pleut <u>mais</u> je sors.</td></tr>
+                            <tr><td><strong>Subordination</strong></td><td>Conjonction de subordination (que, quand, si, parce que...)</td><td>Je sais <u>qu'</u>il viendra.</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="tips">
+                        <h4>💡 Astuce MAIS OU ET DONC OR NI CAR</h4>
+                        <ul>
+                            <li>Retiens cette phrase pour les conjonctions de coordination !</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('cc')">← Les CC</button>
+                        <button class="nav-btn next" onclick="showLesson('present')">Le présent →</button>
+                    </div>
+                </div>
+
+                <!-- ==================== CONJUGAISON ==================== -->
+                
+                <!-- Le présent de l'indicatif -->
+                <div class="lesson" id="lesson-present">
+                    <div class="lesson-header">
+                        <h2>🔄 Le présent de l'indicatif</h2>
+                        <span class="duration">⏱️ 2h</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Le <strong>présent de l'indicatif</strong> exprime une action qui se passe au moment où l'on parle, une vérité générale, ou une habitude.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Terminaisons des 3 groupes</h3>
+                        <table class="conjugation-table">
+                            <tr><th>Personne</th><th>1er groupe (-er)</th><th>2ème groupe (-ir)</th><th>3ème groupe</th></tr>
+                            <tr><td>je</td><td>-e</td><td>-is</td><td>-s / -x / -e</td></tr>
+                            <tr><td>tu</td><td>-es</td><td>-is</td><td>-s / -x / -es</td></tr>
+                            <tr><td>il/elle</td><td>-e</td><td>-it</td><td>-t / -d / -e</td></tr>
+                            <tr><td>nous</td><td>-ons</td><td>-issons</td><td>-ons</td></tr>
+                            <tr><td>vous</td><td>-ez</td><td>-issez</td><td>-ez</td></tr>
+                            <tr><td>ils/elles</td><td>-ent</td><td>-issent</td><td>-ent</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Verbes irréguliers essentiels</h3>
+                        <table class="conjugation-table">
+                            <tr><th></th><th>ÊTRE</th><th>AVOIR</th><th>ALLER</th><th>FAIRE</th></tr>
+                            <tr><td>je</td><td>suis</td><td>ai</td><td>vais</td><td>fais</td></tr>
+                            <tr><td>tu</td><td>es</td><td>as</td><td>vas</td><td>fais</td></tr>
+                            <tr><td>il/elle</td><td>est</td><td>a</td><td>va</td><td>fait</td></tr>
+                            <tr><td>nous</td><td>sommes</td><td>avons</td><td>allons</td><td>faisons</td></tr>
+                            <tr><td>vous</td><td>êtes</td><td>avez</td><td>allez</td><td>faites</td></tr>
+                            <tr><td>ils/elles</td><td>sont</td><td>ont</td><td>vont</td><td>font</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('phrase-complexe')">← Phrase complexe</button>
+                        <button class="nav-btn next" onclick="showLesson('imparfait')">L'imparfait →</button>
+                    </div>
+                </div>
+
+                <!-- L'imparfait -->
+                <div class="lesson" id="lesson-imparfait">
+                    <div class="lesson-header">
+                        <h2>🔄 L'imparfait de l'indicatif</h2>
+                        <span class="duration">⏱️ 1h30</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>L'<strong>imparfait</strong> exprime une action passée qui dure, une habitude dans le passé, ou sert à la description.</p>
+                    </div>
+                    
+                    <div class="formula">
+                        Radical (1ère personne pluriel présent) + -ais, -ais, -ait, -ions, -iez, -aient
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Conjugaison</h3>
+                        <table class="conjugation-table">
+                            <tr><th>Personne</th><th>CHANTER</th><th>FINIR</th><th>PRENDRE</th></tr>
+                            <tr><td>je</td><td>chantais</td><td>finissais</td><td>prenais</td></tr>
+                            <tr><td>tu</td><td>chantais</td><td>finissais</td><td>prenais</td></tr>
+                            <tr><td>il/elle</td><td>chantait</td><td>finissait</td><td>prenait</td></tr>
+                            <tr><td>nous</td><td>chantions</td><td>finissions</td><td>prenions</td></tr>
+                            <tr><td>vous</td><td>chantiez</td><td>finissiez</td><td>preniez</td></tr>
+                            <tr><td>ils/elles</td><td>chantaient</td><td>finissaient</td><td>prenaient</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>🎯 Valeurs de l'imparfait</h3>
+                        <table>
+                            <tr><th>Valeur</th><th>Exemple</th></tr>
+                            <tr><td>Description</td><td>Le ciel <u>était</u> bleu, les oiseaux <u>chantaient</u>.</td></tr>
+                            <tr><td>Habitude passée</td><td>Chaque matin, elle <u>se levait</u> tôt.</td></tr>
+                            <tr><td>Action qui dure</td><td>Pendant qu'il <u>dormait</u>, le téléphone sonna.</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('present')">← Le présent</button>
+                        <button class="nav-btn next" onclick="showLesson('passe-simple')">Le passé simple →</button>
+                    </div>
+                </div>
+
+                <!-- Le passé simple -->
+                <div class="lesson" id="lesson-passe-simple">
+                    <div class="lesson-header">
+                        <h2>🔄 Le passé simple</h2>
+                        <span class="duration">⏱️ 2h</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Le <strong>passé simple</strong> exprime une action passée, brève et achevée. C'est le temps du récit écrit (littérature, contes).</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Terminaisons</h3>
+                        <table class="conjugation-table">
+                            <tr><th>Personne</th><th>1er groupe (-a-)</th><th>2ème groupe (-i-)</th><th>3ème groupe (-i-, -u-)</th></tr>
+                            <tr><td>je</td><td>-ai</td><td>-is</td><td>-is / -us</td></tr>
+                            <tr><td>tu</td><td>-as</td><td>-is</td><td>-is / -us</td></tr>
+                            <tr><td>il/elle</td><td>-a</td><td>-it</td><td>-it / -ut</td></tr>
+                            <tr><td>nous</td><td>-âmes</td><td>-îmes</td><td>-îmes / -ûmes</td></tr>
+                            <tr><td>vous</td><td>-âtes</td><td>-îtes</td><td>-îtes / -ûtes</td></tr>
+                            <tr><td>ils/elles</td><td>-èrent</td><td>-irent</td><td>-irent / -urent</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>✅ Exemples</h4>
+                        <div class="example-content">
+                            <p><strong>CHANTER :</strong> je chant<u>ai</u>, il chant<u>a</u>, ils chant<u>èrent</u></p>
+                            <p><strong>FINIR :</strong> je fin<u>is</u>, il fin<u>it</u>, ils fin<u>irent</u></p>
+                            <p><strong>VENIR :</strong> je v<u>ins</u>, il v<u>int</u>, ils v<u>inrent</u></p>
+                            <p><strong>AVOIR :</strong> j'<u>eus</u>, il <u>eut</u>, ils <u>eurent</u></p>
+                            <p><strong>ÊTRE :</strong> je <u>fus</u>, il <u>fut</u>, ils <u>furent</u></p>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('imparfait')">← L'imparfait</button>
+                        <button class="nav-btn next" onclick="showLesson('futur')">Le futur →</button>
+                    </div>
+                </div>
+
+                <!-- Le futur simple -->
+                <div class="lesson" id="lesson-futur">
+                    <div class="lesson-header">
+                        <h2>🔄 Le futur simple</h2>
+                        <span class="duration">⏱️ 1h30</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Le <strong>futur simple</strong> exprime une action qui se produira dans l'avenir.</p>
+                    </div>
+                    
+                    <div class="formula">
+                        Infinitif + -ai, -as, -a, -ons, -ez, -ont
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Conjugaison régulière</h3>
+                        <table class="conjugation-table">
+                            <tr><th>Personne</th><th>CHANTER</th><th>FINIR</th><th>PARTIR</th></tr>
+                            <tr><td>je</td><td>chanterai</td><td>finirai</td><td>partirai</td></tr>
+                            <tr><td>tu</td><td>chanteras</td><td>finiras</td><td>partiras</td></tr>
+                            <tr><td>il/elle</td><td>chantera</td><td>finira</td><td>partira</td></tr>
+                            <tr><td>nous</td><td>chanterons</td><td>finirons</td><td>partirons</td></tr>
+                            <tr><td>vous</td><td>chanterez</td><td>finirez</td><td>partirez</td></tr>
+                            <tr><td>ils/elles</td><td>chanteront</td><td>finiront</td><td>partiront</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>⚠️ Verbes irréguliers</h3>
+                        <table class="conjugation-table">
+                            <tr><th></th><th>ÊTRE</th><th>AVOIR</th><th>ALLER</th><th>FAIRE</th><th>VENIR</th><th>VOIR</th></tr>
+                            <tr><td>je</td><td>serai</td><td>aurai</td><td>irai</td><td>ferai</td><td>viendrai</td><td>verrai</td></tr>
+                            <tr><td>tu</td><td>seras</td><td>auras</td><td>iras</td><td>feras</td><td>viendras</td><td>verras</td></tr>
+                            <tr><td>il/elle</td><td>sera</td><td>aura</td><td>ira</td><td>fera</td><td>viendra</td><td>verra</td></tr>
+                            <tr><td>nous</td><td>serons</td><td>aurons</td><td>irons</td><td>ferons</td><td>viendrons</td><td>verrons</td></tr>
+                            <tr><td>vous</td><td>serez</td><td>aurez</td><td>irez</td><td>ferez</td><td>viendrez</td><td>verrez</td></tr>
+                            <tr><td>ils/elles</td><td>seront</td><td>auront</td><td>iront</td><td>feront</td><td>viendront</td><td>verront</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="warning">
+                        <h4>⚠️ Attention aux verbes en -yer</h4>
+                        <p><strong>Envoyer</strong> → j'enverr<u>ai</u> (et non "j'envoyerai")</p>
+                        <p><strong>Payer</strong> → je paier<u>ai</u> ou je payer<u>ai</u> (deux formes possibles)</p>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('passe-simple')">← Le passé simple</button>
+                        <button class="nav-btn next" onclick="showLesson('imperatif')">L'impératif →</button>
+                    </div>
+                </div>
+
+                <!-- L'impératif -->
+                <div class="lesson" id="lesson-imperatif">
+                    <div class="lesson-header">
+                        <h2>🔄 L'impératif présent</h2>
+                        <span class="duration">⏱️ 1h</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>L'<strong>impératif</strong> sert à donner un ordre, un conseil, une interdiction. Il n'a que <strong>3 personnes</strong> : tu, nous, vous (sans pronom sujet).</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Conjugaison</h3>
+                        <table class="conjugation-table">
+                            <tr><th>Personne</th><th>CHANTER</th><th>FINIR</th><th>PRENDRE</th></tr>
+                            <tr><td>2ème sing. (tu)</td><td>Chante !</td><td>Finis !</td><td>Prends !</td></tr>
+                            <tr><td>1ère plur. (nous)</td><td>Chantons !</td><td>Finissons !</td><td>Prenons !</td></tr>
+                            <tr><td>2ème plur. (vous)</td><td>Chantez !</td><td>Finissez !</td><td>Prenez !</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="warning">
+                        <h4>⚠️ Règle importante</h4>
+                        <p>Les verbes du <strong>1er groupe</strong> ne prennent <strong>pas de -s</strong> à la 2ème personne du singulier :</p>
+                        <p>• "Mange ta soupe !" (et non "Manges")</p>
+                        <p>• "Parle plus fort !" (et non "Parles")</p>
+                        <p><strong>Exception :</strong> devant "en" ou "y" → "Manges-<u>en</u> !" / "Vas-<u>y</u> !"</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Verbes irréguliers</h3>
+                        <table class="conjugation-table">
+                            <tr><th></th><th>ÊTRE</th><th>AVOIR</th><th>ALLER</th><th>SAVOIR</th></tr>
+                            <tr><td>tu</td><td>Sois</td><td>Aie</td><td>Va</td><td>Sache</td></tr>
+                            <tr><td>nous</td><td>Soyons</td><td>Ayons</td><td>Allons</td><td>Sachons</td></tr>
+                            <tr><td>vous</td><td>Soyez</td><td>Ayez</td><td>Allez</td><td>Sachez</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('futur')">← Le futur</button>
+                        <button class="nav-btn next" onclick="showLesson('homophones')">Les homophones →</button>
+                    </div>
+                </div>
+
+                <!-- ==================== ORTHOGRAPHE ==================== -->
+                
+                <!-- Les homophones grammaticaux -->
+                <div class="lesson" id="lesson-homophones">
+                    <div class="lesson-header">
+                        <h2>✏️ Les homophones grammaticaux</h2>
+                        <span class="duration">⏱️ 2h</span>
+                    </div>
+                    <div class="objectives">
+                        <h3>🎯 Objectifs</h3>
+                        <ul>
+                            <li>Distinguer les homophones courants</li>
+                            <li>Appliquer les astuces pour ne plus se tromper</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Les <strong>homophones</strong> sont des mots qui se prononcent de la même façon mais qui s'écrivent différemment et n'ont pas le même sens.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 a / à</h3>
+                        <table>
+                            <tr><th>Forme</th><th>Nature</th><th>Astuce</th><th>Exemple</th></tr>
+                            <tr><td><strong>a</strong></td><td>Verbe AVOIR</td><td>On peut remplacer par "avait"</td><td>Il <u>a</u> faim. → Il <u>avait</u> faim. ✓</td></tr>
+                            <tr><td><strong>à</strong></td><td>Préposition</td><td>On ne peut pas remplacer par "avait"</td><td>Je vais <u>à</u> Dakar. → Je vais <u>avait</u> Dakar. ✗</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 et / est</h3>
+                        <table>
+                            <tr><th>Forme</th><th>Nature</th><th>Astuce</th><th>Exemple</th></tr>
+                            <tr><td><strong>et</strong></td><td>Conjonction</td><td>On peut remplacer par "et puis"</td><td>Fatou <u>et</u> Awa jouent. → Fatou <u>et puis</u> Awa... ✓</td></tr>
+                            <tr><td><strong>est</strong></td><td>Verbe ÊTRE</td><td>On peut remplacer par "était"</td><td>Il <u>est</u> grand. → Il <u>était</u> grand. ✓</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 son / sont</h3>
+                        <table>
+                            <tr><th>Forme</th><th>Nature</th><th>Astuce</th><th>Exemple</th></tr>
+                            <tr><td><strong>son</strong></td><td>Déterminant possessif</td><td>On peut remplacer par "mon" ou "ton"</td><td><u>Son</u> livre est beau. → <u>Mon</u> livre... ✓</td></tr>
+                            <tr><td><strong>sont</strong></td><td>Verbe ÊTRE</td><td>On peut remplacer par "étaient"</td><td>Ils <u>sont</u> partis. → Ils <u>étaient</u> partis. ✓</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 on / ont</h3>
+                        <table>
+                            <tr><th>Forme</th><th>Nature</th><th>Astuce</th><th>Exemple</th></tr>
+                            <tr><td><strong>on</strong></td><td>Pronom personnel</td><td>On peut remplacer par "il" ou "quelqu'un"</td><td><u>On</u> mange. → <u>Il</u> mange. ✓</td></tr>
+                            <tr><td><strong>ont</strong></td><td>Verbe AVOIR</td><td>On peut remplacer par "avaient"</td><td>Ils <u>ont</u> faim. → Ils <u>avaient</u> faim. ✓</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 ce / se</h3>
+                        <table>
+                            <tr><th>Forme</th><th>Nature</th><th>Astuce</th><th>Exemple</th></tr>
+                            <tr><td><strong>ce</strong></td><td>Déterminant démonstratif</td><td>Devant un nom, remplaçable par "le"</td><td><u>Ce</u> livre est beau. → <u>Le</u> livre... ✓</td></tr>
+                            <tr><td><strong>se</strong></td><td>Pronom réfléchi</td><td>Devant un verbe pronominal</td><td>Il <u>se</u> lave. (verbe se laver)</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="exercise">
+                        <h3>✍️ Exercices</h3>
+                        <div class="exercise-item">
+                            <p><strong>Complète avec l'homophone correct :</strong></p>
+                            <p>1. Amadou ___ (a/à) mal ___ (a/à) la tête.</p>
+                            <p>2. Le professeur ___ (et/est) sévère ___ (et/est) juste.</p>
+                            <p>3. ___ (Son/Sont) père ___ (et/est) ___ (son/sont) oncle ___ (son/sont) médecins.</p>
+                            <p>4. ___ (On/Ont) dit qu'ils ___ (on/ont) gagné le match.</p>
+                            <textarea rows="4" placeholder="Tes réponses..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('imperatif')">← L'impératif</button>
+                        <button class="nav-btn next" onclick="showLesson('pluriel')">Le pluriel →</button>
+                    </div>
+                </div>
+
+                <!-- Le pluriel des noms -->
+                <div class="lesson" id="lesson-pluriel">
+                    <div class="lesson-header">
+                        <h2>✏️ Le pluriel des noms</h2>
+                        <span class="duration">⏱️ 1h30</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Règle générale</h4>
+                        <p>Pour former le pluriel d'un nom, on ajoute généralement un <strong>-s</strong> à la fin.</p>
+                        <p>un livre → des livre<strong>s</strong></p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Cas particuliers</h3>
+                        <table>
+                            <tr><th>Terminaison</th><th>Pluriel</th><th>Exemples</th></tr>
+                            <tr><td>-s, -x, -z</td><td>Invariables</td><td>un nez → des nez, un prix → des prix</td></tr>
+                            <tr><td>-au, -eau, -eu</td><td>+ x</td><td>un bateau → des bateau<strong>x</strong></td></tr>
+                            <tr><td>-al</td><td>-aux</td><td>un cheval → des chev<strong>aux</strong></td></tr>
+                            <tr><td>-ail</td><td>+ s (ou -aux)</td><td>un détail → des détails, un travail → des trav<strong>aux</strong></td></tr>
+                            <tr><td>-ou</td><td>+ s</td><td>un clou → des clous</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="warning">
+                        <h4>⚠️ Les 7 exceptions en -ou → -oux</h4>
+                        <p style="font-size: 1.1rem; text-align: center;"><strong>bijou, caillou, chou, genou, hibou, joujou, pou</strong></p>
+                        <p>Ces 7 mots prennent un <strong>-x</strong> au pluriel !</p>
+                    </div>
+                    
+                    <div class="tips">
+                        <h4>💡 Astuce pour retenir</h4>
+                        <ul>
+                            <li>"Viens mon <strong>chou</strong>, mon <strong>bijou</strong>, sur mes <strong>genoux</strong> avec tes <strong>joujoux</strong>, et ne jette pas de <strong>cailloux</strong> sur ce <strong>hibou</strong> plein de <strong>poux</strong> !"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('homophones')">← Les homophones</button>
+                        <button class="nav-btn next" onclick="showLesson('accord-adj')">L'accord de l'adjectif →</button>
+                    </div>
+                </div>
+
+                <!-- L'accord de l'adjectif -->
+                <div class="lesson" id="lesson-accord-adj">
+                    <div class="lesson-header">
+                        <h2>✏️ L'accord de l'adjectif</h2>
+                        <span class="duration">⏱️ 1h</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Règle</h4>
+                        <p>L'adjectif qualificatif s'accorde en <strong>genre</strong> (masculin/féminin) et en <strong>nombre</strong> (singulier/pluriel) avec le nom qu'il qualifie.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Formation du féminin</h3>
+                        <table>
+                            <tr><th>Règle</th><th>Masculin</th><th>Féminin</th></tr>
+                            <tr><td>Ajout de -e</td><td>grand</td><td>grand<strong>e</strong></td></tr>
+                            <tr><td>-eux → -euse</td><td>heureux</td><td>heureu<strong>se</strong></td></tr>
+                            <tr><td>-f → -ve</td><td>neuf</td><td>neu<strong>ve</strong></td></tr>
+                            <tr><td>-er → -ère</td><td>léger</td><td>légè<strong>re</strong></td></tr>
+                            <tr><td>Doublement + e</td><td>bon</td><td>bon<strong>ne</strong></td></tr>
+                            <tr><td>Irrégulier</td><td>beau</td><td>bel<strong>le</strong></td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Formation du pluriel</h3>
+                        <table>
+                            <tr><th>Règle</th><th>Singulier</th><th>Pluriel</th></tr>
+                            <tr><td>Ajout de -s</td><td>grand</td><td>grand<strong>s</strong></td></tr>
+                            <tr><td>-eau → -eaux</td><td>beau</td><td>beau<strong>x</strong></td></tr>
+                            <tr><td>-al → -aux</td><td>royal</td><td>roy<strong>aux</strong></td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="warning">
+                        <h4>⚠️ Cas particulier : plusieurs noms</h4>
+                        <p>Si l'adjectif qualifie plusieurs noms de genres différents, il se met au <strong>masculin pluriel</strong> :</p>
+                        <p>"La robe et le pantalon sont <u>beaux</u>."</p>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('pluriel')">← Le pluriel</button>
+                        <button class="nav-btn next" onclick="showLesson('synonymes')">Synonymes →</button>
+                    </div>
+                </div>
+
+                <!-- ==================== VOCABULAIRE ==================== -->
+                
+                <!-- Synonymes et antonymes -->
+                <div class="lesson" id="lesson-synonymes">
+                    <div class="lesson-header">
+                        <h2>📖 Synonymes et antonymes</h2>
+                        <span class="duration">⏱️ 1h30</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définitions</h4>
+                        <p><strong>Synonymes</strong> = mots de même sens ou de sens proche.</p>
+                        <p><strong>Antonymes</strong> = mots de sens contraire.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Exemples de synonymes</h3>
+                        <table>
+                            <tr><th>Mot</th><th>Synonymes</th></tr>
+                            <tr><td>beau</td><td>joli, magnifique, superbe, splendide</td></tr>
+                            <tr><td>content</td><td>heureux, joyeux, ravi, satisfait</td></tr>
+                            <tr><td>maison</td><td>demeure, habitation, logement, domicile</td></tr>
+                            <tr><td>manger</td><td>se nourrir, dévorer, avaler, consommer</td></tr>
+                            <tr><td>dire</td><td>affirmer, déclarer, raconter, expliquer</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Exemples d'antonymes</h3>
+                        <table>
+                            <tr><th>Mot</th><th>Antonyme</th><th>Formation</th></tr>
+                            <tr><td>grand</td><td>petit</td><td>Mot différent</td></tr>
+                            <tr><td>possible</td><td><u>im</u>possible</td><td>Préfixe im-</td></tr>
+                            <tr><td>heureux</td><td><u>mal</u>heureux</td><td>Préfixe mal-</td></tr>
+                            <tr><td>faire</td><td><u>dé</u>faire</td><td>Préfixe dé-</td></tr>
+                            <tr><td>monter</td><td>descendre</td><td>Mot différent</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="tips">
+                        <h4>💡 Préfixes pour former des antonymes</h4>
+                        <ul>
+                            <li><strong>in- / im- / il- / ir-</strong> : visible → invisible, possible → impossible</li>
+                            <li><strong>dé- / dés-</strong> : faire → défaire, obéir → désobéir</li>
+                            <li><strong>mal-</strong> : heureux → malheureux, chance → malchance</li>
+                            <li><strong>a-</strong> : normal → anormal, typique → atypique</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('accord-adj')">← L'accord de l'adjectif</button>
+                        <button class="nav-btn next" onclick="showLesson('familles')">Familles de mots →</button>
+                    </div>
+                </div>
+
+                <!-- Les familles de mots -->
+                <div class="lesson" id="lesson-familles">
+                    <div class="lesson-header">
+                        <h2>📖 Les familles de mots</h2>
+                        <span class="duration">⏱️ 1h30</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Une <strong>famille de mots</strong> regroupe tous les mots formés à partir d'un même <strong>radical</strong> (partie commune qui porte le sens).</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>🔧 Structure d'un mot</h3>
+                        <div class="formula">
+                            PRÉFIXE + RADICAL + SUFFIXE
+                        </div>
+                        <p style="text-align: center;">dé + chauss + er = <strong>déchausser</strong></p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Exemples de familles de mots</h3>
+                        <table>
+                            <tr><th>Radical</th><th>Famille de mots</th></tr>
+                            <tr><td><strong>terre</strong></td><td>terrain, terrasse, enterrer, déterrer, terrestre, atterrir</td></tr>
+                            <tr><td><strong>chant</strong></td><td>chanter, chanteur, chanteuse, chanson, enchanter</td></tr>
+                            <tr><td><strong>port</strong></td><td>porter, porteur, transport, transporter, portable, import, export</td></tr>
+                            <tr><td><strong>fleur</strong></td><td>fleurir, fleuriste, floraison, défleurir, refleurir</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Préfixes courants</h3>
+                        <table>
+                            <tr><th>Préfixe</th><th>Sens</th><th>Exemple</th></tr>
+                            <tr><td>re-</td><td>de nouveau</td><td><u>re</u>faire, <u>re</u>lire</td></tr>
+                            <tr><td>pré-</td><td>avant</td><td><u>pré</u>voir, <u>pré</u>nom</td></tr>
+                            <tr><td>trans-</td><td>à travers</td><td><u>trans</u>porter</td></tr>
+                            <tr><td>sur-</td><td>au-dessus</td><td><u>sur</u>voler</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Suffixes courants</h3>
+                        <table>
+                            <tr><th>Suffixe</th><th>Ce qu'il forme</th><th>Exemple</th></tr>
+                            <tr><td>-eur / -euse</td><td>Personne qui fait</td><td>chant<u>eur</u>, vend<u>euse</u></td></tr>
+                            <tr><td>-tion / -ation</td><td>Action</td><td>éduca<u>tion</u>, créa<u>tion</u></td></tr>
+                            <tr><td>-able / -ible</td><td>Possibilité</td><td>mang<u>eable</u>, vis<u>ible</u></td></tr>
+                            <tr><td>-ment</td><td>Manière</td><td>lente<u>ment</u>, douce<u>ment</u></td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('synonymes')">← Synonymes</button>
+                        <button class="nav-btn next" onclick="showLesson('schema-narratif')">Schéma narratif →</button>
+                    </div>
+                </div>
+
+                <!-- ==================== LECTURE ==================== -->
+                
+                <!-- Le schéma narratif -->
+                <div class="lesson" id="lesson-schema-narratif">
+                    <div class="lesson-header">
+                        <h2>📚 Le schéma narratif</h2>
+                        <span class="duration">⏱️ 2h</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Le <strong>schéma narratif</strong> est la structure en 5 étapes qui organise un récit (conte, nouvelle, roman...).</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Les 5 étapes</h3>
+                        <table>
+                            <tr><th>Étape</th><th>Contenu</th><th>Temps</th></tr>
+                            <tr><td><strong>1. Situation initiale</strong></td><td>Présentation des personnages, du lieu, de l'époque</td><td>Imparfait</td></tr>
+                            <tr><td><strong>2. Élément perturbateur</strong></td><td>Événement qui vient troubler l'équilibre</td><td>Passé simple</td></tr>
+                            <tr><td><strong>3. Péripéties</strong></td><td>Actions, aventures, épreuves</td><td>Passé simple</td></tr>
+                            <tr><td><strong>4. Résolution</strong></td><td>Solution au problème</td><td>Passé simple</td></tr>
+                            <tr><td><strong>5. Situation finale</strong></td><td>Nouvel équilibre</td><td>Imparfait/PS</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>✅ Exemple : Leuk-le-lièvre</h4>
+                        <div class="example-content">
+                            <p><strong>1. Situation initiale :</strong> Leuk le lièvre <u>vivait</u> dans la savane avec Bouki l'hyène.</p>
+                            <p><strong>2. Élément perturbateur :</strong> Un jour, une grande sécheresse <u>s'abattit</u> sur le pays.</p>
+                            <p><strong>3. Péripéties :</strong> Leuk <u>partit</u> chercher de l'eau, <u>rencontra</u> des obstacles...</p>
+                            <p><strong>4. Résolution :</strong> Grâce à sa ruse, il <u>trouva</u> une source cachée.</p>
+                            <p><strong>5. Situation finale :</strong> La paix <u>revint</u> dans la savane.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('familles')">← Familles de mots</button>
+                        <button class="nav-btn next" onclick="showLesson('conte')">Le conte →</button>
+                    </div>
+                </div>
+
+                <!-- Le conte merveilleux -->
+                <div class="lesson" id="lesson-conte">
+                    <div class="lesson-header">
+                        <h2>📚 Le conte merveilleux</h2>
+                        <span class="duration">⏱️ 2h</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Le <strong>conte merveilleux</strong> est un récit court où interviennent des éléments magiques ou surnaturels. Il transmet souvent une morale.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>🔧 Caractéristiques</h3>
+                        <table>
+                            <tr><th>Élément</th><th>Exemples</th></tr>
+                            <tr><td><strong>Formule d'ouverture</strong></td><td>"Il était une fois...", "Il y a bien longtemps..."</td></tr>
+                            <tr><td><strong>Personnages types</strong></td><td>Héros, princesse, méchant, fée, sorcière</td></tr>
+                            <tr><td><strong>Éléments merveilleux</strong></td><td>Magie, objets enchantés, animaux parlants</td></tr>
+                            <tr><td><strong>Formule de clôture</strong></td><td>"Ils vécurent heureux...", "Et le conte s'arrête là."</td></tr>
+                            <tr><td><strong>Morale</strong></td><td>Leçon de vie, valeur morale</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>🌍 Contes sénégalais célèbres</h3>
+                        <table>
+                            <tr><th>Conte</th><th>Personnages</th><th>Thème</th></tr>
+                            <tr><td><strong>Leuk-le-lièvre</strong></td><td>Leuk (rusé), Bouki (bête)</td><td>L'intelligence triomphe de la force</td></tr>
+                            <tr><td><strong>Koumba l'orpheline</strong></td><td>Koumba, la marâtre</td><td>La bonté récompensée</td></tr>
+                            <tr><td><strong>La cuillère sale</strong></td><td>Famille africaine</td><td>L'honnêteté</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('schema-narratif')">← Schéma narratif</button>
+                        <button class="nav-btn next" onclick="showLesson('schema-actantiel')">Schéma actantiel →</button>
+                    </div>
+                </div>
+
+                <!-- Le schéma actantiel -->
+                <div class="lesson" id="lesson-schema-actantiel">
+                    <div class="lesson-header">
+                        <h2>📚 Le schéma actantiel</h2>
+                        <span class="duration">⏱️ 1h30</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Le <strong>schéma actantiel</strong> identifie les 6 forces (actants) qui agissent dans un récit.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Les 6 actants</h3>
+                        <table>
+                            <tr><th>Actant</th><th>Rôle</th><th>Exemple (Cendrillon)</th></tr>
+                            <tr><td><strong>Sujet</strong></td><td>Héros qui agit</td><td>Cendrillon</td></tr>
+                            <tr><td><strong>Objet</strong></td><td>Ce qu'il cherche</td><td>Le bonheur, le prince</td></tr>
+                            <tr><td><strong>Destinateur</strong></td><td>Ce qui pousse à agir</td><td>Son désir d'amour</td></tr>
+                            <tr><td><strong>Destinataire</strong></td><td>Qui bénéficie de l'action</td><td>Cendrillon elle-même</td></tr>
+                            <tr><td><strong>Adjuvant</strong></td><td>Qui aide le héros</td><td>La fée marraine</td></tr>
+                            <tr><td><strong>Opposant</strong></td><td>Qui s'oppose au héros</td><td>La belle-mère, les sœurs</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('conte')">← Le conte</button>
+                        <button class="nav-btn next" onclick="showLesson('fable')">La fable →</button>
+                    </div>
+                </div>
+
+                <!-- La fable -->
+                <div class="lesson" id="lesson-fable">
+                    <div class="lesson-header">
+                        <h2>📚 La fable</h2>
+                        <span class="duration">⏱️ 2h</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>La <strong>fable</strong> est un court récit en vers ou en prose mettant en scène des animaux qui représentent des comportements humains. Elle se termine par une <strong>morale</strong>.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>👤 Jean de La Fontaine (1621-1695)</h3>
+                        <p>Fabuliste français, auteur de 243 fables. Il s'est inspiré d'Ésope (Grèce antique) et de Phèdre (Rome).</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Fables célèbres</h3>
+                        <table>
+                            <tr><th>Fable</th><th>Morale</th></tr>
+                            <tr><td>Le Corbeau et le Renard</td><td>Se méfier des flatteurs</td></tr>
+                            <tr><td>La Cigale et la Fourmi</td><td>Travailler pour préparer l'avenir</td></tr>
+                            <tr><td>Le Lièvre et la Tortue</td><td>Rien ne sert de courir, il faut partir à point</td></tr>
+                            <tr><td>Le Loup et l'Agneau</td><td>La raison du plus fort est toujours la meilleure</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('schema-actantiel')">← Schéma actantiel</button>
+                        <button class="nav-btn next" onclick="showLesson('versification')">La versification →</button>
+                    </div>
+                </div>
+
+                <!-- La versification -->
+                <div class="lesson" id="lesson-versification">
+                    <div class="lesson-header">
+                        <h2>📚 La versification</h2>
+                        <span class="duration">⏱️ 2h</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>La <strong>versification</strong> est l'ensemble des règles qui régissent la poésie : vers, rimes, strophes.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Les types de vers</h3>
+                        <table>
+                            <tr><th>Nom</th><th>Syllabes</th><th>Exemple</th></tr>
+                            <tr><td><strong>Alexandrin</strong></td><td>12</td><td>"Je / le / vis, / je / rou/gis, / je / pâ/lis / à / sa / vue" (Racine)</td></tr>
+                            <tr><td><strong>Décasyllabe</strong></td><td>10</td><td>"Ma / jeu/nes/se / ne / fut / qu'un / té/né/breux / o/rage"</td></tr>
+                            <tr><td><strong>Octosyllabe</strong></td><td>8</td><td>"Maî/tre / Cor/beau, / sur / un / ar/bre / per/ché"</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Les types de rimes</h3>
+                        <table>
+                            <tr><th>Disposition</th><th>Schéma</th><th>Exemple</th></tr>
+                            <tr><td><strong>Plates</strong></td><td>AABB</td><td>jour/amour - vie/envie</td></tr>
+                            <tr><td><strong>Croisées</strong></td><td>ABAB</td><td>jour/vie - amour/envie</td></tr>
+                            <tr><td><strong>Embrassées</strong></td><td>ABBA</td><td>jour/vie - envie/amour</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="warning">
+                        <h4>⚠️ Le "e" muet</h4>
+                        <p>Le "e" en fin de mot ne se prononce pas devant une voyelle ou à la fin du vers.</p>
+                        <p>Il SE prononce devant une consonne.</p>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('fable')">← La fable</button>
+                        <button class="nav-btn next" onclick="showLesson('poesie')">Le texte poétique →</button>
+                    </div>
+                </div>
+
+                <!-- Le texte poétique -->
+                <div class="lesson" id="lesson-poesie">
+                    <div class="lesson-header">
+                        <h2>📚 Le texte poétique</h2>
+                        <span class="duration">⏱️ 2h</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>La <strong>poésie</strong> est un genre littéraire qui joue sur les sons, le rythme et les images pour exprimer des émotions et créer de la beauté.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Les figures de style</h3>
+                        <table>
+                            <tr><th>Figure</th><th>Définition</th><th>Exemple</th></tr>
+                            <tr><td><strong>Comparaison</strong></td><td>Rapproche 2 éléments avec "comme"</td><td>Fort <u>comme</u> un lion</td></tr>
+                            <tr><td><strong>Métaphore</strong></td><td>Comparaison sans outil</td><td>Cet homme est un lion</td></tr>
+                            <tr><td><strong>Personnification</strong></td><td>Donne vie à un objet/idée</td><td>Le vent <u>murmure</u></td></tr>
+                            <tr><td><strong>Anaphore</strong></td><td>Répétition en début de vers</td><td><u>Paris</u>... <u>Paris</u>...</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>✅ Léopold Sédar Senghor - "Nuit de Sine"</h4>
+                        <div class="example-content" style="font-style: italic;">
+                            <p>"Femme, pose sur mon front tes mains balsamiques,<br>
+                            tes mains douces plus que fourrure.<br>
+                            Là-haut les palmes balancées qui bruissent dans la haute brise nocturne<br>
+                            À peine."</p>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('versification')">← La versification</button>
+                        <button class="nav-btn next" onclick="showLesson('registres')">Les registres →</button>
+                    </div>
+                </div>
+
+                <!-- ==================== EXPRESSION ==================== -->
+                
+                <!-- Les registres de langue -->
+                <div class="lesson" id="lesson-registres">
+                    <div class="lesson-header">
+                        <h2>✍️ Les registres de langue</h2>
+                        <span class="duration">⏱️ 1h30</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Le <strong>registre de langue</strong> (ou niveau de langue) est la façon de s'exprimer selon la situation : avec ses amis, en classe, dans une lettre officielle...</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Les 3 registres</h3>
+                        <table>
+                            <tr><th>Registre</th><th>Situation</th><th>Exemple</th></tr>
+                            <tr><td><strong>Familier</strong></td><td>Amis, famille</td><td>T'as vu ma bagnole ?</td></tr>
+                            <tr><td><strong>Courant</strong></td><td>Vie quotidienne</td><td>Tu as vu ma voiture ?</td></tr>
+                            <tr><td><strong>Soutenu</strong></td><td>Écrits officiels, littérature</td><td>Avez-vous aperçu mon automobile ?</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📊 Autres exemples</h3>
+                        <table>
+                            <tr><th>Familier</th><th>Courant</th><th>Soutenu</th></tr>
+                            <tr><td>bouquin</td><td>livre</td><td>ouvrage</td></tr>
+                            <tr><td>se gourer</td><td>se tromper</td><td>commettre une erreur</td></tr>
+                            <tr><td>bosser</td><td>travailler</td><td>œuvrer</td></tr>
+                            <tr><td>flic</td><td>policier</td><td>agent de police</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('poesie')">← Le texte poétique</button>
+                        <button class="nav-btn next" onclick="showLesson('lettre')">La lettre familière →</button>
+                    </div>
+                </div>
+
+                <!-- La lettre familière -->
+                <div class="lesson" id="lesson-lettre">
+                    <div class="lesson-header">
+                        <h2>✍️ La lettre familière</h2>
+                        <span class="duration">⏱️ 2h</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>La <strong>lettre familière</strong> est une lettre personnelle adressée à un ami, un parent ou une connaissance proche.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📋 Structure</h3>
+                        <table>
+                            <tr><th>Élément</th><th>Position</th><th>Exemple</th></tr>
+                            <tr><td><strong>Lieu et date</strong></td><td>En haut à droite</td><td>Dakar, le 15 mars 2024</td></tr>
+                            <tr><td><strong>Formule d'appel</strong></td><td>En haut à gauche</td><td>Cher Amadou, / Ma chère Fatou,</td></tr>
+                            <tr><td><strong>Corps de la lettre</strong></td><td>Au centre</td><td>Introduction, développement, conclusion</td></tr>
+                            <tr><td><strong>Formule de politesse</strong></td><td>Avant la signature</td><td>Amicalement, / Affectueusement,</td></tr>
+                            <tr><td><strong>Signature</strong></td><td>En bas à droite</td><td>Ton ami(e) Oumar</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>✅ Modèle</h4>
+                        <div class="example-content">
+                            <p style="text-align: right;">Dakar, le 20 janvier 2024</p>
+                            <p>Cher Ibrahima,</p>
+                            <p>Comment vas-tu ? J'espère que tu te portes bien ainsi que toute ta famille...</p>
+                            <p>Je t'écris pour te donner de mes nouvelles...</p>
+                            <p>J'attends ta réponse avec impatience.</p>
+                            <p>Amicalement,</p>
+                            <p style="text-align: right;">Ton ami Moussa</p>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('registres')">← Les registres</button>
+                        <button class="nav-btn next" onclick="showLesson('recit')">Produire un récit →</button>
+                    </div>
+                </div>
+
+                <!-- Produire un récit -->
+                <div class="lesson" id="lesson-recit">
+                    <div class="lesson-header">
+                        <h2>✍️ Produire un récit</h2>
+                        <span class="duration">⏱️ 2h</span>
+                    </div>
+                    
+                    <div class="definition">
+                        <h4>Définition</h4>
+                        <p>Un <strong>récit</strong> est un texte qui raconte une histoire avec des personnages, des lieux et des actions.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>📋 Méthodologie en 5 étapes</h3>
+                        <table>
+                            <tr><th>Étape</th><th>Action</th></tr>
+                            <tr><td><strong>1. Analyser le sujet</strong></td><td>Repérer les contraintes (personnages, lieu, temps)</td></tr>
+                            <tr><td><strong>2. Imaginer l'histoire</strong></td><td>Créer le schéma narratif</td></tr>
+                            <tr><td><strong>3. Planifier</strong></td><td>Faire un brouillon avec les 5 étapes</td></tr>
+                            <tr><td><strong>4. Rédiger</strong></td><td>Écrire au brouillon puis recopier</td></tr>
+                            <tr><td><strong>5. Relire</strong></td><td>Vérifier orthographe et cohérence</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>⏰ Les temps du récit</h3>
+                        <table>
+                            <tr><th>Temps</th><th>Usage</th></tr>
+                            <tr><td><strong>Imparfait</strong></td><td>Description, habitude, action qui dure</td></tr>
+                            <tr><td><strong>Passé simple</strong></td><td>Actions principales, événements ponctuels</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="tips">
+                        <h4>💡 Conseils pour réussir</h4>
+                        <ul>
+                            <li>Commence par une accroche (phrase qui capte l'attention)</li>
+                            <li>Varie les débuts de phrases</li>
+                            <li>Utilise des connecteurs temporels (puis, soudain, alors...)</li>
+                            <li>Termine par une chute ou une morale</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="exercise">
+                        <h3>✍️ Sujet d'entraînement</h3>
+                        <div class="exercise-item">
+                            <p><strong>Sujet :</strong> Raconte une aventure qui t'est arrivée pendant les vacances (réelle ou imaginaire).</p>
+                            <textarea rows="10" placeholder="Situation initiale : ...
+
+Élément perturbateur : ...
+
+Péripéties : ...
+
+Résolution : ...
+
+Situation finale : ..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-nav">
+                        <button class="nav-btn prev" onclick="showLesson('lettre')">← La lettre familière</button>
+                        <button class="nav-btn next" disabled>Fin du programme →</button>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function showLesson(id) {
+            document.querySelectorAll('.lesson').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            const lesson = document.getElementById('lesson-' + id);
+            if (lesson) {
+                lesson.classList.add('active');
+            }
+            event.target.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

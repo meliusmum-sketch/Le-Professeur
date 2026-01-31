@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Professeur - Français 5ème Complet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        :root { --primary: #1976d2; --primary-dark: #1565c0; --secondary: #42a5f5; --success: #4caf50; --warning: #ff9800; --info: #00bcd4; --dark: #0d47a1; }
+        body { background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); min-height: 100vh; }
+        .navbar { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 1rem 2rem; position: sticky; top: 0; z-index: 1000; }
+        .nav-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { color: white; font-size: 1.5rem; font-weight: 800; text-decoration: none; }
+        .nav-level { background: rgba(255,255,255,0.2); padding: 0.5rem 1.5rem; border-radius: 50px; color: white; font-weight: 600; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .page-header { text-align: center; margin-bottom: 2rem; padding: 2rem; background: white; border-radius: 20px; }
+        .page-header h1 { font-size: 2.2rem; color: var(--dark); margin-bottom: 0.5rem; }
+        .badge-level { display: inline-block; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 0.5rem 2rem; border-radius: 50px; font-weight: 700; margin-top: 1rem; }
+        .content-wrapper { display: grid; grid-template-columns: 320px 1fr; gap: 2rem; }
+        .sidebar { background: white; border-radius: 20px; padding: 1.5rem; position: sticky; top: 100px; height: fit-content; max-height: calc(100vh - 120px); overflow-y: auto; }
+        .sidebar h3 { color: var(--dark); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 3px solid var(--primary); }
+        .sidebar-section { margin-bottom: 1.5rem; }
+        .sidebar-section h4 { color: white; font-size: 0.8rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 0.5rem 1rem; border-radius: 8px; }
+        .sidebar-link { display: block; padding: 0.4rem 1rem; color: #555; text-decoration: none; border-radius: 8px; margin-bottom: 0.2rem; font-size: 0.85rem; cursor: pointer; transition: all 0.3s; border-left: 3px solid transparent; }
+        .sidebar-link:hover { background: #e3f2fd; border-left-color: var(--primary); }
+        .sidebar-link.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
+        .main-content { background: white; border-radius: 20px; padding: 2rem; }
+        .lesson { display: none; }
+        .lesson.active { display: block; }
+        .lesson-header { border-bottom: 3px solid var(--primary); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .lesson-header h2 { color: var(--dark); font-size: 1.5rem; }
+        .duration { background: var(--info); color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; }
+        .objectives { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-left: 5px solid var(--success); padding: 1.5rem; border-radius: 0 15px 15px 0; margin-bottom: 2rem; }
+        .objectives h3 { color: #2e7d32; margin-bottom: 1rem; }
+        .objectives ul { list-style: none; }
+        .objectives li { padding: 0.3rem 0; padding-left: 1.5rem; position: relative; }
+        .objectives li::before { content: '✓'; position: absolute; left: 0; color: #2e7d32; font-weight: bold; }
+        .section { margin-bottom: 2rem; }
+        .section h3 { color: var(--dark); font-size: 1.2rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px dashed #e0e0e0; }
+        .section p { color: #444; line-height: 1.8; margin-bottom: 1rem; }
+        .definition { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border: 2px solid var(--warning); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; }
+        .definition h4 { color: #e65100; margin-bottom: 0.5rem; }
+        .definition h4::before { content: '📌 '; }
+        .example { background: linear-gradient(135deg, #e3f2fd, #bbdefb); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; border-left: 5px solid var(--primary); }
+        .example h4 { color: var(--primary-dark); margin-bottom: 1rem; }
+        .example-content { background: white; padding: 1rem; border-radius: 10px; line-height: 1.8; }
+        .example-content .highlight { background: #ffeb3b; padding: 2px 6px; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; border-radius: 12px; overflow: hidden; }
+        th { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 0.8rem; text-align: left; }
+        td { padding: 0.7rem 0.8rem; border-bottom: 1px solid #eee; }
+        tr:hover { background: #f5f5f5; }
+        .tips { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; border-left: 5px solid var(--info); }
+        .tips h4 { color: #00838f; margin-bottom: 1rem; }
+        .warning { background: linear-gradient(135deg, #fff8e1, #ffecb3); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; border-left: 5px solid #ffc107; }
+        .warning h4 { color: #f57c00; margin-bottom: 0.5rem; }
+        .exercise { background: linear-gradient(135deg, #fce4ec, #f8bbd0); border-radius: 15px; padding: 1.5rem; margin: 2rem 0; }
+        .exercise h3 { color: #c2185b; margin-bottom: 1rem; }
+        .exercise-item { background: white; padding: 1rem; border-radius: 10px; margin-bottom: 1rem; }
+        textarea { width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px; font-family: inherit; }
+        .lesson-nav { display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 2rem; border-top: 2px solid #eee; }
+        .nav-btn { padding: 0.8rem 1.5rem; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; }
+        .nav-btn.prev { background: #ecf0f1; color: var(--dark); }
+        .nav-btn.next { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .formula { background: linear-gradient(135deg, #e8eaf6, #c5cae9); padding: 1rem 1.5rem; border-radius: 10px; text-align: center; font-size: 1.1rem; font-weight: 600; margin: 1rem 0; border: 2px solid #7986cb; }
+        .book-cover { background: linear-gradient(135deg, #1a237e, #283593); color: white; padding: 2rem; border-radius: 15px; text-align: center; margin: 1.5rem 0; }
+        @media (max-width: 1024px) { .content-wrapper { grid-template-columns: 1fr; } .sidebar { position: relative; top: 0; max-height: none; } }
+    </style>
+</head>
+<body>
+    <nav class="navbar"><div class="nav-content"><a href="#" class="logo">📚 Le Professeur</a><span class="nav-level">📘 Classe de 5ème</span></div></nav>
+    <div class="container">
+        <header class="page-header"><h1>📘 Cours Complet de Français - 5ème</h1><p>Programme PHARES - République du Sénégal</p><span class="badge-level">Enseignement Moyen - 24 Leçons</span></header>
+        <div class="content-wrapper">
+            <aside class="sidebar">
+                <h3>📑 Sommaire</h3>
+                <div class="sidebar-section"><h4>📝 GRAMMAIRE</h4>
+                    <a class="sidebar-link active" onclick="showLesson('expansions')">Les expansions du GN</a>
+                    <a class="sidebar-link" onclick="showLesson('cod-coi-cos')">COD, COI et COS</a>
+                    <a class="sidebar-link" onclick="showLesson('attribut')">L'attribut du sujet</a>
+                    <a class="sidebar-link" onclick="showLesson('voix')">Voix active et passive</a>
+                    <a class="sidebar-link" onclick="showLesson('pronoms')">Les pronoms</a>
+                    <a class="sidebar-link" onclick="showLesson('relative')">La subordonnée relative</a>
+                    <a class="sidebar-link" onclick="showLesson('types-phrases')">Les types de phrases</a>
+                </div>
+                <div class="sidebar-section"><h4>🔄 CONJUGAISON</h4>
+                    <a class="sidebar-link" onclick="showLesson('pqp')">Le plus-que-parfait</a>
+                    <a class="sidebar-link" onclick="showLesson('futur-ant')">Le futur antérieur</a>
+                    <a class="sidebar-link" onclick="showLesson('conditionnel')">Le conditionnel présent</a>
+                </div>
+                <div class="sidebar-section"><h4>📖 LE RÉCIT ENRICHI</h4>
+                    <a class="sidebar-link" onclick="showLesson('description')">Récit et description</a>
+                    <a class="sidebar-link" onclick="showLesson('portrait')">Le portrait</a>
+                    <a class="sidebar-link" onclick="showLesson('dialogue')">Le dialogue</a>
+                    <a class="sidebar-link" onclick="showLesson('discours')">Discours direct/indirect</a>
+                </div>
+                <div class="sidebar-section"><h4>🎭 LE THÉÂTRE</h4>
+                    <a class="sidebar-link" onclick="showLesson('theatre')">Introduction au théâtre</a>
+                    <a class="sidebar-link" onclick="showLesson('tragedie')">La tragédie - Le Cid</a>
+                    <a class="sidebar-link" onclick="showLesson('comedie')">La comédie - L'Avare</a>
+                </div>
+                <div class="sidebar-section"><h4>⚔️ L'ÉPOPÉE</h4>
+                    <a class="sidebar-link" onclick="showLesson('epopee')">L'épopée</a>
+                    <a class="sidebar-link" onclick="showLesson('soundjata')">Soundjata Keïta</a>
+                </div>
+                <div class="sidebar-section"><h4>🎵 POÉSIE</h4>
+                    <a class="sidebar-link" onclick="showLesson('versification')">La versification</a>
+                    <a class="sidebar-link" onclick="showLesson('senghor')">Senghor - "Joal"</a>
+                </div>
+                <div class="sidebar-section"><h4>✍️ EXPRESSION</h4>
+                    <a class="sidebar-link" onclick="showLesson('lettre-admin')">La lettre administrative</a>
+                    <a class="sidebar-link" onclick="showLesson('resume')">Le résumé de texte</a>
+                </div>
+            </aside>
+            <main class="main-content">
+                <!-- GRAMMAIRE -->
+                <div class="lesson active" id="lesson-expansions">
+                    <div class="lesson-header"><h2>📝 Les expansions du groupe nominal</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="objectives"><h3>🎯 Objectifs</h3><ul><li>Identifier les 3 types d'expansions du nom</li><li>Enrichir un groupe nominal</li></ul></div>
+                    <div class="definition"><h4>Définition</h4><p>Les <strong>expansions du nom</strong> enrichissent le groupe nominal minimal (déterminant + nom).</p></div>
+                    <div class="section"><h3>📊 Les 3 types d'expansions</h3>
+                        <table><tr><th>Type</th><th>Nature</th><th>Exemple</th></tr>
+                        <tr><td><strong>Épithète</strong></td><td>Adjectif qualificatif</td><td>Une maison <u>blanche</u></td></tr>
+                        <tr><td><strong>CDN</strong></td><td>Préposition + GN</td><td>Une maison <u>de pierre</u></td></tr>
+                        <tr><td><strong>Relative</strong></td><td>Pronom relatif + prop.</td><td>Une maison <u>qui domine la vallée</u></td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" disabled>← Précédent</button><button class="nav-btn next" onclick="showLesson('cod-coi-cos')">COD, COI, COS →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-cod-coi-cos">
+                    <div class="lesson-header"><h2>📝 COD, COI et COS</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="definition"><h4>Définitions</h4><p><strong>COD</strong> = sans préposition | <strong>COI</strong> = avec à/de | <strong>COS</strong> = 2ème complément</p></div>
+                    <div class="section"><h3>📊 Tableau</h3>
+                        <table><tr><th>Compl.</th><th>Question</th><th>Exemple</th></tr>
+                        <tr><td><strong>COD</strong></td><td>Qui ? Quoi ?</td><td>Je lis <u>un livre</u>.</td></tr>
+                        <tr><td><strong>COI</strong></td><td>À qui ? De quoi ?</td><td>Je pense <u>à toi</u>.</td></tr>
+                        <tr><td><strong>COS</strong></td><td>À qui ? (avec COD)</td><td>Je donne un livre <u>à mon frère</u>.</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('expansions')">← Expansions</button><button class="nav-btn next" onclick="showLesson('attribut')">Attribut →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-attribut">
+                    <div class="lesson-header"><h2>📝 L'attribut du sujet</h2><span class="duration">⏱️ 1h30</span></div>
+                    <div class="definition"><h4>Définition</h4><p>L'<strong>attribut du sujet</strong> donne une caractéristique au sujet via un <strong>verbe d'état</strong> (être, devenir, paraître, sembler, rester, demeurer).</p></div>
+                    <div class="formula">Sujet + Verbe d'état + ATTRIBUT</div>
+                    <div class="example"><h4>✅ Exemples</h4><div class="example-content"><p>Fatou <u>est</u> <span class="highlight">médecin</span>. | Il <u>devient</u> <span class="highlight">riche</span>.</p></div></div>
+                    <div class="warning"><h4>⚠️ Ne pas confondre !</h4><p><strong>Attribut :</strong> "Fatou est <u>belle</u>." (Fatou = belle) | <strong>COD :</strong> "Fatou voit <u>sa mère</u>." (Fatou ≠ sa mère)</p></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('cod-coi-cos')">← COD/COI</button><button class="nav-btn next" onclick="showLesson('voix')">Voix →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-voix">
+                    <div class="lesson-header"><h2>📝 Voix active et passive</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="definition"><h4>Définitions</h4><p><strong>Voix active :</strong> le sujet fait l'action. | <strong>Voix passive :</strong> le sujet subit l'action.</p></div>
+                    <div class="example"><h4>✅ Transformation</h4><div class="example-content">
+                        <p><strong>Active :</strong> <span class="highlight">Le chat</span> mange la souris.</p>
+                        <p><strong>Passive :</strong> La souris est mangée <span class="highlight">par le chat</span>.</p></div></div>
+                    <div class="section"><h3>🔧 Règles</h3><table><tr><th>Active</th><th>→</th><th>Passive</th></tr>
+                        <tr><td>Sujet</td><td>→</td><td>Complément d'agent</td></tr>
+                        <tr><td>COD</td><td>→</td><td>Sujet</td></tr>
+                        <tr><td>Verbe</td><td>→</td><td>ÊTRE + participe passé</td></tr></table></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('attribut')">← Attribut</button><button class="nav-btn next" onclick="showLesson('pronoms')">Pronoms →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-pronoms">
+                    <div class="lesson-header"><h2>📝 Les pronoms</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="definition"><h4>Définition</h4><p>Le <strong>pronom</strong> remplace un nom ou GN pour éviter les répétitions.</p></div>
+                    <div class="section"><h3>📊 Types de pronoms</h3><table><tr><th>Type</th><th>Exemples</th></tr>
+                        <tr><td><strong>Personnels</strong></td><td>je, tu, il, le, lui, leur...</td></tr>
+                        <tr><td><strong>Possessifs</strong></td><td>le mien, la tienne, les nôtres...</td></tr>
+                        <tr><td><strong>Démonstratifs</strong></td><td>celui, celle, ceux, ceci</td></tr>
+                        <tr><td><strong>Relatifs</strong></td><td>qui, que, dont, où</td></tr>
+                        <tr><td><strong>Interrogatifs</strong></td><td>qui ?, que ?, lequel ?</td></tr>
+                        <tr><td><strong>Indéfinis</strong></td><td>on, tout, chacun, quelqu'un</td></tr></table></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('voix')">← Voix</button><button class="nav-btn next" onclick="showLesson('relative')">Relative →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-relative">
+                    <div class="lesson-header"><h2>📝 La subordonnée relative</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="definition"><h4>Définition</h4><p>La <strong>subordonnée relative</strong> est introduite par un pronom relatif (qui, que, dont, où) et complète un nom appelé <strong>antécédent</strong>.</p></div>
+                    <div class="section"><h3>📊 Les pronoms relatifs</h3><table><tr><th>Pronom</th><th>Fonction</th><th>Exemple</th></tr>
+                        <tr><td><strong>QUI</strong></td><td>Sujet</td><td>L'homme <u>qui parle</u></td></tr>
+                        <tr><td><strong>QUE</strong></td><td>COD</td><td>Le livre <u>que je lis</u></td></tr>
+                        <tr><td><strong>DONT</strong></td><td>Complément de</td><td>L'ami <u>dont je parle</u></td></tr>
+                        <tr><td><strong>OÙ</strong></td><td>CC lieu/temps</td><td>La ville <u>où je vis</u></td></tr></table></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('pronoms')">← Pronoms</button><button class="nav-btn next" onclick="showLesson('types-phrases')">Types phrases →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-types-phrases">
+                    <div class="lesson-header"><h2>📝 Les types de phrases</h2><span class="duration">⏱️ 1h30</span></div>
+                    <div class="section"><h3>📊 Les 4 types</h3><table><tr><th>Type</th><th>Fonction</th><th>Ponctuation</th><th>Exemple</th></tr>
+                        <tr><td><strong>Déclarative</strong></td><td>Informer</td><td>.</td><td>Il fait beau.</td></tr>
+                        <tr><td><strong>Interrogative</strong></td><td>Questionner</td><td>?</td><td>Fait-il beau ?</td></tr>
+                        <tr><td><strong>Exclamative</strong></td><td>Exprimer sentiment</td><td>!</td><td>Qu'il fait beau !</td></tr>
+                        <tr><td><strong>Injonctive</strong></td><td>Ordonner</td><td>. ou !</td><td>Sors !</td></tr></table></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('relative')">← Relative</button><button class="nav-btn next" onclick="showLesson('pqp')">Plus-que-parfait →</button></div>
+                </div>
+
+                <!-- CONJUGAISON -->
+                <div class="lesson" id="lesson-pqp">
+                    <div class="lesson-header"><h2>🔄 Le plus-que-parfait</h2><span class="duration">⏱️ 1h30</span></div>
+                    <div class="definition"><h4>Définition</h4><p>Le <strong>plus-que-parfait</strong> exprime une action passée <strong>avant</strong> une autre action passée.</p></div>
+                    <div class="formula">AVOIR ou ÊTRE à l'imparfait + participe passé</div>
+                    <div class="section"><h3>📊 Conjugaison</h3><table><tr><th></th><th>MANGER</th><th>PARTIR</th></tr>
+                        <tr><td>je</td><td>j'avais mangé</td><td>j'étais parti(e)</td></tr>
+                        <tr><td>tu</td><td>tu avais mangé</td><td>tu étais parti(e)</td></tr>
+                        <tr><td>il/elle</td><td>il avait mangé</td><td>elle était partie</td></tr>
+                        <tr><td>nous</td><td>nous avions mangé</td><td>nous étions partis</td></tr>
+                        <tr><td>vous</td><td>vous aviez mangé</td><td>vous étiez partis</td></tr>
+                        <tr><td>ils</td><td>ils avaient mangé</td><td>elles étaient parties</td></tr></table></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('types-phrases')">← Types phrases</button><button class="nav-btn next" onclick="showLesson('futur-ant')">Futur antérieur →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-futur-ant">
+                    <div class="lesson-header"><h2>🔄 Le futur antérieur</h2><span class="duration">⏱️ 1h30</span></div>
+                    <div class="definition"><h4>Définition</h4><p>Le <strong>futur antérieur</strong> exprime une action future <strong>achevée avant</strong> une autre action future.</p></div>
+                    <div class="formula">AVOIR ou ÊTRE au futur simple + participe passé</div>
+                    <div class="example"><h4>✅ Emploi</h4><div class="example-content"><p>"Quand tu <span class="highlight">auras terminé</span> (futur antérieur), tu pourras (futur simple) sortir."</p></div></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('pqp')">← Plus-que-parfait</button><button class="nav-btn next" onclick="showLesson('conditionnel')">Conditionnel →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-conditionnel">
+                    <div class="lesson-header"><h2>🔄 Le conditionnel présent</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="definition"><h4>Définition</h4><p>Le <strong>conditionnel</strong> exprime une condition, un souhait, une demande polie, une hypothèse.</p></div>
+                    <div class="formula">Radical du futur + terminaisons de l'imparfait (-ais, -ais, -ait, -ions, -iez, -aient)</div>
+                    <div class="section"><h3>🎯 Valeurs</h3><table><tr><th>Valeur</th><th>Exemple</th></tr>
+                        <tr><td><strong>Condition</strong></td><td>Si j'avais de l'argent, je <u>voyagerais</u>.</td></tr>
+                        <tr><td><strong>Souhait</strong></td><td>J'<u>aimerais</u> te revoir.</td></tr>
+                        <tr><td><strong>Politesse</strong></td><td><u>Pourriez</u>-vous m'aider ?</td></tr></table></div>
+                    <div class="warning"><h4>⚠️ Si + imparfait → conditionnel</h4><p>"Si j'<u>avais</u> le temps, je <u>viendrais</u>." ✓ | "Si j'aurais..." ✗</p></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('futur-ant')">← Futur antérieur</button><button class="nav-btn next" onclick="showLesson('description')">Description →</button></div>
+                </div>
+
+                <!-- LE RÉCIT ENRICHI -->
+                <div class="lesson" id="lesson-description">
+                    <div class="lesson-header"><h2>📖 Récit et description</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="definition"><h4>Définitions</h4><p><strong>Narration</strong> = actions (passé simple) | <strong>Description</strong> = lieux, personnages (imparfait)</p></div>
+                    <div class="section"><h3>📊 Différences</h3><table><tr><th>Aspect</th><th>Narration</th><th>Description</th></tr>
+                        <tr><td>Question</td><td>Que se passe-t-il ?</td><td>Comment est-ce ?</td></tr>
+                        <tr><td>Temps</td><td>Passé simple</td><td>Imparfait</td></tr>
+                        <tr><td>Rythme</td><td>Dynamique</td><td>Pause</td></tr></table></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('conditionnel')">← Conditionnel</button><button class="nav-btn next" onclick="showLesson('portrait')">Portrait →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-portrait">
+                    <div class="lesson-header"><h2>📖 Le portrait</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="definition"><h4>Définition</h4><p>Le <strong>portrait</strong> décrit un personnage : aspect physique et/ou caractère (portrait moral).</p></div>
+                    <div class="section"><h3>📊 Vocabulaire physique</h3><table><tr><th>Aspect</th><th>Vocabulaire</th></tr>
+                        <tr><td>Taille</td><td>grand, petit, élancé, trapu</td></tr>
+                        <tr><td>Visage</td><td>ovale, rond, ridé, lisse</td></tr>
+                        <tr><td>Yeux</td><td>noirs, brillants, vifs, perçants</td></tr>
+                        <tr><td>Teint</td><td>ébène, cuivré, mat, clair</td></tr></table></div>
+                    <div class="section"><h3>📊 Portrait moral</h3><table><tr><th>Qualités</th><th>Défauts</th></tr>
+                        <tr><td>généreux, courageux, honnête</td><td>avare, lâche, malhonnête</td></tr>
+                        <tr><td>patient, calme, joyeux</td><td>impatient, colérique, triste</td></tr></table></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('description')">← Description</button><button class="nav-btn next" onclick="showLesson('dialogue')">Dialogue →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-dialogue">
+                    <div class="lesson-header"><h2>📖 Le dialogue</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="definition"><h4>Définition</h4><p>Le <strong>dialogue</strong> est un échange de paroles entre personnages, avec ponctuation spécifique.</p></div>
+                    <div class="section"><h3>🔧 Ponctuation</h3><table><tr><th>Signe</th><th>Usage</th></tr>
+                        <tr><td><strong>:</strong></td><td>Annonce le dialogue</td></tr>
+                        <tr><td><strong>« »</strong></td><td>Encadrent les paroles</td></tr>
+                        <tr><td><strong>–</strong></td><td>Changement de locuteur</td></tr></table></div>
+                    <div class="section"><h3>📊 Verbes de parole</h3><table><tr><th>Neutre</th><th>Expressif</th></tr>
+                        <tr><td>dire</td><td>murmurer, crier, chuchoter</td></tr>
+                        <tr><td>demander</td><td>questionner, implorer</td></tr>
+                        <tr><td>répondre</td><td>répliquer, rétorquer</td></tr></table></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('portrait')">← Portrait</button><button class="nav-btn next" onclick="showLesson('discours')">Discours →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-discours">
+                    <div class="lesson-header"><h2>📖 Discours direct et indirect</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="definition"><h4>Définitions</h4><p><strong>Direct :</strong> paroles entre guillemets | <strong>Indirect :</strong> paroles intégrées au récit</p></div>
+                    <div class="example"><h4>✅ Comparaison</h4><div class="example-content">
+                        <p><strong>Direct :</strong> Il dit : « <span class="highlight">Je suis</span> fatigué. »</p>
+                        <p><strong>Indirect :</strong> Il dit <span class="highlight">qu'il est</span> fatigué.</p></div></div>
+                    <div class="section"><h3>📊 Mots introducteurs</h3><table><tr><th>Type phrase</th><th>Introducteur</th></tr>
+                        <tr><td>Déclarative</td><td>que</td></tr>
+                        <tr><td>Interrog. oui/non</td><td>si</td></tr>
+                        <tr><td>Interrog. mot</td><td>où, quand, comment</td></tr>
+                        <tr><td>Impérative</td><td>de + infinitif</td></tr></table></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('dialogue')">← Dialogue</button><button class="nav-btn next" onclick="showLesson('theatre')">Théâtre →</button></div>
+                </div>
+
+                <!-- THÉÂTRE -->
+                <div class="lesson" id="lesson-theatre">
+                    <div class="lesson-header"><h2>🎭 Introduction au théâtre</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="definition"><h4>Définition</h4><p>Le <strong>théâtre</strong> est un genre littéraire destiné à être joué sur scène.</p></div>
+                    <div class="section"><h3>📊 Vocabulaire</h3><table><tr><th>Terme</th><th>Définition</th></tr>
+                        <tr><td><strong>Acte</strong></td><td>Grande division de la pièce</td></tr>
+                        <tr><td><strong>Scène</strong></td><td>Division de l'acte</td></tr>
+                        <tr><td><strong>Réplique</strong></td><td>Parole d'un personnage</td></tr>
+                        <tr><td><strong>Tirade</strong></td><td>Longue réplique</td></tr>
+                        <tr><td><strong>Monologue</strong></td><td>Personnage seul qui parle</td></tr>
+                        <tr><td><strong>Aparté</strong></td><td>Parole que seul le public entend</td></tr>
+                        <tr><td><strong>Didascalie</strong></td><td>Indication scénique</td></tr></table></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('discours')">← Discours</button><button class="nav-btn next" onclick="showLesson('tragedie')">Tragédie →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-tragedie">
+                    <div class="lesson-header"><h2>🎭 La tragédie - Le Cid</h2><span class="duration">⏱️ 3h</span></div>
+                    <div class="book-cover"><h4>"Le Cid" (1637)</h4><p>Pierre Corneille - Tragi-comédie en 5 actes</p></div>
+                    <div class="section"><h3>📖 L'intrigue</h3><p><strong>Rodrigue</strong> et <strong>Chimène</strong> s'aiment. Mais le père de Chimène gifle celui de Rodrigue. Rodrigue doit choisir : son amour ou l'honneur familial.</p></div>
+                    <div class="section"><h3>⚡ Le dilemme cornélien</h3><table><tr><th>AMOUR</th><th>HONNEUR</th></tr>
+                        <tr><td>Épargner Don Gomès</td><td>Venger son père</td></tr>
+                        <tr><td>→ Épouser Chimène</td><td>→ Perdre Chimène</td></tr>
+                        <tr><td>→ Déshonorer son père</td><td>→ Sauver l'honneur</td></tr></table></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('theatre')">← Théâtre</button><button class="nav-btn next" onclick="showLesson('comedie')">Comédie →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-comedie">
+                    <div class="lesson-header"><h2>🎭 La comédie - L'Avare</h2><span class="duration">⏱️ 3h</span></div>
+                    <div class="book-cover"><h4>"L'Avare" (1668)</h4><p>Molière - Comédie en 5 actes</p></div>
+                    <div class="section"><h3>📖 L'intrigue</h3><p><strong>Harpagon</strong>, vieillard avare, veut épouser <strong>Mariane</strong>... que son fils <strong>Cléante</strong> aime ! De plus, il cache une cassette d'or dans son jardin.</p></div>
+                    <div class="section"><h3>😂 Procédés comiques</h3><table><tr><th>Procédé</th><th>Exemple</th></tr>
+                        <tr><td><strong>Comique de caractère</strong></td><td>L'avarice excessive</td></tr>
+                        <tr><td><strong>Comique de situation</strong></td><td>Père et fils rivaux</td></tr>
+                        <tr><td><strong>Comique de gestes</strong></td><td>Harpagon fouille ses serviteurs</td></tr>
+                        <tr><td><strong>Comique de mots</strong></td><td>"Sans dot !" répété</td></tr></table></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('tragedie')">← Tragédie</button><button class="nav-btn next" onclick="showLesson('epopee')">Épopée →</button></div>
+                </div>
+
+                <!-- ÉPOPÉE -->
+                <div class="lesson" id="lesson-epopee">
+                    <div class="lesson-header"><h2>⚔️ L'épopée</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="definition"><h4>Définition</h4><p>L'<strong>épopée</strong> est un long récit célébrant les exploits d'un héros légendaire, souvent fondateur d'une nation.</p></div>
+                    <div class="section"><h3>📚 Épopées célèbres</h3><table><tr><th>Œuvre</th><th>Héros</th><th>Civilisation</th></tr>
+                        <tr><td>L'Iliade</td><td>Achille</td><td>Grèce</td></tr>
+                        <tr><td>L'Odyssée</td><td>Ulysse</td><td>Grèce</td></tr>
+                        <tr><td>La Chanson de Roland</td><td>Roland</td><td>France</td></tr>
+                        <tr><td><strong>Soundjata</strong></td><td>Soundjata</td><td><strong>Mali</strong></td></tr></table></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('comedie')">← Comédie</button><button class="nav-btn next" onclick="showLesson('soundjata')">Soundjata →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-soundjata">
+                    <div class="lesson-header"><h2>⚔️ L'épopée de Soundjata</h2><span class="duration">⏱️ 3h</span></div>
+                    <div class="book-cover" style="background: linear-gradient(135deg, #8d6e63, #5d4037);"><h4>Soundjata ou l'Épopée mandingue</h4><p>Récit des griots - XIIIe siècle</p></div>
+                    <div class="section"><h3>📖 L'histoire</h3><p><strong>Soundjata Keïta</strong>, né infirme, se lève miraculeusement, vainc le roi sorcier <strong>Soumaoro Kanté</strong> à Kirina (1235) et fonde l'<strong>Empire du Mali</strong>.</p></div>
+                    <div class="section"><h3>👥 Personnages</h3><table><tr><th>Personnage</th><th>Rôle</th></tr>
+                        <tr><td><strong>Soundjata</strong></td><td>Héros, fondateur de l'Empire</td></tr>
+                        <tr><td><strong>Sogolon</strong></td><td>Mère, femme-buffle</td></tr>
+                        <tr><td><strong>Soumaoro Kanté</strong></td><td>Roi sorcier, ennemi</td></tr></table></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('epopee')">← Épopée</button><button class="nav-btn next" onclick="showLesson('versification')">Versification →</button></div>
+                </div>
+
+                <!-- POÉSIE -->
+                <div class="lesson" id="lesson-versification">
+                    <div class="lesson-header"><h2>🎵 La versification</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="section"><h3>📊 Types de vers</h3><table><tr><th>Nom</th><th>Syllabes</th></tr>
+                        <tr><td><strong>Alexandrin</strong></td><td>12</td></tr>
+                        <tr><td><strong>Décasyllabe</strong></td><td>10</td></tr>
+                        <tr><td><strong>Octosyllabe</strong></td><td>8</td></tr></table></div>
+                    <div class="section"><h3>📊 Disposition des rimes</h3><table><tr><th>Type</th><th>Schéma</th></tr>
+                        <tr><td><strong>Plates</strong></td><td>AA BB</td></tr>
+                        <tr><td><strong>Croisées</strong></td><td>AB AB</td></tr>
+                        <tr><td><strong>Embrassées</strong></td><td>AB BA</td></tr></table></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('soundjata')">← Soundjata</button><button class="nav-btn next" onclick="showLesson('senghor')">Senghor →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-senghor">
+                    <div class="lesson-header"><h2>🎵 Senghor - "Joal"</h2><span class="duration">⏱️ 3h</span></div>
+                    <div class="book-cover" style="background: linear-gradient(135deg, #2e7d32, #1b5e20);"><h4>Léopold Sédar Senghor</h4><p>(1906-2001) - Poète, 1er Président du Sénégal</p></div>
+                    <div class="section"><h3>🌍 La Négritude</h3><p>Mouvement fondé par Senghor, Césaire et Damas pour <strong>réhabiliter les cultures africaines</strong>.</p></div>
+                    <div class="example"><h4>📝 "Joal" (extrait)</h4><div class="example-content" style="font-style: italic;"><p>"Joal !<br>Je me rappelle.<br>Je me rappelle les signares à l'ombre verte des vérandas..."</p></div></div>
+                    <div class="tips"><h4>💡 À retenir</h4><p>Né à Joal | 1er président du Sénégal (1960-1980) | Académie française | Co-fondateur de la Négritude</p></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('versification')">← Versification</button><button class="nav-btn next" onclick="showLesson('lettre-admin')">Lettre admin →</button></div>
+                </div>
+
+                <!-- EXPRESSION -->
+                <div class="lesson" id="lesson-lettre-admin">
+                    <div class="lesson-header"><h2>✍️ La lettre administrative</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="definition"><h4>Définition</h4><p>Lettre adressée à une autorité, utilisant un <strong>registre soutenu</strong>.</p></div>
+                    <div class="section"><h3>📋 Structure</h3><table><tr><th>N°</th><th>Élément</th><th>Position</th></tr>
+                        <tr><td>1</td><td>Coordonnées expéditeur</td><td>Haut gauche</td></tr>
+                        <tr><td>2</td><td>Coordonnées destinataire</td><td>Haut droite</td></tr>
+                        <tr><td>3</td><td>Lieu et date</td><td>Droite</td></tr>
+                        <tr><td>4</td><td>Objet</td><td>Gauche</td></tr>
+                        <tr><td>5</td><td>Formule d'appel</td><td>Début</td></tr>
+                        <tr><td>6</td><td>Corps de la lettre</td><td>Centre</td></tr>
+                        <tr><td>7</td><td>Formule de politesse</td><td>Fin</td></tr>
+                        <tr><td>8</td><td>Signature</td><td>Bas droite</td></tr></table></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('senghor')">← Senghor</button><button class="nav-btn next" onclick="showLesson('resume')">Résumé →</button></div>
+                </div>
+
+                <div class="lesson" id="lesson-resume">
+                    <div class="lesson-header"><h2>✍️ Le résumé de texte</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="definition"><h4>Définition</h4><p>Le <strong>résumé</strong> est une réduction fidèle d'un texte conservant les idées essentielles.</p></div>
+                    <div class="section"><h3>📋 Méthodologie</h3><table><tr><th>Étape</th><th>Action</th></tr>
+                        <tr><td>1. Lire</td><td>Lire plusieurs fois</td></tr>
+                        <tr><td>2. Analyser</td><td>Repérer thème, thèse, idées</td></tr>
+                        <tr><td>3. Dégager</td><td>Identifier idées essentielles</td></tr>
+                        <tr><td>4. Reformuler</td><td>Écrire avec SES mots</td></tr>
+                        <tr><td>5. Vérifier</td><td>Contrôler longueur</td></tr></table></div>
+                    <div class="section"><h3>📊 Règles</h3><table><tr><th>✓ À faire</th><th>✗ À éviter</th></tr>
+                        <tr><td>Reformuler</td><td>Recopier des phrases</td></tr>
+                        <tr><td>Garder l'ordre</td><td>Réorganiser</td></tr>
+                        <tr><td>Rester objectif</td><td>Donner son avis</td></tr>
+                        <tr><td>Respecter proportion (1/4)</td><td>Trop long/court</td></tr></table></div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('lettre-admin')">← Lettre admin</button><button class="nav-btn next" disabled>Fin du programme →</button></div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script>
+        function showLesson(id) {
+            document.querySelectorAll('.lesson').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            document.getElementById('lesson-' + id).classList.add('active');
+            event.target.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

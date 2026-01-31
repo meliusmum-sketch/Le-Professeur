@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Professeur - Français Terminale - BAC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        :root { --primary: #c62828; --primary-dark: #b71c1c; --success: #4caf50; --warning: #ff9800; --info: #00bcd4; }
+        body { background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); min-height: 100vh; }
+        .navbar { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 1rem 2rem; position: sticky; top: 0; z-index: 1000; }
+        .nav-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { color: white; font-size: 1.5rem; font-weight: 800; text-decoration: none; }
+        .nav-level { background: rgba(255,255,255,0.2); padding: 0.5rem 1.5rem; border-radius: 50px; color: white; font-weight: 600; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .page-header { text-align: center; margin-bottom: 2rem; padding: 2rem; background: white; border-radius: 20px; }
+        .page-header h1 { font-size: 2.2rem; color: var(--primary-dark); }
+        .badge-level { display: inline-block; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 0.5rem 2rem; border-radius: 50px; font-weight: 700; margin-top: 1rem; }
+        .content-wrapper { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; }
+        .sidebar { background: white; border-radius: 20px; padding: 1.5rem; position: sticky; top: 100px; height: fit-content; max-height: calc(100vh - 120px); overflow-y: auto; }
+        .sidebar h3 { color: var(--primary-dark); margin-bottom: 1rem; border-bottom: 3px solid var(--primary); padding-bottom: 0.5rem; }
+        .sidebar-section { margin-bottom: 1.5rem; }
+        .sidebar-section h4 { color: white; font-size: 0.75rem; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 0.4rem 0.8rem; border-radius: 8px; margin-bottom: 0.5rem; }
+        .sidebar-link { display: block; padding: 0.3rem 0.8rem; color: #555; text-decoration: none; border-radius: 6px; margin-bottom: 0.2rem; font-size: 0.8rem; cursor: pointer; border-left: 3px solid transparent; }
+        .sidebar-link:hover { background: #ffebee; border-left-color: var(--primary); }
+        .sidebar-link.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
+        .main-content { background: white; border-radius: 20px; padding: 2rem; }
+        .lesson { display: none; }
+        .lesson.active { display: block; }
+        .lesson-header { border-bottom: 3px solid var(--primary); padding-bottom: 1rem; margin-bottom: 2rem; }
+        .lesson-header h2 { color: var(--primary-dark); font-size: 1.4rem; }
+        .duration { background: var(--info); color: white; padding: 0.2rem 0.8rem; border-radius: 15px; font-size: 0.75rem; display: inline-block; margin-top: 0.5rem; }
+        .section { margin-bottom: 1.5rem; }
+        .section h3 { color: var(--primary-dark); font-size: 1.1rem; margin-bottom: 0.8rem; border-bottom: 2px dashed #e0e0e0; padding-bottom: 0.3rem; }
+        .section p { color: #444; line-height: 1.7; margin-bottom: 0.8rem; }
+        .definition { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border: 2px solid var(--warning); border-radius: 12px; padding: 1rem; margin: 1rem 0; }
+        .definition h4 { color: #e65100; margin-bottom: 0.3rem; }
+        .example { background: linear-gradient(135deg, #ffebee, #ffcdd2); border-radius: 12px; padding: 1rem; margin: 1rem 0; border-left: 4px solid var(--primary); }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; border-radius: 10px; overflow: hidden; font-size: 0.9rem; }
+        th { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 0.6rem; text-align: left; }
+        td { padding: 0.5rem 0.6rem; border-bottom: 1px solid #eee; }
+        tr:hover { background: #f5f5f5; }
+        .tips { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); border-radius: 12px; padding: 1rem; margin: 1rem 0; border-left: 4px solid var(--info); }
+        .bac-alert { background: linear-gradient(135deg, #ffc107, #ff9800); padding: 0.8rem; border-radius: 10px; text-align: center; color: #333; font-weight: 600; margin: 1rem 0; }
+        .author-box { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); color: white; padding: 1rem; border-radius: 12px; margin: 1rem 0; }
+        .quote { font-style: italic; background: #f5f5f5; padding: 0.8rem; border-left: 3px solid var(--primary); margin: 0.8rem 0; }
+        .lesson-nav { display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 2px solid #eee; }
+        .nav-btn { padding: 0.6rem 1.2rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.85rem; }
+        .nav-btn.prev { background: #ecf0f1; color: var(--primary-dark); }
+        .nav-btn.next { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
+        @media (max-width: 1024px) { .content-wrapper { grid-template-columns: 1fr; } .sidebar { position: relative; top: 0; } }
+    </style>
+</head>
+<body>
+    <nav class="navbar"><div class="nav-content"><a href="#" class="logo">📚 Le Professeur</a><span class="nav-level">🎓 Terminale - ÉPREUVE BAC</span></div></nav>
+    <div class="container">
+        <header class="page-header"><h1>🎓 Français Terminale - Programme Complet</h1><p>Préparation finale au Baccalauréat - 24 Leçons</p><span class="badge-level">Lycée - PHARES Sénégal</span></header>
+        <div class="content-wrapper">
+            <aside class="sidebar">
+                <h3>📑 Programme</h3>
+                <div class="sidebar-section"><h4>🏛️ LITTÉRATURE XXe</h4>
+                    <a class="sidebar-link active" onclick="showLesson('surrealisme')">Le Surréalisme</a>
+                    <a class="sidebar-link" onclick="showLesson('existentialisme')">L'Existentialisme</a>
+                    <a class="sidebar-link" onclick="showLesson('nouveau-roman')">Le Nouveau Roman</a>
+                    <a class="sidebar-link" onclick="showLesson('absurde')">L'Absurde</a>
+                </div>
+                <div class="sidebar-section"><h4>🌍 LITTÉRATURE AFRICAINE</h4>
+                    <a class="sidebar-link" onclick="showLesson('negritude')">La Négritude</a>
+                    <a class="sidebar-link" onclick="showLesson('senghor')">Senghor - Œuvre</a>
+                    <a class="sidebar-link" onclick="showLesson('cesaire')">Césaire - Cahier</a>
+                    <a class="sidebar-link" onclick="showLesson('roman-africain')">Le roman africain</a>
+                    <a class="sidebar-link" onclick="showLesson('sembene')">Sembène Ousmane</a>
+                </div>
+                <div class="sidebar-section"><h4>📖 ŒUVRES COMPLÈTES</h4>
+                    <a class="sidebar-link" onclick="showLesson('camus')">Camus - L'Étranger</a>
+                    <a class="sidebar-link" onclick="showLesson('sartre')">Sartre - Huis clos</a>
+                    <a class="sidebar-link" onclick="showLesson('beti')">Mongo Beti</a>
+                    <a class="sidebar-link" onclick="showLesson('laye')">Camara Laye</a>
+                </div>
+                <div class="sidebar-section"><h4>✍️ MÉTHODO BAC FINALE</h4>
+                    <a class="sidebar-link" onclick="showLesson('commentaire-bac')">Commentaire perfectionné</a>
+                    <a class="sidebar-link" onclick="showLesson('dissertation-bac')">Dissertation avancée</a>
+                    <a class="sidebar-link" onclick="showLesson('contraction')">Contraction + essai</a>
+                    <a class="sidebar-link" onclick="showLesson('oral-bac')">Oral perfectionné</a>
+                </div>
+                <div class="sidebar-section"><h4>🎯 RÉVISIONS & SUJETS</h4>
+                    <a class="sidebar-link" onclick="showLesson('revision-figures')">Figures de style (révision)</a>
+                    <a class="sidebar-link" onclick="showLesson('revision-mouvements')">Mouvements (synthèse)</a>
+                    <a class="sidebar-link" onclick="showLesson('sujets-bac')">Annales BAC corrigées</a>
+                    <a class="sidebar-link" onclick="showLesson('conseils-bac')">Conseils jour J</a>
+                </div>
+            </aside>
+            <main class="main-content">
+                <!-- SURRÉALISME -->
+                <div class="lesson active" id="lesson-surrealisme">
+                    <div class="lesson-header"><h2>🏛️ Le Surréalisme</h2><span class="duration">⏱️ 3h</span></div>
+                    <div class="author-box"><h4>Contexte (1920-1940)</h4><p>Après-guerre, rejet de la raison, exploration de l'inconscient (Freud)</p></div>
+                    <div class="definition"><h4>📌 Définition</h4><p>Mouvement explorant l'inconscient, le rêve, l'automatisme pour libérer l'imagination de la raison.</p></div>
+                    <div class="section"><h3>Principes</h3>
+                        <table><tr><th>Principe</th><th>Description</th></tr>
+                        <tr><td><strong>Automatisme</strong></td><td>Écriture sans contrôle de la raison</td></tr>
+                        <tr><td><strong>Rêve</strong></td><td>Source de création</td></tr>
+                        <tr><td><strong>Hasard objectif</strong></td><td>Rencontres fortuites signifiantes</td></tr>
+                        <tr><td><strong>Image surréaliste</strong></td><td>Rapprochements inattendus</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Auteurs</h3>
+                        <table><tr><th>Auteur</th><th>Œuvres</th></tr>
+                        <tr><td><strong>André Breton</strong></td><td>Manifeste, Nadja</td></tr>
+                        <tr><td><strong>Paul Éluard</strong></td><td>Capitale de la douleur</td></tr>
+                        <tr><td><strong>Louis Aragon</strong></td><td>Le Paysan de Paris</td></tr>
+                        <tr><td><strong>Robert Desnos</strong></td><td>Corps et biens</td></tr></table>
+                    </div>
+                    <div class="quote">"La beauté sera convulsive ou ne sera pas." — Breton</div>
+                    <div class="lesson-nav"><button class="nav-btn prev" disabled>←</button><button class="nav-btn next" onclick="showLesson('existentialisme')">Existentialisme →</button></div>
+                </div>
+
+                <!-- EXISTENTIALISME -->
+                <div class="lesson" id="lesson-existentialisme">
+                    <div class="lesson-header"><h2>🏛️ L'Existentialisme</h2><span class="duration">⏱️ 3h</span></div>
+                    <div class="definition"><h4>📌 Définition</h4><p>Philosophie selon laquelle "l'existence précède l'essence" : l'homme se définit par ses actes, non par une nature préétablie.</p></div>
+                    <div class="section"><h3>Concepts clés</h3>
+                        <table><tr><th>Concept</th><th>Explication</th></tr>
+                        <tr><td><strong>Liberté</strong></td><td>L'homme est condamné à être libre</td></tr>
+                        <tr><td><strong>Responsabilité</strong></td><td>Chaque choix engage l'humanité</td></tr>
+                        <tr><td><strong>Angoisse</strong></td><td>Face à la liberté totale</td></tr>
+                        <tr><td><strong>Mauvaise foi</strong></td><td>Se mentir sur sa liberté</td></tr>
+                        <tr><td><strong>Engagement</strong></td><td>Nécessité d'agir dans le monde</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Auteurs</h3>
+                        <table><tr><th>Auteur</th><th>Œuvres</th></tr>
+                        <tr><td><strong>Sartre</strong></td><td>La Nausée, Huis clos, L'Être et le Néant</td></tr>
+                        <tr><td><strong>Camus</strong></td><td>L'Étranger, Le Mythe de Sisyphe</td></tr>
+                        <tr><td><strong>Beauvoir</strong></td><td>Le Deuxième Sexe</td></tr></table>
+                    </div>
+                    <div class="quote">"L'existence précède l'essence." — Sartre</div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('surrealisme')">← Surréalisme</button><button class="nav-btn next" onclick="showLesson('nouveau-roman')">Nouveau Roman →</button></div>
+                </div>
+
+                <!-- NOUVEAU ROMAN -->
+                <div class="lesson" id="lesson-nouveau-roman">
+                    <div class="lesson-header"><h2>🏛️ Le Nouveau Roman</h2><span class="duration">⏱️ 3h</span></div>
+                    <div class="definition"><h4>📌 Définition</h4><p>Mouvement des années 1950-60 remettant en cause les conventions romanesques traditionnelles (personnage, intrigue, chronologie).</p></div>
+                    <div class="section"><h3>Caractéristiques</h3>
+                        <table><tr><th>Rejet</th><th>Innovation</th></tr>
+                        <tr><td>Personnage traditionnel</td><td>Êtres sans psychologie</td></tr>
+                        <tr><td>Intrigue linéaire</td><td>Éclatement du récit</td></tr>
+                        <tr><td>Narrateur omniscient</td><td>Point de vue limité</td></tr>
+                        <tr><td>Description réaliste</td><td>Descriptions obsessionnelles</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Auteurs</h3>
+                        <table><tr><th>Auteur</th><th>Œuvres</th></tr>
+                        <tr><td><strong>Robbe-Grillet</strong></td><td>Les Gommes, La Jalousie</td></tr>
+                        <tr><td><strong>Nathalie Sarraute</strong></td><td>Tropismes</td></tr>
+                        <tr><td><strong>Michel Butor</strong></td><td>La Modification</td></tr>
+                        <tr><td><strong>Claude Simon</strong></td><td>La Route des Flandres</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('existentialisme')">← Existentialisme</button><button class="nav-btn next" onclick="showLesson('absurde')">Absurde →</button></div>
+                </div>
+
+                <!-- ABSURDE -->
+                <div class="lesson" id="lesson-absurde">
+                    <div class="lesson-header"><h2>🏛️ L'Absurde</h2><span class="duration">⏱️ 3h</span></div>
+                    <div class="definition"><h4>📌 Définition</h4><p>Prise de conscience de l'absence de sens de l'existence humaine, de la confrontation entre l'homme et un monde silencieux.</p></div>
+                    <div class="section"><h3>Manifestations</h3>
+                        <table><tr><th>Domaine</th><th>Expression</th></tr>
+                        <tr><td><strong>Philosophie</strong></td><td>Camus : Le Mythe de Sisyphe</td></tr>
+                        <tr><td><strong>Roman</strong></td><td>L'Étranger (indifférence de Meursault)</td></tr>
+                        <tr><td><strong>Théâtre</strong></td><td>Ionesco, Beckett (non-sens)</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Réponses à l'absurde (Camus)</h3>
+                        <table><tr><th>Réponse</th><th>Description</th></tr>
+                        <tr><td><strong>Le suicide</strong></td><td>Refusé (fuite)</td></tr>
+                        <tr><td><strong>L'espoir religieux</strong></td><td>Refusé (saut philosophique)</td></tr>
+                        <tr><td><strong>La révolte</strong></td><td>Acceptée : vivre malgré l'absurde</td></tr></table>
+                    </div>
+                    <div class="quote">"Il faut imaginer Sisyphe heureux." — Camus</div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('nouveau-roman')">← Nouveau Roman</button><button class="nav-btn next" onclick="showLesson('negritude')">Négritude →</button></div>
+                </div>
+
+                <!-- NÉGRITUDE -->
+                <div class="lesson" id="lesson-negritude">
+                    <div class="lesson-header"><h2>🌍 La Négritude</h2><span class="duration">⏱️ 4h</span></div>
+                    <div class="bac-alert">🎯 ESSENTIEL LITTÉRATURE AFRICAINE</div>
+                    <div class="definition"><h4>📌 Définition</h4><p>Mouvement littéraire et intellectuel né dans les années 1930 visant à réhabiliter les cultures africaines et à affirmer l'identité noire.</p></div>
+                    <div class="section"><h3>Fondateurs</h3>
+                        <table><tr><th>Auteur</th><th>Pays</th><th>Apport</th></tr>
+                        <tr><td><strong>Aimé Césaire</strong></td><td>Martinique</td><td>Inventeur du mot, poésie volcanique</td></tr>
+                        <tr><td><strong>Léopold S. Senghor</strong></td><td>Sénégal</td><td>Théoricien, poésie rythmée</td></tr>
+                        <tr><td><strong>Léon-Gontran Damas</strong></td><td>Guyane</td><td>Révolte, jazz</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Principes</h3>
+                        <table><tr><th>Principe</th><th>Description</th></tr>
+                        <tr><td><strong>Réhabilitation</strong></td><td>Valoriser les cultures africaines</td></tr>
+                        <tr><td><strong>Affirmation</strong></td><td>"Il est beau d'être nègre"</td></tr>
+                        <tr><td><strong>Retour aux sources</strong></td><td>Redécouvrir l'Afrique</td></tr>
+                        <tr><td><strong>Fraternité</strong></td><td>Solidarité des peuples noirs</td></tr></table>
+                    </div>
+                    <div class="quote">"Ma négritude n'est pas une pierre, sa surdité ruée contre la clameur du jour" — Césaire</div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('absurde')">← Absurde</button><button class="nav-btn next" onclick="showLesson('senghor')">Senghor →</button></div>
+                </div>
+
+                <!-- SENGHOR -->
+                <div class="lesson" id="lesson-senghor">
+                    <div class="lesson-header"><h2>🌍 Senghor - Œuvre poétique</h2><span class="duration">⏱️ 4h</span></div>
+                    <div class="author-box" style="background: linear-gradient(135deg, #1b5e20, #4caf50);"><h4>Léopold Sédar Senghor (1906-2001)</h4><p>Poète, 1er président du Sénégal, Académie française</p></div>
+                    <div class="section"><h3>Œuvres</h3>
+                        <table><tr><th>Recueil</th><th>Date</th><th>Thème</th></tr>
+                        <tr><td><strong>Chants d'ombre</strong></td><td>1945</td><td>Nostalgie de l'enfance</td></tr>
+                        <tr><td><strong>Hosties noires</strong></td><td>1948</td><td>Tirailleurs sénégalais</td></tr>
+                        <tr><td><strong>Éthiopiques</strong></td><td>1956</td><td>Afrique éternelle</td></tr>
+                        <tr><td><strong>Nocturnes</strong></td><td>1961</td><td>Amour, mélancolie</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Caractéristiques</h3>
+                        <table><tr><th>Aspect</th><th>Description</th></tr>
+                        <tr><td><strong>Rythme</strong></td><td>Inspiré des tam-tams, de l'oralité</td></tr>
+                        <tr><td><strong>Images</strong></td><td>Symboles africains (masques, ancêtres)</td></tr>
+                        <tr><td><strong>Thèmes</strong></td><td>Enfance, femme noire, métissage</td></tr></table>
+                    </div>
+                    <div class="quote">"Femme nue, femme noire / Vêtue de ta couleur qui est vie..."</div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('negritude')">← Négritude</button><button class="nav-btn next" onclick="showLesson('cesaire')">Césaire →</button></div>
+                </div>
+
+                <!-- CÉSAIRE -->
+                <div class="lesson" id="lesson-cesaire">
+                    <div class="lesson-header"><h2>🌍 Césaire - Cahier d'un retour au pays natal</h2><span class="duration">⏱️ 4h</span></div>
+                    <div class="author-box" style="background: linear-gradient(135deg, #0d47a1, #1976d2);"><h4>Aimé Césaire (1913-2008)</h4><p>Poète martiniquais, homme politique, inventeur du mot "négritude"</p></div>
+                    <div class="section"><h3>L'œuvre (1939)</h3>
+                        <p>Long poème en prose racontant le retour du poète dans sa Martinique natale et sa prise de conscience de l'aliénation coloniale.</p>
+                    </div>
+                    <div class="section"><h3>Structure</h3>
+                        <table><tr><th>Partie</th><th>Contenu</th></tr>
+                        <tr><td><strong>1. Constat</strong></td><td>Misère de la Martinique</td></tr>
+                        <tr><td><strong>2. Aliénation</strong></td><td>Honte intériorisée</td></tr>
+                        <tr><td><strong>3. Révolte</strong></td><td>Refus, cri</td></tr>
+                        <tr><td><strong>4. Affirmation</strong></td><td>Fierté retrouvée, debout</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Style</h3>
+                        <p><strong>Poésie volcanique</strong> : images violentes, surréalistes, rythme haletant, néologismes, cris.</p>
+                    </div>
+                    <div class="quote">"ma négritude n'est pas une taie d'eau morte sur l'œil mort de la terre"</div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('senghor')">← Senghor</button><button class="nav-btn next" onclick="showLesson('roman-africain')">Roman africain →</button></div>
+                </div>
+
+                <!-- ROMAN AFRICAIN -->
+                <div class="lesson" id="lesson-roman-africain">
+                    <div class="lesson-header"><h2>🌍 Le roman africain</h2><span class="duration">⏱️ 3h</span></div>
+                    <div class="section"><h3>Évolution</h3>
+                        <table><tr><th>Période</th><th>Caractéristiques</th><th>Auteurs</th></tr>
+                        <tr><td><strong>1950-60</strong></td><td>Critique coloniale</td><td>Oyono, Beti, Kourouma</td></tr>
+                        <tr><td><strong>1960-80</strong></td><td>Désillusion indépendances</td><td>Kourouma, Sembène</td></tr>
+                        <tr><td><strong>1980-2000</strong></td><td>Dictatures, exil</td><td>Sony Labou Tansi</td></tr>
+                        <tr><td><strong>2000+</strong></td><td>Mondialisation, identité</td><td>Mabanckou, Diome</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Thèmes récurrents</h3>
+                        <table><tr><th>Thème</th><th>Exemples</th></tr>
+                        <tr><td><strong>Colonisation</strong></td><td>Oyono, Beti</td></tr>
+                        <tr><td><strong>Tradition vs modernité</strong></td><td>Kane, Badian</td></tr>
+                        <tr><td><strong>Condition féminine</strong></td><td>Mariama Bâ</td></tr>
+                        <tr><td><strong>Dictature</strong></td><td>Kourouma, Sony L.T.</td></tr>
+                        <tr><td><strong>Immigration</strong></td><td>Diome, Mabanckou</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('cesaire')">← Césaire</button><button class="nav-btn next" onclick="showLesson('sembene')">Sembène →</button></div>
+                </div>
+
+                <!-- SEMBÈNE -->
+                <div class="lesson" id="lesson-sembene">
+                    <div class="lesson-header"><h2>🌍 Sembène Ousmane</h2><span class="duration">⏱️ 3h</span></div>
+                    <div class="author-box" style="background: linear-gradient(135deg, #e65100, #ff9800);"><h4>Sembène Ousmane (1923-2007)</h4><p>Écrivain et cinéaste sénégalais, "père du cinéma africain"</p></div>
+                    <div class="section"><h3>Œuvres littéraires</h3>
+                        <table><tr><th>Œuvre</th><th>Thème</th></tr>
+                        <tr><td><strong>Les Bouts de bois de Dieu</strong></td><td>Grève des cheminots 1947-48</td></tr>
+                        <tr><td><strong>Le Docker noir</strong></td><td>Condition des immigrés</td></tr>
+                        <tr><td><strong>Xala</strong></td><td>Critique bourgeoisie africaine</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Caractéristiques</h3>
+                        <table><tr><th>Aspect</th><th>Description</th></tr>
+                        <tr><td><strong>Engagement</strong></td><td>Défense des opprimés</td></tr>
+                        <tr><td><strong>Réalisme</strong></td><td>Peinture sociale</td></tr>
+                        <tr><td><strong>Héros collectifs</strong></td><td>Le peuple, pas l'individu</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('roman-africain')">← Roman africain</button><button class="nav-btn next" onclick="showLesson('camus')">Camus →</button></div>
+                </div>
+
+                <!-- CAMUS -->
+                <div class="lesson" id="lesson-camus">
+                    <div class="lesson-header"><h2>📖 Camus - L'Étranger</h2><span class="duration">⏱️ 4h</span></div>
+                    <div class="author-box"><h4>Albert Camus (1913-1960)</h4><p>Prix Nobel 1957, philosophe de l'absurde</p></div>
+                    <div class="section"><h3>L'œuvre (1942)</h3>
+                        <p>Meursault, employé de bureau à Alger, tue un Arabe "à cause du soleil" et est condamné à mort moins pour son crime que pour n'avoir pas pleuré à l'enterrement de sa mère.</p>
+                    </div>
+                    <div class="section"><h3>Caractéristiques</h3>
+                        <table><tr><th>Aspect</th><th>Description</th></tr>
+                        <tr><td><strong>Narrateur</strong></td><td>1ère personne, passé composé</td></tr>
+                        <tr><td><strong>Style</strong></td><td>Phrases courtes, "écriture blanche"</td></tr>
+                        <tr><td><strong>Héros</strong></td><td>Indifférent, étranger au monde</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Thèmes</h3>
+                        <table><tr><th>Thème</th><th>Manifestation</th></tr>
+                        <tr><td><strong>Absurde</strong></td><td>Indifférence de Meursault</td></tr>
+                        <tr><td><strong>Vérité</strong></td><td>Refus de mentir, de "jouer le jeu"</td></tr>
+                        <tr><td><strong>Société</strong></td><td>Condamnation de la différence</td></tr></table>
+                    </div>
+                    <div class="quote">"Aujourd'hui, maman est morte. Ou peut-être hier, je ne sais pas."</div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('sembene')">← Sembène</button><button class="nav-btn next" onclick="showLesson('sartre')">Sartre →</button></div>
+                </div>
+
+                <!-- SARTRE -->
+                <div class="lesson" id="lesson-sartre">
+                    <div class="lesson-header"><h2>📖 Sartre - Huis clos</h2><span class="duration">⏱️ 4h</span></div>
+                    <div class="author-box"><h4>Jean-Paul Sartre (1905-1980)</h4><p>Philosophe existentialiste, refusa le Nobel</p></div>
+                    <div class="section"><h3>L'œuvre (1944)</h3>
+                        <p>Trois personnages (Garcin, Inès, Estelle) sont enfermés pour l'éternité dans un salon : l'enfer, ce n'est pas les flammes mais le regard des autres.</p>
+                    </div>
+                    <div class="section"><h3>Personnages</h3>
+                        <table><tr><th>Personnage</th><th>Faute</th><th>Besoin</th></tr>
+                        <tr><td><strong>Garcin</strong></td><td>Lâcheté, désertion</td><td>Être reconnu courageux</td></tr>
+                        <tr><td><strong>Inès</strong></td><td>Cruauté, lesbianisme</td><td>Posséder Estelle</td></tr>
+                        <tr><td><strong>Estelle</strong></td><td>Infanticide</td><td>Être désirée par un homme</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Thèmes existentialistes</h3>
+                        <table><tr><th>Thème</th><th>Illustration</th></tr>
+                        <tr><td><strong>Le regard d'autrui</strong></td><td>"L'enfer, c'est les autres"</td></tr>
+                        <tr><td><strong>Mauvaise foi</strong></td><td>Garcin se ment sur sa lâcheté</td></tr>
+                        <tr><td><strong>Liberté impossible</strong></td><td>Porte ouverte mais personne ne sort</td></tr></table>
+                    </div>
+                    <div class="quote">"L'enfer, c'est les autres."</div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('camus')">← Camus</button><button class="nav-btn next" onclick="showLesson('beti')">Beti →</button></div>
+                </div>
+
+                <!-- BETI -->
+                <div class="lesson" id="lesson-beti">
+                    <div class="lesson-header"><h2>📖 Mongo Beti</h2><span class="duration">⏱️ 3h</span></div>
+                    <div class="author-box" style="background: linear-gradient(135deg, #5d4037, #795548);"><h4>Mongo Beti (1932-2001)</h4><p>Écrivain camerounais, critique virulent de la colonisation et des dictatures</p></div>
+                    <div class="section"><h3>Œuvres</h3>
+                        <table><tr><th>Œuvre</th><th>Thème</th></tr>
+                        <tr><td><strong>Le Pauvre Christ de Bomba</strong></td><td>Critique des missions</td></tr>
+                        <tr><td><strong>Mission terminée</strong></td><td>Retour au village, échec scolaire</td></tr>
+                        <tr><td><strong>Remember Ruben</strong></td><td>Luttes indépendantistes</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Style</h3>
+                        <p><strong>Ironie mordante</strong> | <strong>Satire</strong> | <strong>Engagement politique</strong></p>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('sartre')">← Sartre</button><button class="nav-btn next" onclick="showLesson('laye')">Laye →</button></div>
+                </div>
+
+                <!-- LAYE -->
+                <div class="lesson" id="lesson-laye">
+                    <div class="lesson-header"><h2>📖 Camara Laye - L'Enfant noir</h2><span class="duration">⏱️ 3h</span></div>
+                    <div class="author-box" style="background: linear-gradient(135deg, #1565c0, #1976d2);"><h4>Camara Laye (1928-1980)</h4><p>Écrivain guinéen, autobiographie poétique</p></div>
+                    <div class="section"><h3>L'œuvre (1953)</h3>
+                        <p>Récit autobiographique de l'enfance en Haute-Guinée : initiation, traditions, départ pour la France.</p>
+                    </div>
+                    <div class="section"><h3>Thèmes</h3>
+                        <table><tr><th>Thème</th><th>Description</th></tr>
+                        <tr><td><strong>Enfance heureuse</strong></td><td>Nostalgie, tendresse</td></tr>
+                        <tr><td><strong>Traditions</strong></td><td>Forge du père, rites initiatiques</td></tr>
+                        <tr><td><strong>Mère</strong></td><td>Amour maternel, pouvoirs mystiques</td></tr>
+                        <tr><td><strong>Déchirement</strong></td><td>Partir pour étudier</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Style</h3>
+                        <p>Écriture <strong>poétique</strong>, <strong>douce</strong>, <strong>nostalgique</strong>. Aucune critique coloniale explicite (ce qui lui fut reproché).</p>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('beti')">← Beti</button><button class="nav-btn next" onclick="showLesson('commentaire-bac')">Commentaire →</button></div>
+                </div>
+
+                <!-- COMMENTAIRE BAC -->
+                <div class="lesson" id="lesson-commentaire-bac">
+                    <div class="lesson-header"><h2>✍️ Commentaire perfectionné</h2><span class="duration">⏱️ 4h</span></div>
+                    <div class="bac-alert">🎯 NIVEAU BAC - Maîtrise totale exigée</div>
+                    <div class="section"><h3>Critères d'évaluation</h3>
+                        <table><tr><th>Critère</th><th>Attentes</th></tr>
+                        <tr><td><strong>Compréhension</strong></td><td>Sens global + nuances</td></tr>
+                        <tr><td><strong>Analyse</strong></td><td>Procédés + effets + interprétation</td></tr>
+                        <tr><td><strong>Organisation</strong></td><td>Plan cohérent, progressif</td></tr>
+                        <tr><td><strong>Expression</strong></td><td>Style clair, vocabulaire précis</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Formules utiles</h3>
+                        <table><tr><th>Pour...</th><th>Formules</th></tr>
+                        <tr><td>Introduire</td><td>"Ce texte extrait de...", "L'auteur nous propose..."</td></tr>
+                        <tr><td>Analyser</td><td>"On remarque que...", "L'emploi de... souligne..."</td></tr>
+                        <tr><td>Citer</td><td>"comme le montre...", "ainsi que l'illustre..."</td></tr>
+                        <tr><td>Conclure</td><td>"En définitive...", "Ce texte apparaît donc comme..."</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('laye')">← Laye</button><button class="nav-btn next" onclick="showLesson('dissertation-bac')">Dissertation →</button></div>
+                </div>
+
+                <!-- DISSERTATION BAC -->
+                <div class="lesson" id="lesson-dissertation-bac">
+                    <div class="lesson-header"><h2>✍️ Dissertation avancée</h2><span class="duration">⏱️ 4h</span></div>
+                    <div class="section"><h3>Analyse du sujet</h3>
+                        <table><tr><th>Étape</th><th>Action</th></tr>
+                        <tr><td><strong>1. Mots-clés</strong></td><td>Définir chaque terme</td></tr>
+                        <tr><td><strong>2. Présupposés</strong></td><td>Ce que le sujet implique</td></tr>
+                        <tr><td><strong>3. Limites</strong></td><td>Ce qui n'est pas demandé</td></tr>
+                        <tr><td><strong>4. Problématique</strong></td><td>Question centrale</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Exemples littéraires efficaces</h3>
+                        <table><tr><th>Qualité</th><th>Description</th></tr>
+                        <tr><td><strong>Précis</strong></td><td>Titre, auteur, date, passage</td></tr>
+                        <tr><td><strong>Analysé</strong></td><td>Pas juste mentionné</td></tr>
+                        <tr><td><strong>Varié</strong></td><td>Genres, siècles, cultures</td></tr>
+                        <tr><td><strong>Pertinent</strong></td><td>Répond à l'argument</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('commentaire-bac')">← Commentaire</button><button class="nav-btn next" onclick="showLesson('contraction')">Contraction →</button></div>
+                </div>
+
+                <!-- CONTRACTION -->
+                <div class="lesson" id="lesson-contraction">
+                    <div class="lesson-header"><h2>✍️ Contraction + Essai</h2><span class="duration">⏱️ 3h</span></div>
+                    <div class="section"><h3>La contraction</h3>
+                        <table><tr><th>Règle</th><th>Application</th></tr>
+                        <tr><td><strong>Longueur</strong></td><td>Nombre de mots imposé (±10%)</td></tr>
+                        <tr><td><strong>Fidélité</strong></td><td>Respecter les idées de l'auteur</td></tr>
+                        <tr><td><strong>Reformulation</strong></td><td>Ses propres mots</td></tr>
+                        <tr><td><strong>Objectivité</strong></td><td>Pas d'avis personnel</td></tr></table>
+                    </div>
+                    <div class="section"><h3>L'essai</h3>
+                        <table><tr><th>Aspect</th><th>Conseil</th></tr>
+                        <tr><td><strong>Lien</strong></td><td>En rapport avec le texte contracté</td></tr>
+                        <tr><td><strong>Thèse</strong></td><td>Position personnelle claire</td></tr>
+                        <tr><td><strong>Arguments</strong></td><td>Variés (culture générale)</td></tr>
+                        <tr><td><strong>Exemples</strong></td><td>Littéraires + actualité</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('dissertation-bac')">← Dissertation</button><button class="nav-btn next" onclick="showLesson('oral-bac')">Oral →</button></div>
+                </div>
+
+                <!-- ORAL BAC -->
+                <div class="lesson" id="lesson-oral-bac">
+                    <div class="lesson-header"><h2>✍️ Oral perfectionné</h2><span class="duration">⏱️ 3h</span></div>
+                    <div class="bac-alert">🎯 30 min préparation | 20 min passage</div>
+                    <div class="section"><h3>L'exposé (10 min)</h3>
+                        <table><tr><th>Partie</th><th>Contenu</th></tr>
+                        <tr><td><strong>Introduction</strong></td><td>Situer, annoncer</td></tr>
+                        <tr><td><strong>Lecture</strong></td><td>Expressive, claire</td></tr>
+                        <tr><td><strong>Explication</strong></td><td>Linéaire, procédés</td></tr>
+                        <tr><td><strong>Conclusion</strong></td><td>Bilan, ouverture</td></tr></table>
+                    </div>
+                    <div class="section"><h3>L'entretien (10 min)</h3>
+                        <table><tr><th>Type de question</th><th>Comment répondre</th></tr>
+                        <tr><td>Sur l'œuvre</td><td>Montrer sa connaissance</td></tr>
+                        <tr><td>Sur le parcours</td><td>Faire des liens</td></tr>
+                        <tr><td>Opinion personnelle</td><td>Argumenter son avis</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('contraction')">← Contraction</button><button class="nav-btn next" onclick="showLesson('revision-figures')">Révisions →</button></div>
+                </div>
+
+                <!-- RÉVISION FIGURES -->
+                <div class="lesson" id="lesson-revision-figures">
+                    <div class="lesson-header"><h2>🎯 Figures de style (révision)</h2><span class="duration">⏱️ 2h</span></div>
+                    <div class="section"><h3>Figures d'analogie</h3>
+                        <table><tr><th>Figure</th><th>Définition</th></tr>
+                        <tr><td><strong>Comparaison</strong></td><td>Avec outil (comme, tel)</td></tr>
+                        <tr><td><strong>Métaphore</strong></td><td>Sans outil</td></tr>
+                        <tr><td><strong>Personnification</strong></td><td>Humain → non-humain</td></tr>
+                        <tr><td><strong>Allégorie</strong></td><td>Abstrait → concret</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Figures d'insistance</h3>
+                        <table><tr><th>Figure</th><th>Définition</th></tr>
+                        <tr><td><strong>Anaphore</strong></td><td>Répétition en début</td></tr>
+                        <tr><td><strong>Hyperbole</strong></td><td>Exagération</td></tr>
+                        <tr><td><strong>Gradation</strong></td><td>Progression</td></tr>
+                        <tr><td><strong>Accumulation</strong></td><td>Énumération</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Figures d'opposition</h3>
+                        <table><tr><th>Figure</th><th>Définition</th></tr>
+                        <tr><td><strong>Antithèse</strong></td><td>Opposition d'idées</td></tr>
+                        <tr><td><strong>Oxymore</strong></td><td>Alliance de contraires</td></tr>
+                        <tr><td><strong>Chiasme</strong></td><td>Structure AB/BA</td></tr>
+                        <tr><td><strong>Antiphrase</strong></td><td>Ironie (dire le contraire)</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('oral-bac')">← Oral</button><button class="nav-btn next" onclick="showLesson('revision-mouvements')">Mouvements →</button></div>
+                </div>
+
+                <!-- RÉVISION MOUVEMENTS -->
+                <div class="lesson" id="lesson-revision-mouvements">
+                    <div class="lesson-header"><h2>🎯 Mouvements littéraires (synthèse)</h2><span class="duration">⏱️ 3h</span></div>
+                    <div class="section"><h3>Tableau récapitulatif</h3>
+                        <table><tr><th>Mouvement</th><th>Siècle</th><th>Mots-clés</th></tr>
+                        <tr><td><strong>Humanisme</strong></td><td>XVIe</td><td>Homme, savoir, tolérance</td></tr>
+                        <tr><td><strong>Classicisme</strong></td><td>XVIIe</td><td>Raison, règles, imitation</td></tr>
+                        <tr><td><strong>Lumières</strong></td><td>XVIIIe</td><td>Raison, liberté, progrès</td></tr>
+                        <tr><td><strong>Romantisme</strong></td><td>XIXe (1)</td><td>Moi, nature, passion</td></tr>
+                        <tr><td><strong>Réalisme</strong></td><td>XIXe (2)</td><td>Observation, société</td></tr>
+                        <tr><td><strong>Naturalisme</strong></td><td>XIXe (3)</td><td>Science, hérédité, milieu</td></tr>
+                        <tr><td><strong>Symbolisme</strong></td><td>XIXe (4)</td><td>Symbole, suggestion, musique</td></tr>
+                        <tr><td><strong>Surréalisme</strong></td><td>XXe</td><td>Inconscient, rêve, automatisme</td></tr>
+                        <tr><td><strong>Existentialisme</strong></td><td>XXe</td><td>Liberté, engagement, absurde</td></tr>
+                        <tr><td><strong>Négritude</strong></td><td>XXe</td><td>Identité, Afrique, fierté</td></tr></table>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('revision-figures')">← Figures</button><button class="nav-btn next" onclick="showLesson('sujets-bac')">Sujets BAC →</button></div>
+                </div>
+
+                <!-- SUJETS BAC -->
+                <div class="lesson" id="lesson-sujets-bac">
+                    <div class="lesson-header"><h2>🎯 Annales BAC corrigées</h2><span class="duration">⏱️ 4h</span></div>
+                    <div class="bac-alert">🎯 ENTRAÎNEMENT FINAL</div>
+                    <div class="section"><h3>Sujet 1 : Littérature africaine</h3>
+                        <div class="example"><p><strong>Sujet :</strong> "La littérature africaine n'est-elle qu'une littérature de protestation ?"</p>
+                        <p><strong>Plan :</strong></p>
+                        <p>I. Une littérature de protestation (colonisation, dictatures)</p>
+                        <p>II. Mais aussi célébration (traditions, identité, beauté)</p>
+                        <p>III. Et universalité (condition humaine, amour, mort)</p></div>
+                    </div>
+                    <div class="section"><h3>Sujet 2 : Poésie</h3>
+                        <div class="example"><p><strong>Sujet :</strong> "Pensez-vous que la poésie soit une arme de combat efficace ?"</p>
+                        <p><strong>Plan :</strong></p>
+                        <p>I. La poésie peut être une arme (Résistance, Négritude)</p>
+                        <p>II. Mais ses limites (élitisme, impact réel)</p>
+                        <p>III. Une arme d'un autre type (conscience, mémoire)</p></div>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('revision-mouvements')">← Mouvements</button><button class="nav-btn next" onclick="showLesson('conseils-bac')">Conseils →</button></div>
+                </div>
+
+                <!-- CONSEILS BAC -->
+                <div class="lesson" id="lesson-conseils-bac">
+                    <div class="lesson-header"><h2>🎯 Conseils jour J</h2><span class="duration">⏱️ 1h</span></div>
+                    <div class="bac-alert">🎯 LE JOUR DE L'ÉPREUVE</div>
+                    <div class="section"><h3>Avant l'épreuve</h3>
+                        <table><tr><th>Conseil</th><th>Pourquoi</th></tr>
+                        <tr><td>Bien dormir</td><td>Concentration</td></tr>
+                        <tr><td>Petit-déjeuner</td><td>Énergie</td></tr>
+                        <tr><td>Arriver tôt</td><td>Sérénité</td></tr>
+                        <tr><td>Matériel prêt</td><td>Pas de stress</td></tr></table>
+                    </div>
+                    <div class="section"><h3>Pendant l'épreuve</h3>
+                        <table><tr><th>Conseil</th><th>Application</th></tr>
+                        <tr><td><strong>Lire tout</strong></td><td>Tous les sujets avant de choisir</td></tr>
+                        <tr><td><strong>Gérer le temps</strong></td><td>Horloge visible</td></tr>
+                        <tr><td><strong>Brouillon</strong></td><td>Plan détaillé</td></tr>
+                        <tr><td><strong>Relecture</strong></td><td>15 min minimum</td></tr>
+                        <tr><td><strong>Écriture</strong></td><td>Lisible, aérée</td></tr></table>
+                    </div>
+                    <div class="tips"><h4>💡 Ne jamais...</h4>
+                        <p>• Rendre copie blanche | • Négliger la présentation | • Oublier de numéroter | • Rendre sans relire</p>
+                    </div>
+                    <div class="section"><h3>🎉 Bonne chance !</h3>
+                        <p>Vous avez travaillé, vous êtes prêt(e). Faites-vous confiance !</p>
+                    </div>
+                    <div class="lesson-nav"><button class="nav-btn prev" onclick="showLesson('sujets-bac')">← Sujets</button><button class="nav-btn next" disabled>Fin programme →</button></div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script>
+        function showLesson(id) {
+            document.querySelectorAll('.lesson').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            document.getElementById('lesson-' + id).classList.add('active');
+            event.target.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
